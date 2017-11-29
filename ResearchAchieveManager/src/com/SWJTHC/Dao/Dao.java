@@ -49,22 +49,40 @@ public class Dao {
 			}
 			pstat = conn.prepareStatement(sql);
 			
-			Field[] field = model.getClass().getDeclaredFields();
+			Field[] field = model.getClass().getDeclaredFields();            		//获取模型属性列表
 			int k=1;
-			for(int i=0;i<field.length;i++){
-				String name = field[i].getName();  
-				name = name.substring(0,1).toUpperCase()+name.substring(1);
-				String type = field[i].getGenericType().toString();    //获取属性的类型
-                if(type.equals("class java.lang.String")){   //如果type是类类型，则前面包含"class "，后面跟类名
-                    Method m = model.getClass().getMethod("get"+name);
-                    String value = (String) m.invoke(model);    //调用getter方法获取属性值
-                    if(value != null){
-                    	pstat.setString(k, value);
-                    	k++;
-                    }
-                }
-                rs = pstat.executeQuery();
+			for(int i=0;i<field.length;i++){										//遍历属性
+				String name = field[i].getName();  							 		//获取当前属性名称
+				name = name.substring(0,1).toUpperCase()+name.substring(1);			//将属性名称首字母改为大写方便合成get、set方法
+				String type = field[i].getGenericType().toString();//.split(".");	//获取属性的类型   - class java.lang.*
+				String[] classNameSplited = type.split(" ");						//
+				String className = classNameSplited[classNameSplited.length-1];		//除去类型前的"class
+				String[] typeSplited = type.split("\\.");							//
+				String typeName = typeSplited[typeSplited.length-1];				//去除类型前的包名
+				Object value;
+				if(className.contains("List")){										//若类型为List，需要特殊的生成方式
+					int start,end;
+					for(int j=0;j<className.length();j++){
+						if(className.charAt(j)=='<'){
+							start = j;
+						}
+						if(className.charAt(j)=='>'){
+							end = j;
+						}
+					}
+					value = new ArrayList<>();
+				}else{
+					value = Class.forName(className);								//根据类型名称生成类
+				}				 
+				Method getMethod = model.getClass().getMethod("get"+name);			//合成get方法
+                value = getMethod.invoke(model); 									//调用类的get方法
+                if(value != null){
+                	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass()); 	//合成pstat的set方法
+                	setMethod.invoke(pstat,k,value);																	//调用pstat的set方法
+                	k++;																								//k用来标识当前sql语句中的参数位置	
+               }
 			}
+			rs = pstat.executeQuery();
 			return rs;//conn.createStatement().executeQuery(sql);
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -85,7 +103,7 @@ public class Dao {
 			return -1;
 		}
 	}
-	public static int executUpdate(String sql,Object model){
+	public static int executUpdate(String sql,Object model , String key){
 		int state=-1;
 		ResultSet rs=null;
 		try{
@@ -130,7 +148,17 @@ public class Dao {
                 	k++;
                }
 			}
-            state = pstat.executeUpdate();
+			if (key!=null) {
+				key = key.substring(0, 1).toUpperCase() + key.substring(1);
+				Method getMethod = model.getClass().getMethod("get" + key);
+				Object value = getMethod.invoke(model);
+				if (value != null) {
+					Method setMethod = pstat.getClass().getDeclaredMethod(
+							"setString", int.class, value.getClass());
+					setMethod.invoke(pstat, k, value);
+				}
+			}
+			state = pstat.executeUpdate();
 			return state;//conn.createStatement().executeQuery(sql);
 		}catch (Exception e) {
 			// TODO: handle exception

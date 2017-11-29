@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.SWJTHC.Dao.Dao;
+import com.SWJTHC.Dao.UserDao;
 import com.SWJTHC.enums.Department;
 import com.SWJTHC.enums.ManagementDep;
 import com.SWJTHC.enums.PoliticalDep;
@@ -26,7 +27,7 @@ public class Tester {
 		AppUser a = new AppUser();
 		a.setUsername("testing");
 		a.setPassword("1234");
-		int i = Dao.executUpdate("insert into users(name,password) values(?,?)",a);
+		int i = UserDao.updateUser(a);
 //		user.setPosition(Position.ADVISER);
 //		user.setDepartment(Department.MANAGEMENT);
 //		user.setSubDepartment(ManagementDep.OFFICE);
