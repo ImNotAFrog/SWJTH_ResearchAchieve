@@ -1,14 +1,17 @@
 package com.SWJTHC.Dao;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.*;
+import java.util.List;
 
 public class Dao {
-	protected static String dbClassName = "com.mysql.jdbc.Driver";
-	protected static String dbUrl = "jdbc:mysql://localhost:3306/researchAchieve";
-	protected static String dbUser = "root";
-	protected static String dbPwd = "1234";
+	protected static String dbClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	protected static String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=db_bookborrow;";
+	protected static String dbUser = "sa";
+	protected static String dbPwd = "sqlserver2008";
 	private static Connection conn = null;
-	
+	private static PreparedStatement pstat = null;
 	private Dao(){
 		try{
 			if(conn == null){
@@ -21,7 +24,7 @@ public class Dao {
 		}
 	}
 	
-	static ResultSet executQuery(String sql){
+	public static ResultSet executQuery(String sql){
 		try{
 			if(conn == null){
 				new Dao();
@@ -33,8 +36,42 @@ public class Dao {
 			return null;
 		}
 	}
+	public static ResultSet executQuery(String sql,Object model){
+		ResultSet rs=null;
+		try{
+			if(conn == null){
+				new Dao();
+			}
+			if(model==null){
+				return null;
+			}
+			pstat = conn.prepareStatement(sql);
+			
+			Field[] field = model.getClass().getDeclaredFields();
+			int k=1;
+			for(int i=0;i<field.length;i++){
+				String name = field[i].getName();  
+				name = name.substring(0,1).toUpperCase()+name.substring(1);
+				String type = field[i].getGenericType().toString();    //获取属性的类型
+                if(type.equals("class java.lang.String")){   //如果type是类类型，则前面包含"class "，后面跟类名
+                    Method m = model.getClass().getMethod("get"+name);
+                    String value = (String) m.invoke(model);    //调用getter方法获取属性值
+                    if(value != null){
+                    	pstat.setString(k, value);
+                    	k++;
+                    }
+                }
+                rs = pstat.executeQuery();
+			}
+			return rs;//conn.createStatement().executeQuery(sql);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
-	static int executUpdate(String sql){
+	public static int executUpdate(String sql){
 		try{
 			if(conn==null){
 				new Dao();
@@ -46,7 +83,42 @@ public class Dao {
 			return -1;
 		}
 	}
-	
+	public static ResultSet executUpdate(String sql,Object model){
+		ResultSet rs=null;
+		try{
+			if(conn == null){
+				new Dao();
+			}
+			if(model==null){
+				return null;
+			}
+			pstat = conn.prepareStatement(sql);
+			
+			Field[] field = model.getClass().getDeclaredFields();
+			int k=1;
+			for(int i=0;i<field.length;i++){
+				String name = field[i].getName();  
+				name = name.substring(0,1).toUpperCase()+name.substring(1);
+				String type = field[i].getGenericType().toString();
+				Method m = model.getClass().getMethod("get"+name);
+                TYPE value = (field[i].getGenericType()) m.invoke(model); //获取属性的类型
+                if(type.equals("class java.lang.String")){   //如果type是类类型，则前面包含"class "，后面跟类名
+//                    Method m = model.getClass().getMethod("get"+name);
+//                    String value = (String) m.invoke(model);    //调用getter方法获取属性值
+                    if(value != null){
+                    	pstat.setString(k, value);
+                    	k++;
+                    }
+                }
+                rs = pstat.executeQuery();
+			}
+			return rs;//conn.createStatement().executeQuery(sql);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public static void close(){
 		try {
 			conn.close();
