@@ -25,7 +25,7 @@ public class Tester {
 		// TODO Auto-generated method stub
 		AppUser a = new AppUser();
 		a.setUsername("admin");
-		ResultSet rs = Dao.executQuery("select * from users where name = ?",a);
+		ResultSet rs = Dao.executQuery("insert into users()",a);
 //		user.setPosition(Position.ADVISER);
 //		user.setDepartment(Department.MANAGEMENT);
 //		user.setSubDepartment(ManagementDep.OFFICE);

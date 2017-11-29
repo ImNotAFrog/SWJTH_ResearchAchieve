@@ -2,6 +2,7 @@ package com.SWJTHC.Dao;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.List;
 
@@ -83,14 +84,15 @@ public class Dao {
 			return -1;
 		}
 	}
-	public static ResultSet executUpdate(String sql,Object model){
+	public static int executUpdate(String sql,Object model){
+		int state=-1;
 		ResultSet rs=null;
 		try{
 			if(conn == null){
 				new Dao();
 			}
 			if(model==null){
-				return null;
+				return -1;
 			}
 			pstat = conn.prepareStatement(sql);
 			
@@ -99,24 +101,29 @@ public class Dao {
 			for(int i=0;i<field.length;i++){
 				String name = field[i].getName();  
 				name = name.substring(0,1).toUpperCase()+name.substring(1);
-				String type = field[i].getGenericType().toString();
-				Method m = model.getClass().getMethod("get"+name);
-                TYPE value = (field[i].getGenericType()) m.invoke(model); //获取属性的类型
-                if(type.equals("class java.lang.String")){   //如果type是类类型，则前面包含"class "，后面跟类名
+				String type = field[i].getGenericType().toString();//.split(".");//获取属性的类型
+				String[] typeSplited = type.split(".");
+				String typeName = typeSplited[typeSplited.length-1];
+				Object value = Class.forName(type);
+				Method getMethod = model.getClass().getMethod("get"+name);
+                value = getMethod.invoke(model); 
+//                if(type.equals("class java.lang.String")){   //如果type是类类型，则前面包含"class "，后面跟类名
 //                    Method m = model.getClass().getMethod("get"+name);
 //                    String value = (String) m.invoke(model);    //调用getter方法获取属性值
-                    if(value != null){
-                    	pstat.setString(k, value);
-                    	k++;
-                    }
-                }
-                rs = pstat.executeQuery();
+//                    if(value != null){
+//                    	pstat.setString(k, value);
+//                    	k++;
+//                    }
+//                }
+                Method setMethod = pstat.getClass().getMethod("set"+typeName);
+                setMethod.invoke(pstat,k,value);
 			}
-			return rs;//conn.createStatement().executeQuery(sql);
+            state = pstat.executeUpdate(sql);
+			return state;//conn.createStatement().executeQuery(sql);
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return null;
+			return -1;
 		}
 	}
 	public static void close(){
