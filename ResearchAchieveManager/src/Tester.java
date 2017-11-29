@@ -24,8 +24,9 @@ public class Tester {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		AppUser a = new AppUser();
-		a.setUsername("admin");
-		ResultSet rs = Dao.executQuery("insert into users()",a);
+		a.setUsername("testing");
+		a.setPassword("1234");
+		int i = Dao.executUpdate("insert into users(name,password) values(?,?)",a);
 //		user.setPosition(Position.ADVISER);
 //		user.setDepartment(Department.MANAGEMENT);
 //		user.setSubDepartment(ManagementDep.OFFICE);
@@ -33,15 +34,15 @@ public class Tester {
 		
 //		List<ManagementDep> l = (List<ManagementDep>)user.getDepartment().getSubDeps();
 //		
-		try {
-			while(rs.next()){
-				System.out.println(rs.getString("name"));
-				System.out.println(rs.getString("password"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			while(rs.next()){
+//				System.out.println(rs.getString("name"));
+//				System.out.println(rs.getString("password"));
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 	}
 

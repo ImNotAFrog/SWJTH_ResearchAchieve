@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dao {
@@ -102,23 +103,34 @@ public class Dao {
 				String name = field[i].getName();  
 				name = name.substring(0,1).toUpperCase()+name.substring(1);
 				String type = field[i].getGenericType().toString();//.split(".");//获取属性的类型
-				String[] typeSplited = type.split(".");
+				String[] classNameSplited = type.split(" ");
+				String className = classNameSplited[classNameSplited.length-1];
+				String[] typeSplited = type.split("\\.");
 				String typeName = typeSplited[typeSplited.length-1];
-				Object value = Class.forName(type);
+				Object value;
+				if(className.contains("List")){
+					int start,end;
+					for(int j=0;j<className.length();j++){
+						if(className.charAt(j)=='<'){
+							start = j;
+						}
+						if(className.charAt(j)=='>'){
+							end = j;
+						}
+					}
+					value = new ArrayList<>();
+				}else{
+					value = Class.forName(className);
+				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);
                 value = getMethod.invoke(model); 
-//                if(type.equals("class java.lang.String")){   //如果type是类类型，则前面包含"class "，后面跟类名
-//                    Method m = model.getClass().getMethod("get"+name);
-//                    String value = (String) m.invoke(model);    //调用getter方法获取属性值
-//                    if(value != null){
-//                    	pstat.setString(k, value);
-//                    	k++;
-//                    }
-//                }
-                Method setMethod = pstat.getClass().getMethod("set"+typeName);
-                setMethod.invoke(pstat,k,value);
+                if(value != null){
+                	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());
+                	setMethod.invoke(pstat,k,value);
+                	k++;
+               }
 			}
-            state = pstat.executeUpdate(sql);
+            state = pstat.executeUpdate();
 			return state;//conn.createStatement().executeQuery(sql);
 		}catch (Exception e) {
 			// TODO: handle exception
