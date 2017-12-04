@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.SWJTHC.Dao.Dao;
+import com.SWJTHC.Dao.ThesisDao;
 import com.SWJTHC.Dao.UserDao;
+import com.SWJTHC.enums.AchieveType;
 import com.SWJTHC.enums.Department;
 import com.SWJTHC.enums.ManagementDep;
 import com.SWJTHC.enums.PoliticalDep;
@@ -27,37 +29,14 @@ public class Tester {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		AppUser a = new AppUser();
-		a.setUsername("testing");
-		//a.setPositionLevel(PositionLevel.BATTALION_COMMANDER);
-		//a.setSubDepartment(TrainingDep.CULTRUE);
-		//UserDao.updateUserByUsername(a);
-		List<AppUser> l = UserDao.getUserByUsername(a);
-		System.out.println(l.get(0).getUsername());		
-		System.out.println(l.get(0).getPassword());
-		System.out.println(l.get(0).getDepartment());
-		System.out.println(l.get(0).getPosition());
-		System.out.println(l.get(0).getPositionLevel());
-		System.out.println(l.get(0).getSubDepartment());
-		System.out.println(l.get(0).getTitle());
-		//UserDao.updateUserByUsername(a);
-//		user.setPosition(Position.ADVISER);
-//		user.setDepartment(Department.MANAGEMENT);
-//		user.setSubDepartment(ManagementDep.OFFICE);
-//		System.out.println(user.getDepartment().getSubDeps());
-		
-//		List<ManagementDep> l = (List<ManagementDep>)user.getDepartment().getSubDeps();
-//		
-//		try {
-//			while(rs.next()){
-//				System.out.println(rs.getString("name"));
-//				System.out.println(rs.getString("password"));
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
+		Thesis t= new Thesis();
+		t.setName("基于大数据的学生上网习惯研究");
+		t.setScore(80);
+		t.setJournal(1234567);
+		t.setOwner("testing");
+		t.setLevel("国家级");
+		t.setAchieveType(AchieveType.THESIS);
+		ThesisDao.insertThesis(t);
 	}
 
 }

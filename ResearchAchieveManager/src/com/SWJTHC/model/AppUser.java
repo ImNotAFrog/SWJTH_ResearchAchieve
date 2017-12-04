@@ -20,8 +20,6 @@ public class AppUser {
 	private Title title; //Ö°³Æ
 	private Department department;
 	private SubDepartment subDepartment;
-	private List<Achievement> achievements;
-	private String profile;
 	public AppUser(){
 		
 	}
@@ -60,18 +58,6 @@ public class AppUser {
 	}
 	public void setDepartment(Department department) {
 		this.department = department;
-	}
-	public List<Achievement> getAchievements() {
-		return achievements;
-	}
-	public void setAchievements(List<Achievement> achievements) {
-		this.achievements = achievements;
-	}
-	public String getProfile() {
-		return profile;
-	}
-	public void setProfile(String profile) {
-		this.profile = profile;
 	}
 	public SubDepartment getSubDepartment() {
 		if(department==null){

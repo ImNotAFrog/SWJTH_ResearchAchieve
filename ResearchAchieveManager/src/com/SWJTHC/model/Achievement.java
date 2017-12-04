@@ -5,9 +5,10 @@ import com.SWJTHC.enums.AchieveType;
 public abstract class Achievement {
 	private String ID;
 	private String name;
-	private String score;
+	private double score;
 	private String attachment;
 	private AchieveType achieveType;
+	private String owner;
 	public Achievement(){
 		
 	}
@@ -23,10 +24,10 @@ public abstract class Achievement {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getScore() {
+	public double getScore() {
 		return score;
 	}
-	public void setScore(String score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 	public String getAttachment() {
@@ -40,6 +41,12 @@ public abstract class Achievement {
 	}
 	public void setAchieveType(AchieveType achieveType) {
 		this.achieveType = achieveType;
+	}
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 	
 }

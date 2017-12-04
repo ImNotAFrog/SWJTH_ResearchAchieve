@@ -56,7 +56,36 @@ public class UserDao {
 		return l;
 	}
 	
-	public static int deleteUser(AppUser u){
+	public static List<AppUser> getUserByUsername(String username){
+		AppUser u = new AppUser();
+		u.setUsername(username);
+		ResultSet rs = null;
+		List<AppUser> l = new ArrayList();
+		try {
+			rs = Dao.executQuery("select * from AppUser where username = ?",u);
+			while(rs.next()){
+				AppUser a = new AppUser();
+				a.setUsername(rs.getString("username"));
+				a.setPassword(rs.getString("password"));
+				a.setDepartment(Department.valueOf(rs.getString("department")));
+				a.setSubDepartment(rs.getString("subDepartment"));
+				a.setPosition(Position.valueOf(rs.getString("position")));
+				a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
+				a.setTitle(Title.valueOf(rs.getString("title")));
+				l.add(a);
+			}			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Dao.close();
+		return l;
+	}
+	
+	public static int deleteUser(String username){
+		AppUser u = new AppUser();
+		u.setUsername(username);
 		int i=-1;
 		try {
 			i = Dao.executUpdate("delete from AppUser where username = ?",u,null);

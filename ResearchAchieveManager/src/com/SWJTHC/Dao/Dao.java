@@ -122,9 +122,12 @@ public class Dao {
 			int k=1;
 			for(int i=0;i<field.length;i++){
 				String name = field[i].getName();  
-				if(key.equals(name)){
+				if(key!=null&&key.equals(name)){
 					continue;
 				}
+				if(name.contains("$SWITCH_TABLE")){
+					continue;
+				}//跳过SWITCH_TABLE
 				name = name.substring(0,1).toUpperCase()+name.substring(1);
 				String type = field[i].getGenericType().toString();//.split(".");//获取属性的类型
 				String[] classNameSplited = type.split(" ");
@@ -143,7 +146,10 @@ public class Dao {
 						}
 					}
 					value = new ArrayList<>();
-				}else{
+				}else if(className.equals("int")){
+					value = Class.forName("Interger");
+				}
+				else{
 					value = Class.forName(className);
 				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);
