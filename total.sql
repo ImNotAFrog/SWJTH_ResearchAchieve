@@ -7,7 +7,8 @@ create table AppUser(
 	position varchar(200), --职务
 	positionLevel varchar(200), --职级
 	title varchar(200), --职称
-	department varchar(200)--所属部门
+	department varchar(200),--所属部门
+	subDepartment varchar(50) --子部门
 	)
 /*功能：创建刊物表*/
 create table Journal(
@@ -25,6 +26,7 @@ create table Laws(
 	editors varchar(200), --参编
 	score float, --分值
 	attachment varchar(200) --附件
+	owner varchar(50) --所有者
 	)
 /*功能：创建专利、软件著作表*/
 create table Patent(
@@ -72,6 +74,7 @@ create table TeachingReform(
 	members varchar(200), --成员
 	score float,--分值
 	attachment varchar(200) --附件
+	owner varchar(50) --所有者
 	)
 /*功能：创建教材著作表*/
 create table Textbook(
@@ -82,6 +85,7 @@ create table Textbook(
 	publishSituation varchar(200), --出版情况
 	score float,--分值
 	attachment varchar(200) --附件
+	owner varchar(50) --所有者
 	)
 /*功能：创建论文表*/
 create table Thesis(
@@ -91,6 +95,7 @@ create table Thesis(
 	journal_id varchar(200), --发表刊物ID
 	score float,--分值
 	attachment varchar(200) --附件
+	owner varchar(50) --所有者
 	)
 /*功能：创建课题表*/
 create table Topic(
@@ -102,10 +107,11 @@ create table Topic(
 	members varchar(200), --成员
 	score float,--分值
 	attachment varchar(200) --附件
+	owner varchar(50) --所有者
 	)
 /*功能：创建用户成果表*/
 create table UserAchievement(
-	ID int identity(1,1) primary key,--成果ID
+	ID int primary key,--成果ID
 	username varchar(200),--用户名
 	category varchar(200), --成果类型
 	)
