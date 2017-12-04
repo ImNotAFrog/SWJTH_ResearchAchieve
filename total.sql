@@ -25,7 +25,7 @@ create table Laws(
 	chiefEditor varchar(200), --主编
 	editors varchar(200), --参编
 	score float, --分值
-	attachment varchar(200) --附件
+	attachment varchar(200), --附件
 	owner varchar(50) --所有者
 	)
 /*功能：创建专利、软件著作表*/
@@ -73,7 +73,7 @@ create table TeachingReform(
 	groupLeader varchar(200), --组长
 	members varchar(200), --成员
 	score float,--分值
-	attachment varchar(200) --附件
+	attachment varchar(200), --附件
 	owner varchar(50) --所有者
 	)
 /*功能：创建教材著作表*/
@@ -84,7 +84,7 @@ create table Textbook(
 	authorSituation varchar(200), --作者情况
 	publishSituation varchar(200), --出版情况
 	score float,--分值
-	attachment varchar(200) --附件
+	attachment varchar(200), --附件
 	owner varchar(50) --所有者
 	)
 /*功能：创建论文表*/
@@ -94,7 +94,7 @@ create table Thesis(
 	level varchar(200), --级别
 	journal_id varchar(200), --发表刊物ID
 	score float,--分值
-	attachment varchar(200) --附件
+	attachment varchar(200), --附件
 	owner varchar(50) --所有者
 	)
 /*功能：创建课题表*/
@@ -106,7 +106,7 @@ create table Topic(
 	groupLeader varchar(200), --组长
 	members varchar(200), --成员
 	score float,--分值
-	attachment varchar(200) --附件
+	attachment varchar(200),--附件
 	owner varchar(50) --所有者
 	)
 /*功能：创建用户成果表*/
