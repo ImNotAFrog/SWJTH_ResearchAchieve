@@ -3,9 +3,13 @@ package com.SWJTHC.model;
 import java.util.List;
 
 import com.SWJTHC.enums.Department;
+import com.SWJTHC.enums.ManagementDep;
+import com.SWJTHC.enums.PoliticalDep;
 import com.SWJTHC.enums.Position;
 import com.SWJTHC.enums.PositionLevel;
+import com.SWJTHC.enums.SchoolAffairsDep;
 import com.SWJTHC.enums.Title;
+import com.SWJTHC.enums.TrainingDep;
 import com.SWJTHC.interfaces.SubDepartment;
 
 public class AppUser {
@@ -70,10 +74,48 @@ public class AppUser {
 		this.profile = profile;
 	}
 	public SubDepartment getSubDepartment() {
+		if(department==null){
+			return null;
+		}
+		switch(department){
+		case TRAINNING:
+			return TrainingDep.valueOf(subDepartment.toString());
+		case LEADER:
+			return null;
+		case POLITICAL:			
+			return PoliticalDep.valueOf(subDepartment.toString());
+		case SCHOOL_AFFAIRS:
+			return SchoolAffairsDep.valueOf(subDepartment.toString());
+		case MANAGEMENT:
+			return ManagementDep.valueOf(subDepartment.toString());
+		default:
+			break;
+		}
 		return subDepartment;
 	}
-	public void setSubDepartment(SubDepartment subDepartment) {
-		this.subDepartment = subDepartment;
+	public void setSubDepartment(String subDepartmentName) {
+		if(department==null){
+			this.subDepartment = null;
+		}
+		switch(department){
+		case TRAINNING:
+			this.subDepartment= TrainingDep.valueOf(subDepartmentName);
+			break;
+		case LEADER:
+			this.subDepartment=  null;
+			break;
+		case POLITICAL:			
+			this.subDepartment=  PoliticalDep.valueOf(subDepartmentName);
+			break;
+		case SCHOOL_AFFAIRS:
+			this.subDepartment=  SchoolAffairsDep.valueOf(subDepartmentName);
+			break;
+		case MANAGEMENT:
+			this.subDepartment=  ManagementDep.valueOf(subDepartmentName);
+			break;
+		default:
+			break;
+		}
 	}
 	
 }

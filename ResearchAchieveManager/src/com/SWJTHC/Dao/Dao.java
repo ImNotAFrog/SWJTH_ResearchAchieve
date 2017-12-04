@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Dao {
 	protected static String dbClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	protected static String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=db_bookborrow;";
+	protected static String dbUrl = "jdbc:sqlserver://localhost:1433;DatabaseName=ResearchAchieveManager;";
 	protected static String dbUser = "sa";
 	protected static String dbPwd = "sqlserver2008";
 	private static Connection conn = null;
@@ -52,7 +52,10 @@ public class Dao {
 			Field[] field = model.getClass().getDeclaredFields();            		//获取模型属性列表
 			int k=1;
 			for(int i=0;i<field.length;i++){										//遍历属性
-				String name = field[i].getName();  							 		//获取当前属性名称
+				String name = field[i].getName();							 		//获取当前属性名称
+				if(name.contains("$SWITCH_TABLE")){
+					continue;
+				}//跳过SWITCH_TABLE
 				name = name.substring(0,1).toUpperCase()+name.substring(1);			//将属性名称首字母改为大写方便合成get、set方法
 				String type = field[i].getGenericType().toString();//.split(".");	//获取属性的类型   - class java.lang.*
 				String[] classNameSplited = type.split(" ");						//
@@ -75,7 +78,7 @@ public class Dao {
 					value = Class.forName(className);								//根据类型名称生成类
 				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);			//合成get方法
-                value = getMethod.invoke(model); 									//调用类的get方法
+				value = getMethod.invoke(model); 									//调用类的get方法
                 if(value != null){
                 	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass()); 	//合成pstat的set方法
                 	setMethod.invoke(pstat,k,value);																	//调用pstat的set方法
@@ -119,6 +122,9 @@ public class Dao {
 			int k=1;
 			for(int i=0;i<field.length;i++){
 				String name = field[i].getName();  
+				if(key.equals(name)){
+					continue;
+				}
 				name = name.substring(0,1).toUpperCase()+name.substring(1);
 				String type = field[i].getGenericType().toString();//.split(".");//获取属性的类型
 				String[] classNameSplited = type.split(" ");
@@ -143,8 +149,17 @@ public class Dao {
 				Method getMethod = model.getClass().getMethod("get"+name);
                 value = getMethod.invoke(model); 
                 if(value != null){
-                	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());
-                	setMethod.invoke(pstat,k,value);
+       
+                	Method setMethod;
+					try {
+						setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());
+						setMethod.invoke(pstat,k,value);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						setMethod = pstat.getClass().getDeclaredMethod("setString",int.class,String.class);
+						setMethod.invoke(pstat,k,value.toString());
+					}
+                	
                 	k++;
                }
 			}
@@ -156,6 +171,7 @@ public class Dao {
 					Method setMethod = pstat.getClass().getDeclaredMethod(
 							"setString", int.class, value.getClass());
 					setMethod.invoke(pstat, k, value);
+					
 				}
 			}
 			state = pstat.executeUpdate();

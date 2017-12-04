@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.SWJTHC.enums.Department;
+import com.SWJTHC.enums.Position;
+import com.SWJTHC.enums.PositionLevel;
+import com.SWJTHC.enums.Title;
+import com.SWJTHC.interfaces.SubDepartment;
 import com.SWJTHC.model.AppUser;
 
 public class UserDao {
@@ -16,7 +21,7 @@ public class UserDao {
 		
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into users(name,password) values(?,?)",u,null);
+			i = Dao.executUpdate("insert into AppUser(username,password) values(?,?)",u,null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -26,23 +31,35 @@ public class UserDao {
 		return i;
 	}
 	
-	public static ResultSet getUserByUsername(AppUser u){
+	public static List<AppUser> getUserByUsername(AppUser u){
 		ResultSet rs = null;
+		List<AppUser> l = new ArrayList();
 		try {
-			rs = Dao.executQuery("select * from users where name = ?",u);
+			rs = Dao.executQuery("select * from AppUser where username = ?",u);
+			while(rs.next()){
+				AppUser a = new AppUser();
+				a.setUsername(rs.getString("username"));
+				a.setPassword(rs.getString("password"));
+				a.setDepartment(Department.valueOf(rs.getString("department")));
+				a.setSubDepartment(rs.getString("subDepartment"));
+				a.setPosition(Position.valueOf(rs.getString("position")));
+				a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
+				a.setTitle(Title.valueOf(rs.getString("title")));
+				l.add(a);
+			}			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		Dao.close();
-		return rs;
+		return l;
 	}
 	
 	public static int deleteUser(AppUser u){
 		int i=-1;
 		try {
-			i = Dao.executUpdate("delete from users where name = ?",u,null);
+			i = Dao.executUpdate("delete from AppUser where username = ?",u,null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,9 +69,9 @@ public class UserDao {
 		return i;
 	}
 	
-	public static int updateUser(AppUser u){
+	public static int updateUserByUsername(AppUser u){
 		int i=-1;
-		String sql = "update users set ";
+		String sql = "update AppUser set ";
 		String key = "username";
 		int k=1;
 		try {
@@ -86,7 +103,6 @@ public class UserDao {
 	            value = getMethod.invoke(u);
 	            if(value != null){
 	                if(key.equals(name)){
-	                	u.setUsername(null);
 	                	k--;
 	                }else if(k==1){
 	            		sql= sql+name+"=?";
@@ -97,8 +113,8 @@ public class UserDao {
                }
 			}
 			sql+=" where username = ?";
-			System.out.println(u.getUsername());
-			//i = Dao.executUpdate(sql,u,key);
+			System.out.println(sql);
+			i = Dao.executUpdate(sql,u,key);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
