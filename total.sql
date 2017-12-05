@@ -1,146 +1,154 @@
 --create database ResearchAchieveManager;
 use ResearchAchieveManager;
-/*¹¦ÄÜ£º´´½¨ÓÃ»§±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºç”¨æˆ·è¡¨*/
 create table AppUser(
-	username varchar(200) primary key,--ÓÃ»§Ãû
-	password varchar(200),--ÃÜÂë
-	position varchar(200), --Ö°Îñ
-	positionLevel varchar(200), --Ö°¼¶
-	title varchar(200), --Ö°³Æ
-	department varchar(200)--ËùÊô²¿ÃÅ
+	username varchar(200) primary key,--ç”¨æˆ·å
+	password varchar(200),--å¯†ç 
+	position varchar(200), --èŒåŠ¡
+	positionLevel varchar(200), --èŒçº§
+	title varchar(200), --èŒç§°
+	department varchar(200),--æ‰€å±éƒ¨é—¨
+	subDepartment varchar(50) --å­éƒ¨é—¨
 	)
-/*¹¦ÄÜ£º´´½¨¿¯Îï±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºåˆŠç‰©è¡¨*/
 create table Journal(
-	ID int identity(1,1) primary key,--ĞòºÅ	
-	name varchar(200),--Ãû³Æ
-	level varchar(200), --¼¶±ğ
-	number varchar(200) --¿¯ºÅ
+	ID int identity(1,1) primary key,--åºå·	
+	name varchar(200),--åç§°
+	level varchar(200), --çº§åˆ«
+	number varchar(200) --åˆŠå·
 	)
-/*¹¦ÄÜ£º´´½¨·¨¹æ±ê×¼±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºæ³•è§„æ ‡å‡†è¡¨*/
 create table Laws(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	name varchar(200),--Ãû³Æ
-	level varchar(200), --¼¶±ğ
-	chiefEditor varchar(200), --Ö÷±à
-	editors varchar(200), --²Î±à
-	score float, --·ÖÖµ
-	attachment varchar(200) --¸½¼ş
+	ID int identity(1,1) primary key,--åºå·
+	name varchar(200),--åç§°
+	level varchar(200), --çº§åˆ«
+	chiefEditor varchar(200), --ä¸»ç¼–
+	editors varchar(200), --å‚ç¼–
+	score float, --åˆ†å€¼
+	attachment varchar(200), --é™„ä»¶
+	owner varchar(50) --æ‰€æœ‰è€…
 	)
-/*¹¦ÄÜ£º´´½¨×¨Àû¡¢Èí¼şÖø×÷±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºä¸“åˆ©ã€è½¯ä»¶è‘—ä½œè¡¨*/
 create table Patent(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	name varchar(200),--Ãû³Æ
-	category varchar(200), --ÀàĞÍ
-	patentHolder varchar(200), --×¨ÀûÈ¨ÈË
-	score float,--·ÖÖµ
-	attachment varchar(200) --¸½¼ş
+	ID int identity(1,1) primary key,--åºå·
+	name varchar(200),--åç§°
+	category varchar(200), --ç±»å‹
+	patentHolder varchar(200), --ä¸“åˆ©æƒäºº
+	score float,--åˆ†å€¼
+	attachment varchar(200) --é™„ä»¶
 	)
-/*´´½¨¸öÈËĞÅÏ¢±í*/
+/*åˆ›å»ºä¸ªäººä¿¡æ¯è¡¨*/
 create table PersonalInfo(
-	username varchar(200) primary key,--ÓÃ»§Ãû
-	name varchar(200),--ĞÕÃû
-	sex varchar(200), --ĞÔ±ğ
-	ethnic varchar(200), --Ãñ×å	
-	bornDate date,--³öÉúÈÕÆÚ
-	inWorkDate date, --²Î¼Ó¹¤×÷ÄêÔÂ
-	inArmyDate date,--ÈëÎéÄêÔÂ
-	inPartyDate date,--Èëµ³ÄêÔÂ
-	origin varchar(200), --¼®¹á
-	birthPlace varchar(200), --³öÉúµØ	
-	title varchar(200),--×¨Òµ¼¼ÊõÖ°Îñ
-	work varchar(200), --´ÓÊÂ¸ÚÎ»
-	healthCondition varchar(200),--½¡¿µ×´¿ö
-	fullTimeEdu varchar(200), --È«ÈÕÖÆ½ÌÓı
-	onTheJobEdu varchar(200), --ÔÚÖ°½ÌÓı	
-	fullTimeSchool varchar(200),--È«ÈÕÖÆ½ÌÓı±ÏÒµÔºĞ£¼°×¨Òµ
-	onTheJobSchool varchar(200), --ÔÚÖ°½ÌÓı±ÏÒµÔºĞ£¼°×¨Òµ
-	currentPosition varchar(200),--ÏÖ²¿Ö°±ğ
-	policeRank varchar(200), --ÏÖ¾¯ÏÎ
-	policeRankDate date, --ÏÖ¾¯ÏÎÊ±¼ä	
-	positionLevel varchar(200),--ÏÖ¼¼ÊõµÈ¼¶
-	positionLevelDate date, --ÏÖ¼¼ÊõµÈ¼¶Ê±¼ä
-	resume text,--ÈëÎéºó»ù±¾¼òÀú
-	achievement_id varchar(200), --³É¹ûĞòºÅ
-	teachingSituation text, --½ÌÑ§Çé¿ö	
-	rewards text,--Á¢¹¦ÊÜ½±
+	username varchar(200) primary key,--ç”¨æˆ·å
+	name varchar(200),--å§“å
+	sex varchar(200), --æ€§åˆ«
+	ethnic varchar(200), --æ°‘æ—	
+	bornDate date,--å‡ºç”Ÿæ—¥æœŸ
+	inWorkDate date, --å‚åŠ å·¥ä½œå¹´æœˆ
+	inArmyDate date,--å…¥ä¼å¹´æœˆ
+	inPartyDate date,--å…¥å…šå¹´æœˆ
+	origin varchar(200), --ç±è´¯
+	birthPlace varchar(200), --å‡ºç”Ÿåœ°	
+	title varchar(200),--ä¸“ä¸šæŠ€æœ¯èŒåŠ¡
+	work varchar(200), --ä»äº‹å²—ä½
+	healthCondition varchar(200),--å¥åº·çŠ¶å†µ
+	fullTimeEdu varchar(200), --å…¨æ—¥åˆ¶æ•™è‚²
+	onTheJobEdu varchar(200), --åœ¨èŒæ•™è‚²	
+	fullTimeSchool varchar(200),--å…¨æ—¥åˆ¶æ•™è‚²æ¯•ä¸šé™¢æ ¡åŠä¸“ä¸š
+	onTheJobSchool varchar(200), --åœ¨èŒæ•™è‚²æ¯•ä¸šé™¢æ ¡åŠä¸“ä¸š
+	currentPosition varchar(200),--ç°éƒ¨èŒåˆ«
+	policeRank varchar(200), --ç°è­¦è¡”
+	policeRankDate date, --ç°è­¦è¡”æ—¶é—´	
+	positionLevel varchar(200),--ç°æŠ€æœ¯ç­‰çº§
+	positionLevelDate date, --ç°æŠ€æœ¯ç­‰çº§æ—¶é—´
+	resume text,--å…¥ä¼ååŸºæœ¬ç®€å†
+	achievement_id varchar(200), --æˆæœåºå·
+	teachingSituation text, --æ•™å­¦æƒ…å†µ	
+	rewards text,--ç«‹åŠŸå—å¥–
 	)
-/*¹¦ÄÜ£º´´½¨½ÌÑ§¸Ä¸ïÏîÄ¿±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºæ•™å­¦æ”¹é©é¡¹ç›®è¡¨*/
 create table TeachingReform(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	name varchar(200),--Ãû³Æ
-	groupLeader varchar(200), --×é³¤
-	members varchar(200), --³ÉÔ±
-	score float,--·ÖÖµ
-	attachment varchar(200) --¸½¼ş
+	ID int identity(1,1) primary key,--åºå·
+	name varchar(200),--åç§°
+	groupLeader varchar(200), --ç»„é•¿
+	members varchar(200), --æˆå‘˜
+	score float,--åˆ†å€¼
+	attachment varchar(200), --é™„ä»¶
+	owner varchar(50) --æ‰€æœ‰è€…
+
 	)
-/*¹¦ÄÜ£º´´½¨½Ì²ÄÖø×÷±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºæ•™æè‘—ä½œè¡¨*/
 create table Textbook(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	name varchar(200),--Ãû³Æ
-	subject varchar(200), --Ö÷Ìå
-	authorSituation varchar(200), --×÷ÕßÇé¿ö
-	publishSituation varchar(200), --³ö°æÇé¿ö
-	score float,--·ÖÖµ
-	attachment varchar(200) --¸½¼ş
+	ID int identity(1,1) primary key,--åºå·
+	name varchar(200),--åç§°
+	subject varchar(200), --ä¸»ä½“
+	authorSituation varchar(200), --ä½œè€…æƒ…å†µ
+	publishSituation varchar(200), --å‡ºç‰ˆæƒ…å†µ
+	score float,--åˆ†å€¼
+	attachment varchar(200), --é™„ä»¶
+	owner varchar(50) --æ‰€æœ‰è€…
 	)
-/*¹¦ÄÜ£º´´½¨ÂÛÎÄ±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºè®ºæ–‡è¡¨*/
 create table Thesis(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	name varchar(200),--Ãû³Æ
-	level varchar(200), --¼¶±ğ
-	journal_id varchar(200), --·¢±í¿¯ÎïID
-	score float,--·ÖÖµ
-	attachment varchar(200) --¸½¼ş
+	ID int identity(1,1) primary key,--åºå·
+	name varchar(200),--åç§°
+	level varchar(200), --çº§åˆ«
+	journal_id varchar(200), --å‘è¡¨åˆŠç‰©ID
+	score float,--åˆ†å€¼
+	attachment varchar(200), --é™„ä»¶
+	owner varchar(50) --æ‰€æœ‰è€…
 	)
-/*¹¦ÄÜ£º´´½¨¿ÎÌâ±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºè¯¾é¢˜è¡¨*/
 create table Topic(
-	ID int identity(1,1) primary key,--ĞòºÅ	
-	name varchar(200),--Ãû³Æ
-	level varchar(200), --¼¶±ğ
-	subject varchar(200), --Ö÷Ìå
-	groupLeader varchar(200), --×é³¤
-	members varchar(200), --³ÉÔ±
-	score float,--·ÖÖµ
-	attachment varchar(200) --¸½¼ş
+	ID int identity(1,1) primary key,--åºå·	
+	name varchar(200),--åç§°
+	level varchar(200), --çº§åˆ«
+	subject varchar(200), --ä¸»ä½“
+	groupLeader varchar(200), --ç»„é•¿
+	members varchar(200), --æˆå‘˜
+	score float,--åˆ†å€¼
+	attachment varchar(200),--é™„ä»¶
+	owner varchar(50) --æ‰€æœ‰è€…
 	)
-/*¹¦ÄÜ£º´´½¨ÓÃ»§³É¹û±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºç”¨æˆ·æˆæœè¡¨*/
 create table UserAchievement(
-	ID int identity(1,1) primary key,--³É¹ûID
-	username varchar(200),--ÓÃ»§Ãû
-	category varchar(200), --³É¹ûÀàĞÍ
+	ID int key,--æˆæœID
+
+	username varchar(200),--ç”¨æˆ·å
+	category varchar(200), --æˆæœç±»å‹
 	)
-/*¹¦ÄÜ£º´´½¨ÓÃ»§ÀàĞÍ±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºç”¨æˆ·ç±»å‹è¡¨*/
 create table UserType(
-	username varchar(200) primary key,--ÓÃ»§Ãû
-	category varchar(200), --ÀàĞÍ
+	username varchar(200) primary key,--ç”¨æˆ·å
+	category varchar(200), --ç±»å‹
 	)
-/*¹¦ÄÜ£º´´½¨Ñ§Êõ»áÒé-Íâ³ö»î¶¯±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºå­¦æœ¯ä¼šè®®-å¤–å‡ºæ´»åŠ¨è¡¨*/
 create table activities(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	Organizer varchar(200),--Ö÷°ìµ¥Î»
-	name varchar(200), --ÅàÑµ¡¢Ñ§Ï°¡¢ÑĞÌÖ»î¶¯Ãû³Æ
-	attendee varchar(200), --²Î¼ÓÕß
-	activitiestime date, --»î¶¯Ê±¼ä
-	activitiesplace varchar(200), --»î¶¯µØµã
-	main_results text --Ö÷Òª³É¹û
+	ID int identity(1,1) primary key,--åºå·
+	Organizer varchar(200),--ä¸»åŠå•ä½
+	name varchar(200), --åŸ¹è®­ã€å­¦ä¹ ã€ç ”è®¨æ´»åŠ¨åç§°
+	attendee varchar(200), --å‚åŠ è€…
+	activitiestime date, --æ´»åŠ¨æ—¶é—´
+	activitiesplace varchar(200), --æ´»åŠ¨åœ°ç‚¹
+	main_results text --ä¸»è¦æˆæœ
 	)
-/*¹¦ÄÜ£º´´½¨Ñ§Êõ»áÒé-µ÷ÑĞ±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºå­¦æœ¯ä¼šè®®-è°ƒç ”è¡¨*/
 create table Investigation(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	ResearchGroup varchar(200),--µ÷ÑĞ×é
-	content varchar(200), --µ÷ÑĞÄÚÈİ
-	researchers varchar(200), --µ÷ÑĞÈËÔ±
-	persontime varchar(200), --ÈË´Î
-	Researchtime date, --µ÷ÑĞÊ±¼ä
-	Researchplace varchar(200), --µ÷ÑĞµØµã
-	remark text --±¸×¢
+	ID int identity(1,1) primary key,--åºå·
+	ResearchGroup varchar(200),--è°ƒç ”ç»„
+	content varchar(200), --è°ƒç ”å†…å®¹
+	researchers varchar(200), --è°ƒç ”äººå‘˜
+	persontime varchar(200), --äººæ¬¡
+	Researchtime date, --è°ƒç ”æ—¶é—´
+	Researchplace varchar(200), --è°ƒç ”åœ°ç‚¹
+	remark text --å¤‡æ³¨
 	)
-/*¹¦ÄÜ£º´´½¨Ñ§Êõ»áÒé-Í¶¸å±í*/
+/*åŠŸèƒ½ï¼šåˆ›å»ºå­¦æœ¯ä¼šè®®-æŠ•ç¨¿è¡¨*/
 create table contribute(
-	ID int identity(1,1) primary key,--ĞòºÅ
-	Organizer varchar(200),--Ö÷°ìµ¥Î»
-	name varchar(200), --Õ÷ÎÄ»î¶¯Ãû³Æ
-	participants varchar(200), --²Î¼ÓÈË
-	contributetime date, --Í¶¸åÊ±¼ä
-	awards text --»ñ½±Çé¿ö
+	ID int identity(1,1) primary key,--åºå·
+	Organizer varchar(200),--ä¸»åŠå•ä½
+	name varchar(200), --å¾æ–‡æ´»åŠ¨åç§°
+	participants varchar(200), --å‚åŠ äºº
+	contributetime date, --æŠ•ç¨¿æ—¶é—´
+	awards text --è·å¥–æƒ…å†µ
 	)

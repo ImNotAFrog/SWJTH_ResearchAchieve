@@ -30,7 +30,6 @@ public class PersonalInfo {
 	private PositionLevel positionLevel;
 	private Date positionLevelDate;
 	private String resume;
-	private List<Achievement> achievements;
 	private String teachingSituation;
 	private String rewards;
 	
