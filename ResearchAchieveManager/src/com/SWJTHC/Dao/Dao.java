@@ -99,7 +99,7 @@ public class Dao {
 			if(conn==null){
 				new Dao();
 			}
-			return conn.createStatement().executeUpdate(sql);
+			return conn.createStatement().executeUpdate(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class Dao {
 		}
 	}
 	public static int executUpdate(String sql,Object model , String key){
-		int state=-1;
+		int gKeys=-1;
 		ResultSet rs=null;
 		try{
 			if(conn == null){
@@ -116,9 +116,11 @@ public class Dao {
 			if(model==null){
 				return -1;
 			}
-			pstat = conn.prepareStatement(sql);
+			pstat = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			Field[] field = model.getClass().getDeclaredFields();
+
+			
 			int k=1;
 			for(int i=0;i<field.length;i++){
 				String name = field[i].getName();  
@@ -147,7 +149,12 @@ public class Dao {
 					}
 					value = new ArrayList<>();
 				}else if(className.equals("int")){
-					value = Class.forName("Interger");
+					value = Class.forName("java.lang.Integer");
+					value = model.getClass().getMethod("get"+name).invoke(model);
+					if((Integer)value==-2)continue;
+				}
+				else if(className.equals("double")){
+					value = Class.forName("java.lang.Double");
 				}
 				else{
 					value = Class.forName(className);
@@ -155,7 +162,8 @@ public class Dao {
 				Method getMethod = model.getClass().getMethod("get"+name);
                 value = getMethod.invoke(model); 
                 if(value != null){
-       
+
+    				System.out.println(value);
                 	Method setMethod;
 					try {
 						setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());
@@ -180,8 +188,12 @@ public class Dao {
 					
 				}
 			}
-			state = pstat.executeUpdate();
-			return state;//conn.createStatement().executeQuery(sql);
+			pstat.executeUpdate();
+			rs = pstat.getGeneratedKeys();
+			while(rs.next()){
+				gKeys=rs.getInt(1);
+			}
+			return gKeys;//conn.createStatement().executeQuery(sql);
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

@@ -16,7 +16,6 @@ import com.SWJTHC.model.AppUser;
 
 public class UserDao {
 	private PreparedStatement pstat = null;
-    private ResultSet rs = null;
 	public static int insertUser(AppUser u){
 		
 		int i=-1;

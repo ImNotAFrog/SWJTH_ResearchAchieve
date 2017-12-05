@@ -29,14 +29,8 @@ public class Tester {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Thesis t= new Thesis();
-		t.setName("基于大数据的学生上网习惯研究");
-		t.setScore(80);
-		t.setJournal(1234567);
-		t.setOwner("testing");
-		t.setLevel("国家级");
-		t.setAchieveType(AchieveType.THESIS);
-		ThesisDao.insertThesis(t);
+
+		System.out.println(ThesisDao.deleteThesis(3));
 	}
 
 }
