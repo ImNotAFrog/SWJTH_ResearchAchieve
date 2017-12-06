@@ -66,11 +66,11 @@ public class UserDao {
 				AppUser a = new AppUser();
 				a.setUsername(rs.getString("username"));
 				a.setPassword(rs.getString("password"));
-				a.setDepartment(Department.valueOf(rs.getString("department")));
-				a.setSubDepartment(rs.getString("subDepartment"));
-				a.setPosition(Position.valueOf(rs.getString("position")));
-				a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
-				a.setTitle(Title.valueOf(rs.getString("title")));
+//				a.setDepartment(Department.valueOf(rs.getString("department")));
+//				a.setSubDepartment(rs.getString("subDepartment"));
+//				a.setPosition(Position.valueOf(rs.getString("position")));
+//				a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
+//				a.setTitle(Title.valueOf(rs.getString("title")));
 				l.add(a);
 			}			
 		} catch (Exception e) {

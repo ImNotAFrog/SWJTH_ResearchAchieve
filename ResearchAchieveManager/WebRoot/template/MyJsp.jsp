@@ -48,6 +48,3 @@
 		</div>
 		</div>
 <jsp:include page="copyright.jsp" flush="false"/> 
-<jsp:forward page="Forward.jsp">
-	<jsp:param name="username" value="admin"/>
-</jsp:forward>

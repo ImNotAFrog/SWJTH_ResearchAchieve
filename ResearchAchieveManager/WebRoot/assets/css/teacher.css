@@ -1,4 +1,4 @@
-/*头部样式*/
+/*澶撮儴鏍峰紡*/
 #header {
     z-index: 999;
     position: relative;
@@ -75,7 +75,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-/*主内容区*/
+/*涓诲唴瀹瑰尯*/
 .content{
     padding-top: 60px;
 }
@@ -101,7 +101,7 @@
     padding-top: 12px;
 }
 
-/*主内容区结束*/
+/*涓诲唴瀹瑰尯缁撴潫*/
 .left li{
     height: 60px;
     line-height: 60px;
@@ -126,7 +126,7 @@
     display: inline-block;
     width: 26px;
     height: 16px;
-    /*background: url(images/list.png) no-repeat;*/
+    /*background: url(assets/img/list.png) no-repeat;*/
     position: relative;
     top:3px;
 }
@@ -148,7 +148,7 @@ span.icon{
     border-bottom: 1px solid #a8f;
 }
 
-/*主内容区右边， 个人信息*/
+/*涓诲唴瀹瑰尯鍙宠竟锛�涓汉淇℃伅*/
 /*.active{
     display: block;
 }*/
@@ -167,7 +167,7 @@ span.icon{
     font-weight: 400;
     font-size: 14px;
     margin-right: 26px;
-    background: url(images/edit-icon.png) no-repeat 0 12px;
+    background: url(assets/img/edit-icon.png) no-repeat 0 12px;
 }
 
 a.edit:hover{
@@ -200,9 +200,9 @@ a.edit:hover{
     padding: 20px 0 20px 22px;
     border-bottom: 1px solid #d9dde1;
 }
-/*个人信息结束*/
+/*涓汉淇℃伅缁撴潫*/
 
-/*上传成果开始*/
+/*涓婁紶鎴愭灉寮�*/
 #loadup{
     /*background: rgb(222,222,255);*/
 }
@@ -258,7 +258,7 @@ a.edit:hover{
     color: #5f4;
 }
 
-    /*项目表单开始*/
+    /*椤圭洰琛ㄥ崟寮�*/
     .project h3{
              font-size: 16px;
     font-weight: bold;
@@ -359,7 +359,7 @@ a.edit:hover{
         border-radius: 2px;
         box-sizing: border-box;
    }
-    /*项目表单结束*/
-/*上传成果结束*/
+    /*椤圭洰琛ㄥ崟缁撴潫*/
+/*涓婁紶鎴愭灉缁撴潫*/
 
 

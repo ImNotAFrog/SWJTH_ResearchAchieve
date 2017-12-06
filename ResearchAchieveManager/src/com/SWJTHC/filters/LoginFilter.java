@@ -43,7 +43,9 @@ public class LoginFilter implements Filter {
 		}
 		
 		if(session.getAttribute("username")==null){
-			response.sendRedirect(request.getSession().getServletContext().getRealPath("")+"/login.jsp");
+			System.out.println("123123");
+			response.sendRedirect("/ResearchAchieveManager/template/index.jsp");
+			
 		}else{
 			arg2.doFilter(arg0, arg1);
 		}

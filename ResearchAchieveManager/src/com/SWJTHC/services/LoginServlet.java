@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CORBA.Request;
+
 import com.SWJTHC.Dao.Dao;
 
 
@@ -20,6 +22,7 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * Constructor of the object.
 	 */
+	private static String projectPath;
 	public LoginServlet() {
 		super();
 	}
@@ -44,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		projectPath = request.getContextPath();
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
@@ -57,26 +60,22 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("form-username");
 		String password = request.getParameter("form-password");	
 		
-		String sql = "select * from AppUsers where username='"+username+"' and password='"+password+"'";
+		String sql = "select * from AppUser where username='"+username+"' and password='"+password+"'";
 		ResultSet rs = Dao.executQuery(sql);
 		
 		try {
-			if(rs.next()){
+			if(rs!=null){
+				rs.next();
 				//µÇÂ¼³É¹¦
 				request.getSession().setAttribute("username", username);
-				//request.getSession().setAttribute("password", password);
 				
 				if(request.getParameterValues("rememberMe")!=null&&request.getParameterValues("rememberMe").length>0){
 					
 					
 					Cookie usernameCookie = new Cookie("username",URLEncoder.encode(username, "utf-8"));
-					Cookie passwordCookie = new Cookie("password",URLEncoder.encode(password, "utf-8"));
 					usernameCookie.setMaxAge(604800);
-					passwordCookie.setMaxAge(604800);
-					usernameCookie.setPath("/");
-					passwordCookie.setPath("/");				
+					usernameCookie.setPath("/");			
 					response.addCookie(usernameCookie);
-					response.addCookie(passwordCookie);	
 				}else{
 					Cookie[] cookies = request.getCookies();
 					
@@ -85,21 +84,15 @@ public class LoginServlet extends HttpServlet {
 							c.setMaxAge(0);
 							c.setPath("/");
 							response.addCookie(c);							
-						}
-						if(c.getName().equals("password")){
-							c.setMaxAge(0);
-							c.setPath("/");
-							response.addCookie(c);							
-						}						
+						}					
 					}					
-				}
-						
+				}						
 				
-				response.sendRedirect("/JavaEEProject/MyJsp.jsp");
+				response.sendRedirect(projectPath+"/template/teacher.jsp");
 			}else{
-				
+				response.sendRedirect(projectPath+"/register.jsp");
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

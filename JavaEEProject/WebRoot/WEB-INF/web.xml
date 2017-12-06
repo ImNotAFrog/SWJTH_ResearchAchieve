@@ -40,7 +40,7 @@
         <filter-class>filter.LoginFilter</filter-class>
         <init-param>
             <param-name>NoLoginPaths</param-name>
-            <param-value>login.jsp;bootstrap;assets;register.jsp;servlet</param-value>
+            <param-value>login.jsp;bootstrap;assets;register.jsp;services</param-value>
         </init-param>
     </filter>
     <filter-mapping>
