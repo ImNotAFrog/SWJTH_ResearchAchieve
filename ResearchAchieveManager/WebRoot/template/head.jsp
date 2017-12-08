@@ -1,4 +1,7 @@
-<%@page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" import="java.util.*,java.net.*" contentType="text/html;charset=UTF-8" %>
+<% String projectPath = request.getContextPath();
+	boolean isLogin = false;
+ %>
 <div id="header">
 		<div class="container">
 			
@@ -20,10 +23,28 @@
 					<input type="submit" value="">
 				</form>
 			</div>
+			<%
+				    	//判断session是否登录
+		    try{
+		    	String username =request.getSession().getAttribute("username").toString();
+		    	if(username!=null&&username.length()>0){
+		    		isLogin = true;
+			    	}
+		    	}catch(Exception e){
+		    	}
+		    if(!isLogin){
+			%>			
 			<div class="header_login">
 				<a id="js-signin" href="login.jsp">登录</a>
-				<a id="js-signup" href="javascript:;">注册</a>
 			</div>
+			<%}else{
+			 %>
+			 <div class="header_login">
+			 	<a id="js-signin" href="#">个人信息</a>
+				<a id="js-signin" href="#">退出</a>
+			 </div>
+			 <%}
+			  %>
 		</div>
 
 </div>

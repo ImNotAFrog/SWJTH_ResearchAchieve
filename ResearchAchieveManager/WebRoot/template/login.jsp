@@ -1,6 +1,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*,java.net.*" contentType="text/html;charset=UTF-8" %>
-<% String projectPath = request.getContextPath(); %>
+
 <html lang="en">
     <head>
 		<style type="text/css">
@@ -99,14 +99,14 @@
 								 
 							</div>
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label>
 								<input type ="checkBox" name = "rememberMe" checked="true">7天之内记住我
 							</label>
 							<label>
 								<input type ="checkBox" name = "autoLogin" checked="true">7天之内自动登录
 							</label>
-						</div>
+						</div> -->
 						<div class="form-group">
 							<button type="submit" class="btn btn-success form-control">登录</button>
 						</div>	
