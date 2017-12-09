@@ -4,7 +4,6 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <head>
-<link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
 </head>
 <%@page pageEncoding="UTF-8"%>
@@ -15,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		</div>
 		<div class="content-title">
-			<h2>新闻/<span class="en-title">News</span></h2>
+			<label class="pull-left">新闻/<span class="en-title">News</span></label>
 			<a href="#">更多&nbsp;&nbsp;&gt;</a>
 		</div>
 		<div class="clear-fix">
@@ -52,8 +51,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		</div>
 		<div class="content-title">
-			<h2>通知公告/<span class="en-title">Announcement
-			</span></h2>
+			<label class="pull-left">通知公告/<span class="en-title">Announcement</span></label>
+			<a href="#">更多&nbsp;&nbsp;&gt;</a>
 		</div>
 		</div>
 		<div  style= "postion:fixed;bottom:0;">

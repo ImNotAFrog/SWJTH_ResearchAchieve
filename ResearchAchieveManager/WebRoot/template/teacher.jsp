@@ -1,41 +1,13 @@
 <%@page import="java.util.*,com.SWJTHC.model.AppUser,com.SWJTHC.Dao.UserDao" pageEncoding="UTF-8"%>
-<% String projectPath = request.getContextPath(); 
-	AppUser u = new AppUser();;
-	if(request.getSession().getAttribute("username")!=null){
-		u = (UserDao.getUserByUsername(request.getSession().getAttribute("username").toString())).get(0);
-	}
-%>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>教师主页</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../assets/css/teacher.css">
 </head>
+<%@include file="head_user.jsp"%>
 <body>
-	<!--å¤´é¨åºå-->
-	<div id="header">
-		<div class="container">
-			
-			<a class="logo" href="<%=projectPath%>/template/index.jsp" target="_self" title="主页">
-				<img src="../assets/img/logo2.jpg">
-			</a>
-
-			<h3>科研成果管理平台</h3>
-			<a id="logout" href="javascript:confirmLogout()">安全退出</a>
-			<div class="image">
-				<a href=""><img src="../assets/img/head.jpg"></a>
-			</div>
-			<p class="name ellipsis">欢迎，<%=u.getName()%></p>
-		</div>
-		<div class="clearfix">
-			
-		</div>
-	</div>
-	<!--å¤´é¨åºåç»æ-->
-
-	<!--åå®¹åºå¼å§-->
 	<div class="content">
 		<div class="container clearfix">
 			<div class="left">

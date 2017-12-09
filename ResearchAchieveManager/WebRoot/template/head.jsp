@@ -4,7 +4,10 @@
  %>
 <html>
 <link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
-<link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/index_header.css">
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+<script type="text/javascript" src="../assets/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 <div id="header">
 		<div class="container">
 			

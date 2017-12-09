@@ -1,0 +1,95 @@
+/*头部样式*/
+.header {
+    z-index: 999;
+    position: relative;
+    border-bottom: 2px solid #eee;
+}
+#header img{
+	vertical-align: top; 
+}
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+   /* background: green;*/
+    height: 66px;
+    position: relative;
+}
+
+.container {
+		max-width: 1170px;
+
+	}
+
+
+
+.container:after {
+	clear: both;
+}
+.navbar{
+	display: inline-block;
+}
+.navbar li{
+	float:left;
+	margin-left: 30px;
+}
+.navbar a{
+	font-size: 18px;
+	display: block;
+	text-align: center;
+	line-height: 56px;
+	/*font-weight: bold;*/
+	padding: 0 20px;
+}
+.active > a{
+	color: #72c02c;
+}
+.active>a,.navbar a:hover{
+	border-bottom: 2px solid #72c02c;
+}
+
+#search{
+	display: inline-block;
+	position: relative;
+	bottom: 30px;
+	margin-left: 40px;
+}
+#search input[type='text']{
+	padding: 0 35px 0 15px;
+    border: 1px solid rgb(56,155,66);
+    background-color: rgb(251,251,251);
+    border-radius: 18px;
+    width: 190px;
+    line-height: 36px;
+    outline: none;
+    height: 36px;
+}
+input[type='submit'] {
+    background-image: url(../img/search-img.png);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    background-color: transparent;
+    border: 0;
+    margin-left: 10px;
+    position: absolute;
+    right: 8px;
+    top: 4px;
+}
+
+.header_login{
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 16px;
+	height: 68px;
+	line-height: 68px;
+}
+#js-signin,#js-signup{
+	position: relative;
+    font-size: 16px;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+}
