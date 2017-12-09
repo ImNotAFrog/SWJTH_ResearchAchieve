@@ -20,16 +20,16 @@
 <div id="header">
 		<div class="container">
 			
-			<a class="logo" href="<%=projectPath%>/template/index.jsp" target="_self" title="主页">
+			<a class="logo" href="<%=projectPath%>/template/index.jsp" target="_self" title="进入主页">
 				<img src="../assets/img/logo2.jpg">
 			</a>
 
 			<h3>科研成果管理平台</h3>
 			<a id="logout" href="javascript:confirmLogout()">安全退出</a>
 			<div class="image">
-				<a href=""><img src="../assets/img/head.jpg"></a>
+				<a href="<%=projectPath%>/template/teacher.jsp" title="进入个人主页"><img src="../assets/img/head.jpg"></a>
 			</div>
-			<p class="name ellipsis">欢迎，<%=u.getName()%></p>
+			<p class="name ellipsis" >欢迎，<%=u.getName()%></p>
 		</div>
 		<div class="clearfix">
 			
