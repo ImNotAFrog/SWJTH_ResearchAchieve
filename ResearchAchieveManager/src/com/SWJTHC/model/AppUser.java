@@ -15,6 +15,7 @@ import com.SWJTHC.interfaces.SubDepartment;
 public class AppUser {
 	private String username;
 	private String password;
+	private String name;
 	private Position position; //职务
 	private PositionLevel positionLevel; //职级
 	private Title title; //职称
@@ -23,6 +24,19 @@ public class AppUser {
 	public AppUser(){
 		
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSubDepartment(SubDepartment subDepartment) {
+		this.subDepartment = subDepartment;
+	}
+
 	public String getUsername() {
 		return username;
 	}
