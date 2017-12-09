@@ -1,0 +1,77 @@
+/*头部样式*/
+#header {
+    z-index: 999;
+    position: relative;
+    border-bottom: 2px solid #eee;
+
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+   /* background: green;*/
+    height: 80px;
+    position: relative;
+}
+
+.container {
+		max-width: 1170px;
+
+	}
+
+    .logo{
+        float: left;
+    }
+#header h3{
+    float: left;
+    height: 80px;
+    line-height: 80px;
+    margin-left: 12px;
+    color: rgb(65,120,190);
+}
+
+#logout{
+    float: right;
+    display: block;
+    width: 120px;
+    height: 40px;
+    background: #a9f;
+    margin-top: 15px;
+    border-radius: 6px;
+    text-align: center;
+    margin-left: 120px;
+    line-height:40px;
+    color: #000;
+}
+.image{
+    float: right;
+    margin-top: 12px;
+}
+.image a{
+    display: block;
+}
+.image img{
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    box-shadow: 0 8px 16px 0 rgba(7,17,27,.1);
+    background-color: #f3f5f7;
+    border: 2px solid #fff;
+}
+.name{
+    float: right;
+        font-size: 14px;
+    color: #07111B;
+    line-height: 16px;
+    /*margin-top: 8px;*/
+    margin-right: 18px;
+    height: 80px;
+    line-height: 80px;
+}
+.ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
