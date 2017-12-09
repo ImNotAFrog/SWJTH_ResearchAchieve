@@ -163,7 +163,6 @@ public class Dao {
                 value = getMethod.invoke(model); 
                 if(value != null){
 
-    				System.out.println(value);
                 	Method setMethod;
 					try {
 						setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());

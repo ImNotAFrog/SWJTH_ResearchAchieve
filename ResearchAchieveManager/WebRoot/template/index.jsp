@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <head>
-<link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/index_main.css">
 </head>
 <%@page pageEncoding="UTF-8"%>
 <body style="position:relative;">

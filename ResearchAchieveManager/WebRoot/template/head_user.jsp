@@ -35,4 +35,11 @@
 			
 		</div>
 	</div>
+	<script type="text/javascript">  
+    function confirmLogout(){  
+            if(confirm("确认退出?")){  
+            window.location="<%=projectPath %>/services/LogoutServlet";
+            }  
+    }  
+</script>
 </html>

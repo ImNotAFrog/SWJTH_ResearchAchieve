@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>教师主页</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<link rel="stylesheet" type="text/css" href="../assets/css/teacher.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/teacher_main.css">
 </head>
 <%@include file="head_user.jsp"%>
 <body>
@@ -208,11 +208,5 @@
 	<!--内容区域结束-->
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/main.js"></script>
 </body>
-<script type="text/javascript">  
-    function confirmLogout(){  
-            if(confirm("确认退出?")){  
-            window.location="<%=projectPath %>/services/LogoutServlet";
-            }  
-    }  
-</script>
+
 </html>
