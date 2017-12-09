@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>个人信息编辑</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link href="css/userEdit.css" rel="stylesheet">
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	
+	<!--用户 基本信息的编辑-->
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-3">bb</div>
+	        <div class="col-md-6 userinfo-edit">
+	        	<i class="mr_left_bg"></i>
+	        	<i class="mr_right_bg"></i>
+			    <form action=""  class="form-horizontal">
+			     	<div class="form-group">
+					    <label for="name" class="col-md-2 control-label">姓名:</label>
+					    <div class="col-md-6">
+					    	<input id="name" name="name" class="form-control" type="text" autocomplete="off"/>
+					    </div>
+				    </div>
+				    <div class="form-group">
+					    <label for="userName" class="col-md-2 control-label">用户名:</label>
+					    <div class="col-md-6">
+					    	<input id="userName" name="userName" class="form-control" type="text" autocomplete="off"/>
+					    </div>
+				    </div>
+				    <div class="form-group">
+					    <label for="position" class="col-md-2 control-label">职务:</label>
+					    <div class="col-md-6">
+					    	<select name="position" id="position" class="form-control">
+					          <option value="">开发者</option>
+					          <option value="">运营</option>
+					          <option value="">管理人员</option>
+				           </select>
+					    </div>
+				    </div>
+				    
+				    <div class="form-group">
+					    <label for="title" class="col-md-2 control-label">职称:</label>
+					    <div class="col-md-6">
+					    	<select name="title" id="title" class="form-control">
+					          <option value="">专技12</option>
+					          <option value="">专技13</option>
+					          <option value="">专技14</option>
+				           </select>
+					    </div>
+				    </div>
+				    <div class="form-group">
+					    <label for="department" class="col-md-2 control-label">所属部门:</label>
+					    <div class="col-md-6">
+					    	<select name="department " id="department " class="form-control">
+					          <option value="">教务处</option>
+					          <option value="">科研处</option>
+					          <option value="">图书馆</option>
+				           </select>
+					    </div>
+				    </div>
+				    <div class="form-group">
+					    <label for="subDepartment" class="col-md-2 control-label">子部门:</label>
+					    <div class="col-md-6">
+					    	<select name="subDepartment " id="subDepartment " class="form-control">
+					          <option value="">教务处1</option>
+					          <option value="">教务处2</option>
+					          <option value="">教务处3</option>
+				           </select>
+					    </div>
+				    </div>
+				
+			
+				    <!-- <button type="submit" class="btn btn-primary submit">Submit</button> -->
+				    <div class="submit">
+				    	<input type="submit" class="save" value="保存">
+				    	<a href="javascript:;" class="cancel">取消</a>
+					</div>
+				    
+				</form>
+
+
+	        </div>
+	        <div class="col-md-3">ee</div>
+	    </div>
+	</div>
+
+
+</body>
+</html>
