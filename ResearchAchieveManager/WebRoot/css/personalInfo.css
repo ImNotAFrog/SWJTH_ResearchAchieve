@@ -1,4 +1,6 @@
 
+
+/*头部开始*/
 .image{
 	float: left;
 	margin-top: 22px;
@@ -39,6 +41,9 @@
 	margin-left: 120px;
 }
 
+/*头部结束*/
+
+/*具体个人信息开始*/
 .spst_pep table {
     font-size: 14px;
     line-height: 24px;
@@ -46,3 +51,79 @@
 .tdtd {
     padding: 0.6em;
 }
+.long .th{
+	width: 30%;
+}
+.short .th{
+	font-weight: 500;
+	/*color: #*/
+	text-align: right;
+	width: 
+}
+
+/*教育背景*/
+.education .th{
+	width: 40%;
+}
+
+.headline {
+	font-size: 25px;
+	width: 800px;
+	margin: 0 auto;
+	display: block;
+    margin-top:25px;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #e4e9f0;
+}
+
+p.title{
+	/*width: 760px;
+	margin: 0 auto;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	background-color: #966;
+	padding: 5px 20px 5px;
+	background-color: #EAEAEA;
+	color: #005BC4;
+	color: #933;*/
+	border-bottom: 2px solid #0DA3E2;
+	color: #585f69;
+    margin: 0 0 -2px 0;
+    padding-right: 10px;
+    display: inline-block;
+    text-shadow: 0 0 1px #f6f6f6;
+}
+
+/*个人简历*/
+.resume{
+	color: #000;
+        font-size: 14px;
+    line-height: 26px;
+    font-weight: normal;
+    /*padding-top: 14px;*/
+    padding-right: 14px;
+    padding-bottom: 0px;
+    padding-left: 14px;
+    text-indent: 2em;
+}
+
+/*成果序号*/
+li{
+	list-style: none;
+
+}
+
+.teaching{
+	color: #000;
+        font-size: 14px;
+    line-height: 26px;
+    font-weight: normal;
+    /*padding-top: 14px;*/
+    padding-right: 14px;
+    padding-bottom: 0px;
+    padding-left: 14px;
+    text-indent: 2em;
+}
+/*立功受奖*/
+
