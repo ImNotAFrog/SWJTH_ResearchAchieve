@@ -1,8 +1,9 @@
---create database ResearchAchieveManager;
+﻿--create database ResearchAchieveManager;
 use ResearchAchieveManager;
 /*功能：创建用户表*/
 create table AppUser(
 	username varchar(200) primary key,--用户名
+	name varchar(50), --姓名
 	password varchar(200),--密码
 	position varchar(200), --职务
 	positionLevel varchar(200), --职级

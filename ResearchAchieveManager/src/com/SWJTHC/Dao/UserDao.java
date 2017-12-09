@@ -66,11 +66,13 @@ public class UserDao {
 				AppUser a = new AppUser();
 				a.setUsername(rs.getString("username"));
 				a.setPassword(rs.getString("password"));
-//				a.setDepartment(Department.valueOf(rs.getString("department")));
-//				a.setSubDepartment(rs.getString("subDepartment"));
-//				a.setPosition(Position.valueOf(rs.getString("position")));
-//				a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
-//				a.setTitle(Title.valueOf(rs.getString("title")));
+				if(rs.getString("name")!=null)a.setName(rs.getString("name"));
+				System.out.println(rs.getString("department"));
+				if(!rs.getString("department").equals("")&&rs.getString("department")!=null)a.setDepartment(Department.valueOf(rs.getString("department")));
+				if(!rs.getString("subDepartment").equals("")&&rs.getString("subDepartment")!=null)a.setSubDepartment(rs.getString("subDepartment"));
+				if(!rs.getString("position").equals("")&&rs.getString("position")!=null)a.setPosition(Position.valueOf(rs.getString("position")));
+				if(!rs.getString("positionLevel").equals("")&&rs.getString("positionLevel")!=null)a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
+				if(!rs.getString("title").equals("")&&rs.getString("title")!=null)a.setTitle(Title.valueOf(rs.getString("title")));
 				l.add(a);
 			}			
 		} catch (Exception e) {

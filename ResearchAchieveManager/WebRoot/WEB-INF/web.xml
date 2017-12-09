@@ -21,6 +21,13 @@
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>com.SWJTHC.services.LoginServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>User Logout</description>
+    <display-name>User Logout</display-name>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.SWJTHC.services.LogoutServlet</servlet-class>
+  </servlet>
+
 
   <servlet-mapping>
     <servlet-name>RegisterServlet</servlet-name>
@@ -29,6 +36,10 @@
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/services/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/services/LogoutServlet</url-pattern>
   </servlet-mapping>
   
       <filter>

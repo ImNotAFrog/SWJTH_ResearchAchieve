@@ -2,10 +2,13 @@
 <% String projectPath = request.getContextPath();
 	boolean isLogin = false;
  %>
+<html>
+<link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/main.css">
 <div id="header">
 		<div class="container">
 			
-			<a href="#">
+			<a href="<%=projectPath%>/template/index.jsp">
 				<img src="../assets/img/logo2.jpg">
 			</a>
 
@@ -40,11 +43,19 @@
 			<%}else{
 			 %>
 			 <div class="header_login">
-			 	<a id="js-signin" href="#">个人信息</a>
-				<a id="js-signin" href="#">退出</a>
+			 	<a id="js-signin" href="<%=projectPath%>/template/teacher.jsp">个人信息</a>
+				<a id="js-signin" href="javascript:confirmLogout()">退出</a>
 			 </div>
 			 <%}
 			  %>
 		</div>
 
 </div>
+<script type="text/javascript">  
+    function confirmLogout(){  
+            if(confirm("确认退出?")){  
+            window.location="<%=projectPath %>/services/LogoutServlet";
+            }  
+    }  
+</script>
+</html>

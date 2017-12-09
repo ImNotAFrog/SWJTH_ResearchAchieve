@@ -1,5 +1,10 @@
-<%@page pageEncoding="UTF-8"%>
-<% String projectPath=request.getContextPath(); %>
+<%@page import="java.util.*,com.SWJTHC.model.AppUser,com.SWJTHC.Dao.UserDao" pageEncoding="UTF-8"%>
+<% String projectPath = request.getContextPath(); 
+	AppUser u = new AppUser();;
+	if(request.getSession().getAttribute("username")!=null){
+		u = (UserDao.getUserByUsername(request.getSession().getAttribute("username").toString())).get(0);
+	}
+%>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -13,16 +18,16 @@
 	<div id="header">
 		<div class="container">
 			
-			<a class="logo" href="/" target="_self" title="é¦é¡µ">
+			<a class="logo" href="<%=projectPath%>/template/index.jsp" target="_self" title="主页">
 				<img src="../assets/img/logo2.jpg">
 			</a>
 
 			<h3>科研成果管理平台</h3>
-			<a id="logout" href="">安全退出</a>
+			<a id="logout" href="javascript:confirmLogout()">安全退出</a>
 			<div class="image">
-				<a href="/user/12"><img src="../assets/img/head.jpg"></a>
+				<a href=""><img src="../assets/img/head.jpg"></a>
 			</div>
-			<p class="name ellipsis">pardon110</p>
+			<p class="name ellipsis">欢迎，<%=u.getName()%></p>
 		</div>
 		<div class="clearfix">
 			
@@ -66,27 +71,53 @@
 				<div class="right">
 					<div id="detail" class="content-item">
 						<div class="common-title">个人信息
-								<a href="" class="pull-right edit">
+								<a href="<%=projectPath %>/template/editUser.jsp" class="pull-right edit">
 									编辑
 								</a>
 						</div>
 						<!-- <div class="line"></div> -->
+						<%if(u.getUsername()!=null){%>
 						<div class="info-box clearfix">
 							<label class="pull-left">账号</label>
-							<div class="pull-left"> 18280339406</div>
+							<div class="pull-left"> <%=u.getUsername() %></div>
 						</div>
+						<%}%>
+						<%if(u.getName()!=null){%>
 						<div class="info-box clearfix">
-							<label class="pull-left">昵称</label>
-							<div class="pull-left">woodyCheers</div>
+							<label class="pull-left">姓名</label>
+							<div class="pull-left"><%=u.getName() %></div>
 						</div>
+						<%}%>
+						<%if(u.getPosition()!=null){%>
 						<div class="info-box clearfix">
-							<label class="pull-left">职位</label>
-							<div class="pull-left">讲师</div>
+							<label class="pull-left">职务</label>
+							<div class="pull-left"><%=u.getPosition().getName() %></div>
 						</div>
+						<%}%>
+						<%if(u.getTitle()!=null){%>
 						<div class="info-box clearfix">
-							<label class="pull-left">性别</label>
-							<div class="pull-left"> 男</div>
+							<label class="pull-left">职称</label>
+							<div class="pull-left"> <%=u.getTitle().getName() %></div>
 						</div>
+						<%}%>
+						<%if(u.getPositionLevel()!=null){%>
+						<div class="info-box clearfix">
+							<label class="pull-left">职级</label>
+							<div class="pull-left"> <%=u.getPositionLevel().getName() %></div>
+						</div>
+						<%}%>
+						<%if(u.getDepartment()!=null){%>
+						<div class="info-box clearfix">
+							<label class="pull-left">所属部门</label>
+							<div class="pull-left"> <%=u.getDepartment().getName() %></div>
+						</div>
+						<%}%>
+						<%if(u.getSubDepartment()!=null){%>
+						<div class="info-box clearfix">
+							<label class="pull-left">所属科室</label>
+							<div class="pull-left"> <%=u.getSubDepartment().getName() %></div>
+						</div>
+						<%}%>
 					</div>
 					<div id="research" class="content-item">
 						我的科研成果
@@ -205,4 +236,11 @@
 	<!--内容区域结束-->
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/main.js"></script>
 </body>
+<script type="text/javascript">  
+    function confirmLogout(){  
+            if(confirm("确认退出?")){  
+            window.location="<%=projectPath %>/services/LogoutServlet";
+            }  
+    }  
+</script>
 </html>

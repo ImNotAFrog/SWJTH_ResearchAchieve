@@ -109,23 +109,10 @@
 						</div> -->
 						<div class="form-group">
 							<button type="submit" class="btn btn-success form-control">登录</button>
-						</div>	
-						<div class="form-group">
-							<a href="register.jsp" class="btn btn-info form-control">注册</a>						
 						</div>				
 
 							
 					</form>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3 ">
-					<h6 style="color:#fff;">使用其他方式登录:</h6>
-					<div >
-						<button class="col-sm-3 btn btn-primary" href="#">Facebook</button>
-						<button class="col-sm-3 col-sm-offset-1 btn btn-info" href="#">Twitter</button>
-						<button class="col-sm-3 col-sm-offset-1 btn btn-danger" href="#">Google+</button>
-					</div>
 				</div>
 			</div>
 		</div>
