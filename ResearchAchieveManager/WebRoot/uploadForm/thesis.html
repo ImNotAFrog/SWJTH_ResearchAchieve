@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>刊物成果信息上传</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link href="../css/uploadForm.css" rel="stylesheet">
+	<script src="../js/jquery-3.2.1.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	
+	<!--用户 基本信息的编辑-->
+	<div class="container upload">
+	    <div class="row">
+	        <div class="col-md-2">bb</div>
+	        <div class="col-md-8">
+			
+				<!--论文-->
+							<div class="re-item">
+								
+									<h3>请填写论文信息</h3>
+									<a href="javascript:void(0)" class="moco-modal-close"></a>
+									<form method="post" action="">
+										<div class="form-item">
+											<label for="thesisName">论文名称:</label>
+											<div class="moco-control-input">
+	                              				  <input type="text" name="thesisName" id="thesisName" autocomplete="off" class="moco-form-control" value="" placeholder="请论文名称...">
+	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+	                           				 </div>
+										</div>
+										<div class="form-item">
+											<label>级别:</label>
+											<div class="moco-control-input">
+                              				  <select class="moco-form-control rlf-select" name="thesisLevel" hidefocus="true" id="thesisLevel" data-validate="require-select">
+                                   	 				<option value="1">省级</option>
+                                                    <option value="2">国家普通</option>
+                                                    <option value="3">国家核心</option>                              
+                                                </select>
+                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+                           					 </div>
+										</div>
+										<div class="form-item">
+											<label for="chiefEditor">发表刊物:</label>
+											<div class="moco-control-input">
+	                              				  <input type="text" name="journalName" id="journalName" autocomplete="off" class="moco-form-control" value="" placeholder="请输入发表刊物...">
+	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+	                           				 </div>
+										</div>
+										
+										<div class="form-item">
+											<label for="owner">所有者:</label>
+											<div class="moco-control-input">
+	                              				  <input type="text" name="owner" id="owner" autocomplete="off" class="moco-form-control" value="" placeholder="Owner...">
+	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+	                           				 </div>
+										</div>
+										<div class="form-item">
+										<label>上传附件:&nbsp;&nbsp; </label>
+										<div class="moco-control-input" style="position: relative;top:12px;">
+                              				  <input type="file" name="attachment" id="attachment" autocomplete="off" class="moco-control-file" >
+                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+                           				 </div>
+									</div>
+									<button type="submit" class="btn btn-primary submit" style="opacity: 0.75">提交</button>
+										<button class="btn btn-default reset" type="reset"> reset </button>
+									</form>
+								
+							</div>
+	        </div>
+	        <div class="col-md-2">ee</div>
+	    </div>
+	</div>
+
+
+</body>
+</html>

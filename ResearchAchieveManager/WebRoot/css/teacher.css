@@ -259,7 +259,7 @@ a.edit:hover{
 }
 
     /*项目表单开始*/
-    .project h3{
+    .re-item h3{
              font-size: 16px;
     font-weight: bold;
     color: #07111b;
@@ -358,8 +358,18 @@ a.edit:hover{
        
         border-radius: 2px;
         box-sizing: border-box;
-   }
+   } 
     /*项目表单结束*/
+
+
+    /*教材类开始*/
+    .moco-control-input textarea{
+        height: 70px;
+        font-family: 'Microsoft YaHei';
+    }
+    /*教材类结束*/
+
+
 /*上传成果结束*/
 
 
