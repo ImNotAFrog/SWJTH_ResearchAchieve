@@ -4,6 +4,7 @@ public class UserAchievement {
 	private int ID;
 	private String username;
 	private String category;
+	private String name;
 	public UserAchievement(){
 		
 	}
@@ -24,6 +25,12 @@ public class UserAchievement {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

@@ -12,13 +12,14 @@ public class ThesisDao {
 
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into Thesis(name,score,attachment,owner,journal_id,level) values(?,?,?,?,?,?)",t,null);
+			i = Dao.executUpdate("insert into Thesis(name,score,attachment,owner,journal_id,journal_name,journal_level) values(?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
 				a.setID(i);
 				a.setUsername(t.getOwner());
 				a.setCategory("Thesis");
-				Dao.executUpdate("insert into UserAchievement(ID,username,category) values(?,?,?)", a, null);
+				a.setName(t.getName());
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name) values(?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -38,10 +39,11 @@ public class ThesisDao {
 				thesis = new Thesis();
 				thesis.setID(id);
 				thesis.setName(rs.getString("name"));
-				thesis.setLevel(rs.getString("level"));
+				thesis.setJournalLevel(rs.getString("journal_level"));
 				thesis.setScore(rs.getDouble("score"));
 				thesis.setOwner(rs.getString("owner"));
-				thesis.setJournal(rs.getInt("journal_id"));
+				thesis.setJournalNum(rs.getString("journal_id"));
+				thesis.setJournal(rs.getString("journal_name"));
 				thesis.setAttachment(rs.getString("attachment"));				
 			}
 		} catch (Exception e) {
