@@ -5,7 +5,7 @@
 }
 .icon{
 	float: left;
-    background: url(images/title-icon.jpg) no-repeat;
+    background: url(assets/img/title-icon.jpg) no-repeat;
     width: 4px;
     height: 30px;
 }
@@ -62,7 +62,7 @@
 	font-size: 12px;
     margin-top: 5px;
     padding-left: 22px;
-    background-image: url(images/time-icon1.png);
+    background-image: url(assets/img/time-icon1.png);
     background-repeat: no-repeat;
     background-position: 0 1px;
     height: 16px;
@@ -121,19 +121,19 @@
 }
 #prev{
 	left:20px;
-	background: url(images/prev.png) no-repeat;
+	background: url(assets/img/prev.png) no-repeat;
 }
 #prev:hover{
 	left:20px;
-	background: url(images/prev-active.png) no-repeat;
+	background: url(assets/img/prev-active.png) no-repeat;
 }
 #next{
 	right:20px;
-	background: url(images/next.png) no-repeat;
+	background: url(assets/img/next.png) no-repeat;
 }
 #next:hover{
 	right:20px;
-	background: url(images/next-active.png) no-repeat;
+	background: url(assets/img/next-active.png) no-repeat;
 }
 /*轮播结束*/
 /*通知公告开始*/

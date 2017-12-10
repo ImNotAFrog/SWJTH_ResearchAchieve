@@ -64,7 +64,7 @@
     height: 36px;
 }
 input[type='submit'] {
-    background-image: url(images/search-img.png);
+    background-image: url(../img/search-img.png);
     cursor: pointer;
     width: 28px;
     height: 28px;

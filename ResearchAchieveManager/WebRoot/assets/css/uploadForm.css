@@ -24,7 +24,7 @@
         position: absolute;
         width: 18px;
         height: 18px;
-        background: url(../images/close.png) no-repeat;
+        background: url(../img/close.png) no-repeat;
         right: 32px;
         top: 24px;
         /*color: #93999f;*/
@@ -35,7 +35,7 @@
         position: absolute;
         width: 18px;
         height: 18px;
-        background: url(../images/close-on.png) no-repeat 0px 2px;
+        background: url(../img/close-on.png) no-repeat 0px 2px;
         right: 32px;
         top: 24px;
         /*color: #93999f;*/

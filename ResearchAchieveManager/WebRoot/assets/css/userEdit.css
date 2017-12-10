@@ -9,7 +9,7 @@
 
 .mr_left_bg {
     position: absolute;
-    background: url(../images/left.png) no-repeat;
+    background: url(../img/left.png) no-repeat;
     width: 12px;
     height: 34px;
     top: 76px;
@@ -19,7 +19,7 @@
 
 .mr_right_bg {
     position: absolute;
-    background: url(../images/right.png) no-repeat;
+    background: url(../img/right.png) no-repeat;
     width: 12px;
     height: 34px;
     top: 76px;

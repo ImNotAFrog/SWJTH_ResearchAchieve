@@ -64,7 +64,7 @@
     height: 36px;
 }
 input[type='submit'] {
-    background-image: url(images/search-img.png);
+    background-image: url(../img/search-img.png);
     cursor: pointer;
     width: 28px;
     height: 28px;
@@ -100,7 +100,7 @@ input[type='submit'] {
 }
 .icon{
 	float: left;
-    background: url(images/title-icon.jpg) no-repeat;
+    background: url(../img/title-icon.jpg) no-repeat;
     width: 4px;
     height: 30px;
 }
@@ -157,7 +157,7 @@ input[type='submit'] {
 	font-size: 12px;
     margin-top: 5px;
     padding-left: 22px;
-    background-image: url(images/time-icon1.png);
+    background-image: url(../img/time-icon1.png);
     background-repeat: no-repeat;
     background-position: 0 1px;
     height: 16px;
@@ -216,19 +216,19 @@ input[type='submit'] {
 }
 #prev{
 	left:20px;
-	background: url(images/prev.png) no-repeat;
+	background: url(../img/prev.png) no-repeat;
 }
 #prev:hover{
 	left:20px;
-	background: url(images/prev-active.png) no-repeat;
+	background: url(../img/prev-active.png) no-repeat;
 }
 #next{
 	right:20px;
-	background: url(images/next.png) no-repeat;
+	background: url(../img/next.png) no-repeat;
 }
 #next:hover{
 	right:20px;
-	background: url(images/next-active.png) no-repeat;
+	background: url(../img/next-active.png) no-repeat;
 }
 /*轮播结束*/
 /*通知公告开始*/

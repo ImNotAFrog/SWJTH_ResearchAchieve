@@ -61,7 +61,7 @@
     display: inline-block;
     width: 26px;
     height: 16px;
-    /*background: url(images/list.png) no-repeat;*/
+    /*background: url(../img/list.png) no-repeat;*/
     position: relative;
     top:3px;
 }
@@ -102,7 +102,7 @@ span.icon{
     font-weight: 400;
     font-size: 14px;
     margin-right: 26px;
-    background: url(images/edit-icon.png) no-repeat 0 12px;
+    background: url(../img/edit-icon.png) no-repeat 0 12px;
 }
 
 a.edit:hover{

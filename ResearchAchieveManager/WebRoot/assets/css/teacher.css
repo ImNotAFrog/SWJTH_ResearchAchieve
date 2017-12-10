@@ -126,7 +126,7 @@
     display: inline-block;
     width: 26px;
     height: 16px;
-    /*background: url(images/list.png) no-repeat;*/
+    /*background: url(../img/list.png) no-repeat;*/
     position: relative;
     top:3px;
 }
@@ -167,7 +167,7 @@ span.icon{
     font-weight: 400;
     font-size: 14px;
     margin-right: 26px;
-    background: url(images/edit-icon.png) no-repeat 0 12px;
+    background: url(../img/edit-icon.png) no-repeat 0 12px;
 }
 
 a.edit:hover{
@@ -202,11 +202,41 @@ a.edit:hover{
 }
 /*个人信息结束*/
 
+/*我的成果列表开始*/
+#research{
+    padding-bottom: 60px;
+}
+p.state{
+    text-align: center;
+    color: #225;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+#wating, #examined{
+    width: 95%;
+}
+
+.examined{
+    margin-top: 50px;
+}
+/*我的成果列表结束*/
+
+
+
+
+
 /*上传成果开始*/
 #loadup{
     /*background: rgb(222,222,255);*/
 }
 
+
+.note{
+    font-size: 16px;
+    margin-left: 12px;
+    margin-bottom: 30px;
+    color: rgb(230,0,10);
+}
 .nav{
     margin-left: 12px;
 }
