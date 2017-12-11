@@ -92,14 +92,75 @@
 						<%}%>
 					</div>
 					<div id="research" class="content-item">
-						我的科研成果
-						<p>待审核</p>
-						<p>已通过审核</p>
+						<div class="common-title">成果列表
+						</div>
+						<!--待审核-->
+						<div class="examing">
+							<p class="state">待审核</p>
+							<!-- <ul>
+								<li>
+									<a href="#">
+										<p>项目编号：ky0001</p>
+										<span>[1]“移动交互环境下的大媒体内容分析与检索”项目  2017.01-2021.12 国家级 国家级自然
+    									科学基金重点项目</span>
+										<span>项目提交审核时间:2017-01-21</span>
+									</a>
+								</li>
+							</ul> -->
+							<table id="wating" class="table table-striped table-bordered">
+						      <thead>
+						          <th>项目名称</th>
+						          <th>类型</th>
+						          <th>提交审核时间</th>
+						        </tr>
+						      </thead>
+						      <tbody>
+						        <tr>
+						          <td>数字电视嵌入式软件开发平台 </td>
+						          <td>纵向项目</td>
+						          <td>2017年3月5日</td>
+						        </tr>
+						        <tr>
+						          <td>基于国产软硬件的数字电视终端解决方案及样机研制</td>
+						          <td>纵向项目</td>
+						          <td>2017年1月8日</td>
+						        </tr>
+						       </tbody>
+						    </table>
+						</div>
+						
+						<!--已审核-->
+						<div class="examined">
+							<p class="state">已通过审核</p>
+							
+							<table id="examined" class="table table-striped table-bordered">
+						      <thead>
+						          <th>项目名称</th>
+						          <th>类型</th>
+						          <th>提交审核时间</th>
+						        </tr>
+						      </thead>
+						      <tbody>
+						        <tr>
+						          <td>基于模糊神经网络的变频空调控制器关键技术研究及产业化  </td>
+						          <td>横向项目</td>
+						          <td>2016年6月5日</td>
+						        </tr>
+						        <tr>
+						          <td>实时可信服务软件的构件化研究 </td>
+						          <td>纵向项目</td>
+						          <td>2015年5月8日</td>
+						        </tr>
+						       </tbody>
+						    </table>
+						</div>
+					
 					</div>
 					<div id="loadup"  class="content-item">
 						<div class="common-title">上传科研成果
 						</div>
 						<div class="nav">
+								<h4>请选择科研成果类型</h4>
 								<ul>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
