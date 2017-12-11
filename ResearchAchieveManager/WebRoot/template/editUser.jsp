@@ -13,8 +13,9 @@
    <%@include file="head_user.jsp"%> 
   <body>
  <div class="container">
-	    <div class="row">
+	    <div class="row">	    	
 	        <div class="col-md-6 col-md-offset-3 userinfo-edit">
+	        	<label>用户信息编辑表：</label>
 	        	<i class="mr_left_bg"></i>
 	        	<i class="mr_right_bg"></i>
 			    <form action="<%=projectPath%>/services/UserServlet"  class="form-horizontal">

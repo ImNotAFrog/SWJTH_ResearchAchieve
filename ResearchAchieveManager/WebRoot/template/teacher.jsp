@@ -96,7 +96,6 @@
 						</div>
 						<!--待审核-->
 						<div class="examing">
-							<p class="state">待审核</p>
 							<!-- <ul>
 								<li>
 									<a href="#">
@@ -112,6 +111,7 @@
 						          <th>项目名称</th>
 						          <th>类型</th>
 						          <th>提交审核时间</th>
+						          <th>审核状态</th>
 						        </tr>
 						      </thead>
 						      <tbody>
@@ -119,41 +119,17 @@
 						          <td>数字电视嵌入式软件开发平台 </td>
 						          <td>纵向项目</td>
 						          <td>2017年3月5日</td>
+						          <td>待审核</td>
 						        </tr>
 						        <tr>
 						          <td>基于国产软硬件的数字电视终端解决方案及样机研制</td>
 						          <td>纵向项目</td>
 						          <td>2017年1月8日</td>
+						          <td>已通过</td>
 						        </tr>
 						       </tbody>
 						    </table>
-						</div>
-						
-						<!--已审核-->
-						<div class="examined">
-							<p class="state">已通过审核</p>
-							
-							<table id="examined" class="table table-striped table-bordered">
-						      <thead>
-						          <th>项目名称</th>
-						          <th>类型</th>
-						          <th>提交审核时间</th>
-						        </tr>
-						      </thead>
-						      <tbody>
-						        <tr>
-						          <td>基于模糊神经网络的变频空调控制器关键技术研究及产业化  </td>
-						          <td>横向项目</td>
-						          <td>2016年6月5日</td>
-						        </tr>
-						        <tr>
-						          <td>实时可信服务软件的构件化研究 </td>
-						          <td>纵向项目</td>
-						          <td>2015年5月8日</td>
-						        </tr>
-						       </tbody>
-						    </table>
-						</div>
+						</div>						
 					
 					</div>
 					<div id="loadup"  class="content-item">

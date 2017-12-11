@@ -118,19 +118,6 @@ create table Thesis(
 	owner varchar(50), --所有者
 	checked int	
 	)
-/*功能：创建课题表*/
-create table Topic(
-	ID int identity(1,1) primary key,--序号	
-	name varchar(200),--名称
-	level varchar(200), --级别
-	subject varchar(200), --主体
-	groupLeader varchar(200), --组长
-	members varchar(200), --成员
-	score float,--分值
-	attachment varchar(200),--附件
-	owner varchar(50),--所有者
-	checked int	
-	)
 /*功能：创建用户成果表*/
 create table UserAchievement(
 	ID int key,--成果ID
