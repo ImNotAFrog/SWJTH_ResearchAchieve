@@ -103,15 +103,8 @@
 								<ul>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info">
-											<div>科研项目类</div>
-											<div>Research Project</div>
-										</dic>
-									</li>
-									<li class="load-item  clearfix">
-										<img src="../assets/img/paper.png">
-										<dic class="item-info">
-											<div>课题类</div>
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/projectUpload.jsp';">
+											<div>课题项目类</div>
 											<div>Poject</div>
 										</dic>
 									</li>
@@ -138,7 +131,7 @@
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/lawsUpload.jsp';">
 											<div>法律法规类</div>
 											<div>Laws and Regulations</div>
 										</dic>

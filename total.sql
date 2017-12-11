@@ -23,6 +23,9 @@ create table Journal(
 create table Laws(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
+	category varchar(100), --类别
+	lawNumber varchar(50), --编号
+	wordsCount varchar(50), --字数
 	level varchar(200), --级别
 	chiefEditor varchar(200), --主编
 	editors varchar(200), --参编
@@ -75,12 +78,15 @@ create table PersonalInfo(
 	
 	)
 /*功能：创建教学改革项目表*/
-create table TeachingReform(
+create table eduProject(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
+	subject varchar(100), --项目从属
+	level varchar(50), --项目级别
 	groupLeader varchar(200), --组长
 	members varchar(200), --成员
 	score float,--分值
+	state varchar(50), --项目情况
 	attachment varchar(200), --附件
 	owner varchar(50), --所有者
 	checked int	

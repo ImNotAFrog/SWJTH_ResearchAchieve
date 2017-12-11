@@ -51,6 +51,20 @@
     <servlet-name>PatentUpload</servlet-name>
     <servlet-class>com.SWJTHC.services.PatentUpload</servlet-class>
   </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>LawsUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.LawsUpload</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>ProjectUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.ProjectUpload</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -84,6 +98,14 @@
   <servlet-mapping>
     <servlet-name>PatentUpload</servlet-name>
     <url-pattern>/services/PatentUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LawsUpload</servlet-name>
+    <url-pattern>/services/LawsUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProjectUpload</servlet-name>
+    <url-pattern>/services/ProjectUpload</url-pattern>
   </servlet-mapping>
   
       <filter>
