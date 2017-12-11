@@ -5,9 +5,20 @@ public class UserAchievement {
 	private String username;
 	private String category;
 	private String name;
+	private int checked =0;
+	
 	public UserAchievement(){
 		
 	}
+	
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
+	}
+
 	public int getID() {
 		return ID;
 	}

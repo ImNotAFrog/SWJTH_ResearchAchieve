@@ -7,19 +7,19 @@ import com.SWJTHC.model.Thesis;
 import com.SWJTHC.model.UserAchievement;
 
 public class ThesisDao {
-	private PreparedStatement pstat = null;
 	public static int insertThesis(Thesis t){
 
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into Thesis(name,score,attachment,owner,journal_id,journal_name,journal_level) values(?,?,?,?,?,?,?)",t,null);
+			i = Dao.executUpdate("insert into Thesis(name,score,attachment,owner,journal_id,journal_name,journal_level,checked) values(?,?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
 				a.setID(i);
 				a.setUsername(t.getOwner());
 				a.setCategory("Thesis");
 				a.setName(t.getName());
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name) values(?,?,?,?)", a, null);
+				a.setChecked(0);
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -44,6 +44,7 @@ public class ThesisDao {
 				thesis.setOwner(rs.getString("owner"));
 				thesis.setJournalNum(rs.getString("journal_id"));
 				thesis.setJournal(rs.getString("journal_name"));
+				thesis.setChecked(rs.getInt("checked"));
 				thesis.setAttachment(rs.getString("attachment"));				
 			}
 		} catch (Exception e) {

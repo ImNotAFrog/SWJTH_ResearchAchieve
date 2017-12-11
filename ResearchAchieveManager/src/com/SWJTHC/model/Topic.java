@@ -12,10 +12,19 @@ public class Topic{
 	private String level;
 	private String groupLeader;
 	private String members;
+	private int checked =0;
 	public Topic(){
 		
 	}
 	
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
+	}
+
 	public String getID() {
 		return ID;
 	}

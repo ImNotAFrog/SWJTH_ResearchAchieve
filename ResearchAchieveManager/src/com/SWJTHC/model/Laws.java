@@ -11,10 +11,19 @@ public class Laws{
 	private String level;
 	private String chiefEditor;
 	private String editors;
+	private int checked =0;
 	public Laws(){
 		
 	}
 	
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
+	}
+
 	public String getID() {
 		return ID;
 	}

@@ -39,6 +39,20 @@
     <servlet-name>ThesisUpload</servlet-name>
     <servlet-class>com.SWJTHC.services.ThesisUpload</servlet-class>
   </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>TextbookUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.TextbookUpload</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>PatentUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.PatentUpload</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -62,6 +76,14 @@
   <servlet-mapping>
     <servlet-name>ThesisUpload</servlet-name>
     <url-pattern>/services/ThesisUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TextbookUpload</servlet-name>
+    <url-pattern>/services/TextbookUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PatentUpload</servlet-name>
+    <url-pattern>/services/PatentUpload</url-pattern>
   </servlet-mapping>
   
       <filter>

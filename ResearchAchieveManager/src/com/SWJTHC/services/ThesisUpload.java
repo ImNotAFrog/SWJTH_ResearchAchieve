@@ -52,6 +52,7 @@ public class ThesisUpload extends HttpServlet {
 			t.setJournal(request.getParameter("journalName"));
 			t.setJournalNum(request.getParameter("journalNum"));
 			t.setJournalLevel(request.getParameter("journalLevel"));
+			t.setChecked(0);
 			int i =-1; 
 			i=ThesisDao.insertThesis(t);
 			if(i!=-1){

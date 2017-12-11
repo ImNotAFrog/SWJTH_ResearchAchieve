@@ -17,6 +17,7 @@ create table Journal(
 	name varchar(200),--名称
 	level varchar(200), --级别
 	number varchar(200) --刊号
+
 	)
 /*功能：创建法规标准表*/
 create table Laws(
@@ -27,7 +28,8 @@ create table Laws(
 	editors varchar(200), --参编
 	score float, --分值
 	attachment varchar(200), --附件
-	owner varchar(50) --所有者
+	owner varchar(50), --所有者
+	checked int	
 	)
 /*功能：创建专利、软件著作表*/
 create table Patent(
@@ -35,8 +37,12 @@ create table Patent(
 	name varchar(200),--名称
 	category varchar(200), --类型
 	patentHolder varchar(200), --专利权人
+	patentDate date, --授权日期
+	patentNum varchar(50), --专利编号
 	score float,--分值
-	attachment varchar(200) --附件
+	attachment varchar(200), --附件
+	owner varchar(50), --成果申请人
+	checked int	
 	)
 /*创建个人信息表*/
 create table PersonalInfo(
@@ -66,6 +72,7 @@ create table PersonalInfo(
 	achievement_id varchar(200), --成果序号
 	teachingSituation text, --教学情况	
 	rewards text,--立功受奖
+	
 	)
 /*功能：创建教学改革项目表*/
 create table TeachingReform(
@@ -75,29 +82,35 @@ create table TeachingReform(
 	members varchar(200), --成员
 	score float,--分值
 	attachment varchar(200), --附件
-	owner varchar(50) --所有者
+	owner varchar(50), --所有者
+	checked int	
 
 	)
 /*功能：创建教材著作表*/
 create table Textbook(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
-	subject varchar(200), --主体
+	level varchar(200), --级别
 	authorSituation varchar(200), --作者情况
-	publishSituation varchar(200), --出版情况
+	publishDate date, --出版时间
+	ISBN varchar(50), --ISBN
+	publishingHouse varchar(200), --出版社
 	score float,--分值
 	attachment varchar(200), --附件
-	owner varchar(50) --所有者
+	owner varchar(50), --所有者
+	checked int	
 	)
 /*功能：创建论文表*/
 create table Thesis(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
-	level varchar(200), --级别
+	journa_level varchar(200), --级别
+	journa_name varchar(200), --刊物名称
 	journal_id varchar(200), --发表刊物ID
 	score float,--分值
 	attachment varchar(200), --附件
-	owner varchar(50) --所有者
+	owner varchar(50), --所有者
+	checked int	
 	)
 /*功能：创建课题表*/
 create table Topic(
@@ -109,14 +122,16 @@ create table Topic(
 	members varchar(200), --成员
 	score float,--分值
 	attachment varchar(200),--附件
-	owner varchar(50) --所有者
+	owner varchar(50),--所有者
+	checked int	
 	)
 /*功能：创建用户成果表*/
 create table UserAchievement(
 	ID int key,--成果ID
-
+	name varchar(50), --成果名
 	username varchar(200),--用户名
 	category varchar(200), --成果类型
+	checked int
 	)
 /*功能：创建用户类型表*/
 create table UserType(

@@ -123,7 +123,7 @@ public class Dao {
 			
 			int k=1;
 			for(int i=0;i<field.length;i++){
-				String name = field[i].getName();  
+				String name = field[i].getName(); 
 				if(key!=null&&key.equals(name)){
 					continue;
 				}
@@ -161,6 +161,8 @@ public class Dao {
 				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);
                 value = getMethod.invoke(model); 
+
+				System.out.println(value);
                 if(value != null){
 
                 	Method setMethod;

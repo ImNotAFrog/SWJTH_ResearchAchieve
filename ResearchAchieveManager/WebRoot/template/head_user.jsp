@@ -12,8 +12,10 @@
 <link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/reset.css">
 <link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/user_header.css">
 <link rel="stylesheet" type="text/css" href="<%=projectPath%>/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/js/jquery-ui/jquery-ui.min.css">
 <script type="text/javascript" src="<%=projectPath%>/assets/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=projectPath%>/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="<%=projectPath%>/assets/js/jquery-ui/jquery-ui.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>

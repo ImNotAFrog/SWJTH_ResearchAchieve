@@ -11,10 +11,19 @@ public class Thesis{
 	private String journalNum="";
 	private String journal ="";
 	private String journalLevel="";
+	private int checked =0;
 	public Thesis(){
 		
 	}
 	
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
+	}
+
 	public String getJournal() {
 		return journal;
 	}

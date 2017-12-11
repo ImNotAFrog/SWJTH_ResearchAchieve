@@ -124,14 +124,14 @@
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info">
-											<div>教材类</div>
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/textbookUpload.jsp';">
+											<div>论著、教材类</div>
 											<div>TextBook</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/patentUpload.jsp';">
 											<div>专利</div>
 											<div>Patent</div>
 										</dic>

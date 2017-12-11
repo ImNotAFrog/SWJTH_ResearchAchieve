@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="re-item">
 					
 						<h3>请填写论文信息</h3>
-						<a href="javascript:void(0)" class="moco-modal-close"></a>
+						<a href="<%=projectPath%>/template/teacher.jsp" class="moco-modal-close"></a>
 						<form method="post" action="<%=projectPath%>/services/ThesisUpload">
 							<div class="form-item">
 								<label for="thesisName">论文名称:</label>
@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                  <option value="6">6.核心刊物正刊(含北大核心期刊、CSCD、CSSCI、RCCSE)</option>   
                                                  <option value="7">7.《武警学院学报》、《消防技术与产品信息》、全国性或行业性学会论文集（一等奖）、国际会议论文集</option>   
                                                  <option value="8">8.专业期刊（正刊）、全国性或行业性学会论文集（二等奖）、《消防科学与技术》增刊、《武警学院学报》增刊、《消防技术与产品信息》增刊</option>
-                                                 <option value="8">9.一般期刊、其它增刊、其它论文集、校刊</option>                                
+                                                 <option value="9">9.一般期刊、其它增刊、其它论文集、校刊</option>                                
                                              </select>
                             				 <div class="rlf-tip-wrap errorHint color-red"></div>
                         					 </div>
