@@ -152,6 +152,9 @@ span.icon{
 /*.active{
     display: block;
 }*/
+#detail{
+    padding-bottom: 60px;
+}
 .common-title{
     line-height: 40px;
     font-size: 16px;
