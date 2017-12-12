@@ -5,7 +5,7 @@ import java.sql.Date;
 import com.SWJTHC.enums.AchieveType;
 
 public class Patent{
-	private String ID;
+	private int ID=-2;
 	private String name="";
 	private double score=0;
 	private String attachment="";
@@ -18,10 +18,10 @@ public class Patent{
 	public Patent(){
 		
 	}
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 	public String getName() {

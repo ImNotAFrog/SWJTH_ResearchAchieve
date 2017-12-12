@@ -78,7 +78,7 @@ public class Dao {
 					value = Class.forName("java.lang.Integer");
 					value = model.getClass().getMethod("get"+name).invoke(model);
 					typeName="Int";
-					if((Integer)value==-2)continue;
+					if((Integer)value==-2)continue;   //-2代表未赋值
 				}
 				else if(className.equals("double")){
 					value = Class.forName("java.lang.Double");
@@ -88,8 +88,7 @@ public class Dao {
 				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);			//合成get方法
 				value = getMethod.invoke(model);									//调用类的get方法
-                System.out.println(value);
-				if(value != null){
+                if(value != null){
                 	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass()); 	//合成pstat的set方法
                 	setMethod.invoke(pstat,k,value);																	//调用pstat的set方法
                 	k++;																								//k用来标识当前sql语句中的参数位置	
@@ -162,7 +161,7 @@ public class Dao {
 					value = Class.forName("java.lang.Integer");
 					value = model.getClass().getMethod("get"+name).invoke(model);
 					typeName="Int";
-					if((Integer)value==-2)continue;
+					if((Integer)value==-2)continue;  //-2代表未赋值
 				}
 				else if(className.equals("double")){
 					value = Class.forName("java.lang.Double");
@@ -172,8 +171,6 @@ public class Dao {
 				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);
                 value = getMethod.invoke(model); 
-
-				System.out.println(value);
                 if(value != null){
 
                 	Method setMethod;
@@ -191,11 +188,32 @@ public class Dao {
 			}
 			if (key!=null) {
 				key = key.substring(0, 1).toUpperCase() + key.substring(1);
+				
 				Method getMethod = model.getClass().getMethod("get" + key);
 				Object value = getMethod.invoke(model);
 				if (value != null) {
-					Method setMethod = pstat.getClass().getDeclaredMethod(
-							"setString", int.class, value.getClass());
+					String type = value.getClass().getName();
+					String[] typeSplited = type.split("\\.");
+					String typeName = typeSplited[typeSplited.length-1];
+					Method setMethod;
+					switch(typeName){
+					case "String":
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setString", int.class, value.getClass());
+						break;
+					case "Integer":
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setInt", int.class, int.class);
+						break;
+					case "Double":
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setDouble", int.class, value.getClass());
+						break;
+						default:
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setString", int.class, value.getClass());
+							break;
+					}
 					setMethod.invoke(pstat, k, value);
 					
 				}

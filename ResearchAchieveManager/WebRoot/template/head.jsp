@@ -12,7 +12,7 @@
 		<div class="container">
 			
 			<a href="<%=projectPath%>/template/index.jsp">
-				<img src="../assets/img/logo2.jpg">
+				<img src="<%=projectPath%>/assets/img/logo-2.png" height="75px">
 			</a>
 
 			<div class="navbar">

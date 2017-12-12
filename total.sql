@@ -27,8 +27,7 @@ create table Laws(
 	lawNumber varchar(50), --编号
 	wordsCount varchar(50), --字数
 	level varchar(200), --级别
-	chiefEditor varchar(200), --主编
-	editors varchar(200), --参编
+	authorSituation varchar(200), --作者情况
 	score float, --分值
 	attachment varchar(200), --附件
 	owner varchar(50), --所有者
@@ -83,8 +82,7 @@ create table eduProject(
 	name varchar(200),--名称
 	subject varchar(100), --项目从属
 	level varchar(50), --项目级别
-	groupLeader varchar(200), --组长
-	members varchar(200), --成员
+	authorSituation varchar(200), --组长或成员
 	score float,--分值
 	state varchar(50), --项目情况
 	attachment varchar(200), --附件

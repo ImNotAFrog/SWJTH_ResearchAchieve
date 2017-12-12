@@ -3,24 +3,23 @@ package com.SWJTHC.model;
 import com.SWJTHC.enums.AchieveType;
 
 public class EduProject{
-	private String ID;
+	private int ID=-2;
 	private String name="";
 	private double score=0;
 	private String attachment="";
 	private String owner="";
 	private String subject="";
 	private String level="";
-	private String groupLeader="";
-	private String members="";
+	private String authorSituation="";
 	private String state="";
 	private int checked =0;
 	public EduProject(){
 		
 	}
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 	public String getName() {
@@ -59,17 +58,11 @@ public class EduProject{
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	public String getGroupLeader() {
-		return groupLeader;
+	public String getAuthorSituation() {
+		return authorSituation;
 	}
-	public void setGroupLeader(String groupLeader) {
-		this.groupLeader = groupLeader;
-	}
-	public String getMembers() {
-		return members;
-	}
-	public void setMembers(String members) {
-		this.members = members;
+	public void setAuthorSituation(String authorSituation) {
+		this.authorSituation = authorSituation;
 	}
 	public String getState() {
 		return state;

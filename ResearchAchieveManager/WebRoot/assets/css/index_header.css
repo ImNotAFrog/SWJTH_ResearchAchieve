@@ -52,7 +52,7 @@
 #search{
 	display: inline-block;
 	position: relative;
-	bottom: 30px;
+	bottom: 40px;
 	margin-left: 40px;
 }
 #search input[type='text']{

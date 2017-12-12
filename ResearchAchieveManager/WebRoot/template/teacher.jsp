@@ -123,7 +123,7 @@
 						      %>
 						      <tr class="<% switch(l.get(i).getChecked()){
 						          		case -1:
-						          		%>warning<%
+						          		%>danger<%
 						          		break;
 						          		case 0:
 						          		break;
@@ -131,12 +131,24 @@
 						          		%>success<%
 						          		break;
 						          		default:
-						          		%>danger<%
+						          		%>warning<%
 						          		break;
-						          	}%>" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>>'">					          	
+						          	}%>" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>'">					          	
 						          	<td><%=l.get(i).getName()%></td>
 									<td><%=l.get(i).getID()%></td>
-						          	<td><%=l.get(i).getCategory()%></td>
+									<%if(l.get(i).getCategory().equals("thesis")){
+									%><td>论文</td><%
+									}else if(l.get(i).getCategory().equals("eduProject")){
+									%><td>教学项目</td><%
+									}else if (l.get(i).getCategory().equals("textbook")){
+									%><td>教材、论著</td><%
+									}else if (l.get(i).getCategory().equals("patent")){
+									%><td>专利</td><%
+									}else if (l.get(i).getCategory().equals("laws")){
+									%><td>法律、法规</td><%
+									}else{
+									%><td></td><%
+									}%>						          	
 						          	<% switch(l.get(i).getChecked()){
 						          		case -1:
 						          		%><td>未通过</td><%

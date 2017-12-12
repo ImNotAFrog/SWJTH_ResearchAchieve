@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
+import com.SWJTHC.Dao.EduProjectDao;
 import com.SWJTHC.Dao.PatentDao;
 import com.SWJTHC.Dao.TextbookDao;
 import com.SWJTHC.model.Patent;
@@ -49,18 +52,32 @@ public class PatentUpload extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		try {
-			Patent p = new Patent();
-			p.setName(request.getParameter("patentName"));
-			p.setOwner(request.getSession().getAttribute("username").toString());
-			p.setCategory(request.getParameter("category"));
-			p.setPatentNum(request.getParameter("patentNum"));
-			p.setPatentHolder(request.getParameter("patentHolder"));
-			java.sql.Date date = new java.sql.Date(new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("patentDate")).getTime());
-			p.setPatentDate(date);
-			p.setChecked(0);
 			int i =-1; 
-			i=PatentDao.insertPatent(p);
-			if(i!=-1){
+			if(request.getParameter("deleteAchievement")!=null){
+				i=PatentDao.deletePatent(Integer.parseInt(request.getParameter("deleteAchievement")));
+			}else{
+				Patent p = new Patent();
+				p.setName(request.getParameter("patentName"));
+				p.setOwner(request.getSession().getAttribute("username").toString());
+				p.setCategory(request.getParameter("category"));
+				p.setPatentNum(request.getParameter("patentNum"));
+				p.setPatentHolder(request.getParameter("patentHolder"));
+				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("patentDate")).getTime());
+				p.setPatentDate(date);
+				p.setChecked(0);
+				if(request.getParameter("ID")!=null){
+					p.setID(Integer.parseInt(request.getParameter("ID")));
+					i=PatentDao.updatePatent(p);
+				}else{
+					i=PatentDao.insertPatent(p);
+				}
+			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
+				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果更新成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+			}else if(request.getParameter("deleteAchievement")!=null){
+				JSONObject j = new JSONObject();
+				j.put("result",1);
+				out.write(j.toString());
+			}else if(i!=-1){
 				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果上传成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
 			}else{
 				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果上传失败!');window.history.back(-1);</script>");

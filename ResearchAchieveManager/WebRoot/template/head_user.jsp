@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,com.SWJTHC.model.AppUser,com.SWJTHC.Dao.UserDao" contentType="text/html; charset=UTF-8"
+<%@ page language="java" import="java.util.*,com.SWJTHC.model.*,com.SWJTHC.Dao.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% String projectPath = request.getContextPath();
 	AppUser u = new AppUser();
@@ -23,7 +23,7 @@
 		<div class="container">
 			
 			<a class="logo" href="<%=projectPath%>/template/index.jsp" target="_self" title="进入主页">
-				<img src="<%=projectPath%>/assets/img/logo2.jpg">
+				<img src="<%=projectPath%>/assets/img/logo-2.png" height="75px">
 			</a>
 
 			<h3>科研成果管理平台</h3>

@@ -1,5 +1,7 @@
 package com.SWJTHC.Dao;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,5 +37,19 @@ public class UserAchievementDao {
 		
 		Dao.close();
 		return l;
+	}
+	
+	public static int updateUserAchievemetByUsername(UserAchievement u){
+		int i=-1;
+		String sql = "update UserAchievement set name='"+u.getName()+"',checked="+u.getChecked()+" where category='"+u.getCategory()+"' and username='"+u.getUsername()+"' and ID="+u.getID();
+		try{
+			i = Dao.executUpdate(sql);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Dao.close();
+		return i;
 	}
 }

@@ -3,14 +3,13 @@ package com.SWJTHC.model;
 import com.SWJTHC.enums.AchieveType;
 
 public class Laws{
-	private String ID;
+	private int ID=-2;
 	private String name="";
 	private double score=0;
 	private String attachment="";
 	private String owner="";
 	private String level="";
-	private String chiefEditor="";
-	private String editors="";
+	private String authorSituation="";
 	private String category="";
 	private String lawNumber="";
 	private String wordsCount="";
@@ -18,10 +17,10 @@ public class Laws{
 	public Laws(){
 		
 	}
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 	public String getName() {
@@ -54,17 +53,11 @@ public class Laws{
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	public String getChiefEditor() {
-		return chiefEditor;
+	public String getAuthorSituation() {
+		return authorSituation;
 	}
-	public void setChiefEditor(String chiefEditor) {
-		this.chiefEditor = chiefEditor;
-	}
-	public String getEditors() {
-		return editors;
-	}
-	public void setEditors(String editors) {
-		this.editors = editors;
+	public void setAuthorSituation(String authorSituation) {
+		this.authorSituation = authorSituation;
 	}
 	public String getCategory() {
 		return category;

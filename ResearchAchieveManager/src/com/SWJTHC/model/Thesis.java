@@ -9,7 +9,7 @@ public class Thesis{
 	private String attachment="";
 	private String owner="";
 	private String journalNum="";
-	private String journal ="";
+	private String journalName ="";
 	private String journalLevel="";
 	private int checked =0;
 	public Thesis(){
@@ -24,12 +24,12 @@ public class Thesis{
 		this.checked = checked;
 	}
 
-	public String getJournal() {
-		return journal;
+	public String getJournalName() {
+		return journalName;
 	}
 
-	public void setJournal(String journal) {
-		this.journal = journal;
+	public void setJournalName(String journalName) {
+		this.journalName = journalName;
 	}
 
 	public int getID() {

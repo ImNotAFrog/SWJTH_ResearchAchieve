@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import com.SWJTHC.Dao.LawsDao;
 import com.SWJTHC.Dao.PatentDao;
+import com.SWJTHC.Dao.ThesisDao;
 import com.SWJTHC.model.Laws;
 import com.SWJTHC.model.Patent;
 
@@ -50,20 +53,33 @@ public class LawsUpload extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		try {
-			Laws l = new Laws();
-			l.setName(request.getParameter("lawName"));
-			l.setOwner(request.getSession().getAttribute("username").toString());
-			l.setCategory(request.getParameter("category"));
-			l.setChiefEditor(request.getParameter("chiefEditor"));
-			l.setEditors(request.getParameter("editors"));
-			l.setLevel(request.getParameter("lawLevel"));
-			l.setAttachment(request.getParameter("attachment"));
-			l.setLawNumber(request.getParameter("lawNumber"));
-			l.setWordsCount(request.getParameter("wordsCount"));
-			l.setChecked(0);
 			int i =-1; 
-			i=LawsDao.insertLaws(l);
-			if(i!=-1){
+			if(request.getParameter("deleteAchievement")!=null){
+				i=LawsDao.deleteLaw(Integer.parseInt(request.getParameter("deleteAchievement")));
+			}else{
+				Laws l = new Laws();
+				l.setName(request.getParameter("lawName"));
+				l.setOwner(request.getSession().getAttribute("username").toString());
+				l.setCategory(request.getParameter("category"));
+				l.setAuthorSituation(request.getParameter("authorSituation"));
+				l.setLevel(request.getParameter("lawLevel"));
+				l.setAttachment(request.getParameter("attachment"));
+				l.setLawNumber(request.getParameter("lawNumber"));
+				l.setWordsCount(request.getParameter("wordsCount"));
+				l.setChecked(0);
+				if(request.getParameter("ID")!=null){
+					l.setID(Integer.parseInt(request.getParameter("ID")));
+					i=LawsDao.updateLaw(l);
+				}else{
+					i=LawsDao.insertLaws(l);
+				}
+			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
+				out.print("<script type='text/javascript'charset='utf-8'>alert('法律法规成果更新成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+			}else if(request.getParameter("deleteAchievement")!=null){
+				JSONObject j = new JSONObject();
+				j.put("result",1);
+				out.write(j.toString());
+			}else if(i!=-1){
 				out.print("<script type='text/javascript'charset='utf-8'>alert('法律法规成果上传成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
 			}else{
 				out.print("<script type='text/javascript'charset='utf-8'>alert('法律法规成果上传失败!');window.history.back(-1);</script>");
