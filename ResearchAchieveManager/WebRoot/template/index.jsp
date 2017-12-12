@@ -3,12 +3,13 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
+<%@include file="head.jsp"%>
 <head>
-<link rel="stylesheet" type="text/css" href="../assets/css/index_main.css">
+<link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/index_main.css">
 </head>
 <%@page pageEncoding="UTF-8"%>
 <body style="position:relative;">
-<%@include file="head.jsp"%>
 	<div class="news">
 		<div class="icon">
 			
@@ -23,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!--轮播图模块-->
 		<div class="slide-box">
 			<div class="slide">
-				<img src="../assets/img/slide2.jpg">
+				<img src="<%=projectPath%>/assets/img/slide-2.png">
 				<div class="slide-info">
 					<div class="info-title">我校11项成果获四川省第十七次社会科学优秀成果奖</div>
 					<div class="date">2017.05.11</div>

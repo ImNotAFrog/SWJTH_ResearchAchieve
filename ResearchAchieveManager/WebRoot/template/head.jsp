@@ -17,7 +17,7 @@
 
 			<div class="navbar">
 				<ul>
-					<li class="active"><a href="">主页</a></li>
+					<li class="active"><a href="<%=projectPath%>/template/index.jsp">主页</a></li>
 					<li><a href="">新闻</a></li>
 					<li><a href="">通知公告</a></li>
 					<li><a href="">资料下载</a></li>

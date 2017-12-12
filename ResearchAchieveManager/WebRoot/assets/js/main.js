@@ -3,10 +3,10 @@ var nav= document.getElementsByClassName("left")[0];
 var navItem = nav.getElementsByTagName("li");
 // alert(navItem.length);
 
-//右边的内容区
+//鍙宠竟鐨勫唴瀹瑰尯
 var con = document.getElementsByClassName("content-item");
 
-//点击左边的选项，右边内容切换
+//鐐瑰嚮宸﹁竟鐨勯�椤癸紝鍙宠竟鍐呭鍒囨崲
 
 for(var i=0; i<con.length; i++)
 {
