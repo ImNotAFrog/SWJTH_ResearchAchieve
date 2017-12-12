@@ -16,7 +16,7 @@ public class ThesisDao {
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
 				a.setUsername(t.getOwner());
-				a.setCategory("Thesis");
+				a.setCategory("thesis");
 				a.setName(t.getName());
 				a.setChecked(0);
 				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);

@@ -14,7 +14,7 @@ public class LawsDao {
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
 				a.setUsername(l.getOwner());
-				a.setCategory("Laws");
+				a.setCategory("laws");
 				a.setName(l.getName());
 				a.setChecked(0);
 				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);

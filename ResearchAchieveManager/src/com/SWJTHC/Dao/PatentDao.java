@@ -14,7 +14,7 @@ public class PatentDao {
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
 				a.setUsername(p.getOwner());
-				a.setCategory("Patent");
+				a.setCategory("patent");
 				a.setName(p.getName());
 				a.setChecked(0);
 				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);

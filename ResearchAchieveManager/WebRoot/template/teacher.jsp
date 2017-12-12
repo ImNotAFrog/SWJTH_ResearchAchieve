@@ -168,35 +168,35 @@
 								<ul>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/EduProjectUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/eduProjectUpload.jsp';">
 											<div>课题项目类</div>
 											<div>Poject</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix" >
 										<img src="../assets/img/paper.png">
-										<dic class="item-info"  onclick="window.location.href='<%=projectPath%>/template/upload/ThesisUpload.jsp';">
+										<dic class="item-info"  onclick="window.location.href='<%=projectPath%>/template/upload/thesisUpload.jsp';">
 											<div>论文类</div>
 											<div>Thesis</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/TextbookUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/textbookUpload.jsp';">
 											<div>论著、教材类</div>
 											<div>TextBook</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/PatentUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/patentUpload.jsp';">
 											<div>专利</div>
 											<div>Patent</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/LawsUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/lawsUpload.jsp';">
 											<div>法律法规类</div>
 											<div>Laws and Regulations</div>
 										</dic>

@@ -14,7 +14,7 @@ public class EduProjectDao {
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
 				a.setUsername(p.getOwner());
-				a.setCategory("EduProject");
+				a.setCategory("eduProject");
 				a.setName(p.getName());
 				a.setChecked(0);
 				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);
