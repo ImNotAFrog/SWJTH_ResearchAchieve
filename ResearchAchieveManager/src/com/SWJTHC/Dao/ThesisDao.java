@@ -14,7 +14,7 @@ public class ThesisDao {
 			i = Dao.executUpdate("insert into Thesis(name,score,attachment,owner,journal_id,journal_name,journal_level,checked) values(?,?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
-				a.setID(i);
+				a.setID(i+"");
 				a.setUsername(t.getOwner());
 				a.setCategory("Thesis");
 				a.setName(t.getName());

@@ -11,7 +11,7 @@ public class TextbookDao {
 			i = Dao.executUpdate("insert into Textbook(name,score,attachment,owner,publishDate,authorSituation,publishingHouse,ISBN,level,checked) values(?,?,?,?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
-				a.setID(i);
+				a.setID(i+"");
 				a.setUsername(t.getOwner());
 				a.setCategory("Textbook");
 				a.setName(t.getName());

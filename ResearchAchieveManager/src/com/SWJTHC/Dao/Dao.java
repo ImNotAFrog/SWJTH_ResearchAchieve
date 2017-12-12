@@ -74,12 +74,22 @@ public class Dao {
 						}
 					}
 					value = new ArrayList<>();
-				}else{
+				}else if(className.equals("int")){
+					value = Class.forName("java.lang.Integer");
+					value = model.getClass().getMethod("get"+name).invoke(model);
+					typeName="Int";
+					if((Integer)value==-2)continue;
+				}
+				else if(className.equals("double")){
+					value = Class.forName("java.lang.Double");
+				}
+				else{
 					value = Class.forName(className);								//根据类型名称生成类
 				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);			//合成get方法
-				value = getMethod.invoke(model); 									//调用类的get方法
-                if(value != null){
+				value = getMethod.invoke(model);									//调用类的get方法
+                System.out.println(value);
+				if(value != null){
                 	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass()); 	//合成pstat的set方法
                 	setMethod.invoke(pstat,k,value);																	//调用pstat的set方法
                 	k++;																								//k用来标识当前sql语句中的参数位置	
@@ -151,6 +161,7 @@ public class Dao {
 				}else if(className.equals("int")){
 					value = Class.forName("java.lang.Integer");
 					value = model.getClass().getMethod("get"+name).invoke(model);
+					typeName="Int";
 					if((Integer)value==-2)continue;
 				}
 				else if(className.equals("double")){

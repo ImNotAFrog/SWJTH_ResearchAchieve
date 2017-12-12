@@ -1,11 +1,11 @@
 package com.SWJTHC.model;
 
 public class UserAchievement {
-	private int ID;
+	private String ID;
 	private String username;
 	private String category;
 	private String name;
-	private int checked =0;
+	private int checked=-2;
 	
 	public UserAchievement(){
 		
@@ -19,10 +19,10 @@ public class UserAchievement {
 		this.checked = checked;
 	}
 
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
 	}
 	public String getUsername() {

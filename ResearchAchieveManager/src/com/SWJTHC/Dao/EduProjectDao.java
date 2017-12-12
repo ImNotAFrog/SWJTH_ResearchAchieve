@@ -12,9 +12,9 @@ public class EduProjectDao {
 			i = Dao.executUpdate("insert into eduProject(name,score,attachment,owner,subject,level,groupLeader,members,state,checked) values(?,?,?,?,?,?,?,?,?,?)",p,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
-				a.setID(i);
+				a.setID(i+"");
 				a.setUsername(p.getOwner());
-				a.setCategory("Laws");
+				a.setCategory("EduProject");
 				a.setName(p.getName());
 				a.setChecked(0);
 				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);

@@ -12,7 +12,7 @@ public class PatentDao {
 			i = Dao.executUpdate("insert into patent(name,score,attachment,owner,category,patentHolder,patentNum,patentDate,checked) values(?,?,?,?,?,?,?,?,?)",p,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
-				a.setID(i);
+				a.setID(i+"");
 				a.setUsername(p.getOwner());
 				a.setCategory("Patent");
 				a.setName(p.getName());

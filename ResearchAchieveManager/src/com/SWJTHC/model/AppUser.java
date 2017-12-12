@@ -24,7 +24,6 @@ public class AppUser {
 	public AppUser(){
 		
 	}
-	
 	public String getName() {
 		return name;
 	}

@@ -12,7 +12,7 @@ public class LawsDao {
 			i = Dao.executUpdate("insert into Laws(name,score,attachment,owner,level,chiefEditor,editors,category,lawNumber,wordsCount,checked) values(?,?,?,?,?,?,?,?,?,?,?)",l,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
-				a.setID(i);
+				a.setID(i+"");
 				a.setUsername(l.getOwner());
 				a.setCategory("Laws");
 				a.setName(l.getName());

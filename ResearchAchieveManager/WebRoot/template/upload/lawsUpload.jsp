@@ -98,7 +98,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										</div>
 
 										<button type="submit" class="btn btn-primary submit" style="opacity: 0.75">提交</button>
-										<button class="btn btn-default reset" type="reset"> reset </button>
+										<button class="btn btn-default btn-danger" type="reset">重置</button>
+										<button class="btn btn-default" onclick="window.history.back(-1);">返回</button>
 									</form>
 								
 							</div>

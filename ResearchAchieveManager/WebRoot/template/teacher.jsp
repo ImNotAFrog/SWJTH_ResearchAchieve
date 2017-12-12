@@ -1,4 +1,5 @@
-<%@page import="java.util.*,com.SWJTHC.model.AppUser,com.SWJTHC.Dao.UserDao" pageEncoding="UTF-8"%>
+<%@page import="java.util.*,com.SWJTHC.model.*,com.SWJTHC.Dao.*" pageEncoding="UTF-8"%>
+
 <html>
 <head>
 	<meta charset="utf-8">
@@ -7,6 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="../assets/css/teacher_main.css">
 </head>
 <%@include file="head_user.jsp"%>
+<% List<UserAchievement> l = UserAchievementDao.getAchievementByUsername(u.getUsername());
+ %>
 <body>
 	<div class="content">
 		<div class="container clearfix">
@@ -106,27 +109,52 @@
 									</a>
 								</li>
 							</ul> -->
-							<table id="wating" class="table table-striped table-bordered">
+							<table id="wating" class="table table-striped table-bordered table-hover" search="true">
 						      <thead>
+						      	<tr>
 						          <th>项目名称</th>
+						      	  <th>项目类型编号</th>
 						          <th>类型</th>
-						          <th>提交审核时间</th>
 						          <th>审核状态</th>
 						        </tr>
 						      </thead>
 						      <tbody>
-						        <tr>
-						          <td>数字电视嵌入式软件开发平台 </td>
-						          <td>纵向项目</td>
-						          <td>2017年3月5日</td>
-						          <td>待审核</td>
-						        </tr>
-						        <tr>
-						          <td>基于国产软硬件的数字电视终端解决方案及样机研制</td>
-						          <td>纵向项目</td>
-						          <td>2017年1月8日</td>
-						          <td>已通过</td>
-						        </tr>
+						      <% for(int i=0;i<l.size();i++){
+						      %>
+						      <tr class="<% switch(l.get(i).getChecked()){
+						          		case -1:
+						          		%>warning<%
+						          		break;
+						          		case 0:
+						          		break;
+						          		case 1:
+						          		%>success<%
+						          		break;
+						          		default:
+						          		%>danger<%
+						          		break;
+						          	}%>" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>>'">					          	
+						          	<td><%=l.get(i).getName()%></td>
+									<td><%=l.get(i).getID()%></td>
+						          	<td><%=l.get(i).getCategory()%></td>
+						          	<% switch(l.get(i).getChecked()){
+						          		case -1:
+						          		%><td>未通过</td><%
+						          		break;
+						          		case 0:
+						          		%><td>待审核</td><%
+						          		break;
+						          		case 1:
+						          		%><td>已通过</td><%
+						          		break;
+						          		default:
+						          		%><td>异常</td><%
+						          		break;
+						          	}%>						        	
+						      </tr>
+						      <%
+						      	}
+						       %>						       
 						       </tbody>
 						    </table>
 						</div>						
@@ -140,35 +168,35 @@
 								<ul>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/projectUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/EduProjectUpload.jsp';">
 											<div>课题项目类</div>
 											<div>Poject</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix" >
 										<img src="../assets/img/paper.png">
-										<dic class="item-info"  onclick="window.location.href='<%=projectPath%>/template/upload/thesisUpload.jsp';">
+										<dic class="item-info"  onclick="window.location.href='<%=projectPath%>/template/upload/ThesisUpload.jsp';">
 											<div>论文类</div>
 											<div>Thesis</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/textbookUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/TextbookUpload.jsp';">
 											<div>论著、教材类</div>
 											<div>TextBook</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/patentUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/PatentUpload.jsp';">
 											<div>专利</div>
 											<div>Patent</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/lawsUpload.jsp';">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/LawsUpload.jsp';">
 											<div>法律法规类</div>
 											<div>Laws and Regulations</div>
 										</dic>
