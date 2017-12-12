@@ -1,4 +1,4 @@
-package info.sudr.file;
+ï»¿package info.sudr.file;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -29,7 +29,7 @@ public class UploadServlet extends HttpServlet {
         
         if (request.getParameter("getfile") != null && !request.getParameter("getfile").isEmpty()) {
         	
-        	//ÕâÊÇÎÄ¼ş±£´æµÄÂ·¾¶
+        	//è¿™æ˜¯æ–‡ä»¶ä¿å­˜çš„è·¯å¾„
             File file = new File(request.getServletContext().getRealPath("/")+"imgs/"+request.getParameter("getfile"));
             if (file.exists()) {
                 int bytes = 0;
@@ -61,7 +61,7 @@ public class UploadServlet extends HttpServlet {
                     System.out.println(file.getAbsolutePath());
                     String mimetype = getMimeType(file);
                     
-                    /*ÏÔÊ¾Í¼Æ¬µÄËõÂÔÍ¼*/
+                    /*æ˜¾ç¤ºå›¾ç‰‡çš„ç¼©ç•¥å›¾*/
                     if (mimetype.endsWith("png") || mimetype.endsWith("jpeg")|| mimetype.endsWith("jpg") || mimetype.endsWith("gif")) {
                         BufferedImage im = ImageIO.read(file);
                         if (im != null) {
@@ -88,13 +88,13 @@ public class UploadServlet extends HttpServlet {
                             srvos.close();
                         }
                     }else {
-                    	//1.  »ñÈ¡ÎÄ¼şºó×ºÃû
-                    	//2.  »ñÈ¡ËõÂÔÍ¼µÄÍ¼Æ¬(Õâ¸öµÃ×Ô¼ºÏÈ×¼±¸ºÃ£¬ 75ÏñËØ¿íµÄ)
+                    	//1.  è·å–æ–‡ä»¶åç¼€å
+                    	//2.  è·å–ç¼©ç•¥å›¾çš„å›¾ç‰‡(è¿™ä¸ªå¾—è‡ªå·±å…ˆå‡†å¤‡å¥½ï¼Œ 75åƒç´ å®½çš„)
                     	
-                    	//3. ÓÃImageIOÏñÉÏÃæÒ»ÑùĞ´»ØÈ¥£¬ÉèÖÃ response
+                    	//3. ç”¨ImageIOåƒä¸Šé¢ä¸€æ ·å†™å›å»ï¼Œè®¾ç½® response
                     	
                     }
-                    /*ÆäËüÀàĞÍµÄÎÄ¼şµÄËõÂÔÍ¼£¬ ÀıÈçword£¬ excel£¬ ppt £¬pdf*/
+                    /*å…¶å®ƒç±»å‹çš„æ–‡ä»¶çš„ç¼©ç•¥å›¾ï¼Œ ä¾‹å¦‚wordï¼Œ excelï¼Œ ppt ï¼Œpdf*/
             } // TODO: check and report success
         } else {
             PrintWriter writer = response.getWriter();
