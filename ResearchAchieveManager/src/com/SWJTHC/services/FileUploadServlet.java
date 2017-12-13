@@ -34,19 +34,19 @@ public class FileUploadServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");			
         String username = request.getSession().getAttribute("username").toString();
-        System.out.println(request.getParameter("getlist"));
         if(request.getParameter("getlist") != null && !request.getParameter("getlist").isEmpty()){
-        	File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+request.getParameter("getlist"));
+            String[] lists = request.getParameter("getlist").split(";");            
+        	File file = new File(request.getServletContext().getRealPath("/")+"META-INF\\Attachments\\"+username+"\\"+lists[0]);
             response.setContentType("application/json");
             PrintWriter writer = response.getWriter();
             JSONArray json = new JSONArray();
             JSONObject jsono = new JSONObject();
             try {
-				jsono.put("name", request.getParameter("getlist"));
+				jsono.put("name", lists[0]);
 	            jsono.put("size", file.length());
-	            jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + request.getParameter("getlist"));
-	            jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + request.getParameter("getlist"));
-	            jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + request.getParameter("getlist"));
+	            jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + lists[0]);
+	            jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + lists[0]);
+	            jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + lists[0]);
 	            jsono.put("delete_type", "GET");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

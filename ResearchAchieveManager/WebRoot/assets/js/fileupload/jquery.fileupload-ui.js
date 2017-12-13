@@ -158,6 +158,32 @@
                                     function () {
                                         data.context = $(this);
                                         that._trigger('completed', e, data);
+                                    	
+                                    	var updateTable = function(intervalId){ 
+                                    		try{
+                                    			var attach = document.getElementById("attachment");
+                    	            			var attchUrls = document.getElementById("attachUrls");
+                    	            			attach.value ="";	
+
+                    	            			for(var i=1;i<attchUrls.rows.length;i++){
+                    	            				var href =attchUrls.rows[i].cells[0].children[0].href;
+                    	            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
+                    	            			}
+                    	            			var form = document.getElementById("fileupload");
+                    	            			form.setAttribute("action", "/ResearchAchieveManager/services/ThesisUpload");
+                    	            			form.removeAttribute("enctype");
+                    	            			form.setAttribute("target","nm_iframe");
+                    	            			form.submit();
+                    	            			window.clearInterval(intervalId);
+                                    		}catch(e){}
+                                        	
+                                    	}
+                                    	
+                                    	if(document.getElementById("ID")!=null){
+                                    		var intervalId=window.setInterval(function(){	
+                                            	updateTable(intervalId);                	                        
+                                            }, 1000);
+                                    	}                                        
                                     }
                                 );
                             }
@@ -182,6 +208,20 @@
                         function () {
                             data.context = $(this);
                             that._trigger('completed', e, data);
+                            window.setTimeout(function(){	                        	
+                            	var attach = document.getElementById("attachment");
+    	            			var attchUrls = document.getElementById("attachUrls");
+    	            			attach.value ="";	
+    	            			for(var i=0;i<attchUrls.rows.length;i++){
+    	            				var href =attchUrls.rows[i].cells[0].children[0].href;
+    	            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
+    	            			}
+    	                        var form = document.getElementById("fileupload");
+    	            			form.setAttribute("action", "/ResearchAchieveManager/services/ThesisUpload");
+    	            			form.removeAttribute("enctype");
+    	            			form.setAttribute("target","nm_iframe");
+    	            			form.submit();
+                            }, 500);
                         }
                     );
                 }
@@ -275,6 +315,7 @@
                 that._transition($(this).find('.fileupload-progress')).done(
                     function () {
                         that._trigger('started', e);
+                       
                     }
                 );
             },
@@ -292,18 +333,42 @@
                 );
             },
             // Callback for file deletion:
-            destroy: function (e, data) {
+            destroy: function (e, data) {            	
                 var that = $(this).data('fileupload');
-                if (data.url) {
-                    $.ajax(data);
-                    that._adjustMaxNumberOfFiles(1);
-                }
-                that._transition(data.context).done(
-                    function () {
-                        $(this).remove();
-                        that._trigger('destroyed', e, data);
-                    }
-                );
+            	if(confirm("确认删除附件"+data.url.substring(59)+"?")){
+	        		 if (data.url) {
+	                 	
+	                     $.ajax(data);
+	                     that._adjustMaxNumberOfFiles(1);
+	                 }
+	                that._transition(data.context).done(
+	                    function () {
+	                    	
+//	                        $(this).remove();
+	                    	var ele=e.srcElement.parentNode;
+	                    	while(ele.tagName!="TR"){
+	                    		ele = ele.parentNode;
+	                    	}
+	                    	ele.remove();
+	                        that._trigger('destroyed', e, data);
+	                        window.setTimeout(function(){	                        	
+	                        	var attach = document.getElementById("attachment");
+		            			var attchUrls = document.getElementById("attachUrls");
+		            			attach.value ="";	
+		            			for(var i=0;i<attchUrls.rows.length;i++){
+		            				var href =attchUrls.rows[i].cells[0].children[0].href;
+		            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
+		            			}
+		                        var form = document.getElementById("fileupload");
+		            			form.setAttribute("action", "/ResearchAchieveManager/services/ThesisUpload");
+		            			form.removeAttribute("enctype");
+		            			form.setAttribute("target","nm_iframe");
+		            			form.submit();
+	                        }, 500);
+	                        
+	                    }
+	                );
+            	}
             }
         },
 

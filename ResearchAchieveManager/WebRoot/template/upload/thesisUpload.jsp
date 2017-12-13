@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body <% if(request.getParameter("AchievementId")!=null){%>onload="load()"<%}%>>
 <div class="container upload">
 	    <div class="row">
-	        <div class="col-md-8 col-md-offset-2">
+	        <div class="col-md-9 col-md-offset-2">
 			
 				<!--论文-->
 				<div class="re-item">
@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a href="<%=projectPath%>/template/teacher.jsp" class="moco-modal-close"></a>
 						<form id="fileupload" method="post">
 						<%if(request.getParameter("AchievementId")!=null){%>
-						<input name="ID" type="hidden" value="<%=request.getParameter("AchievementId")%>" />
+						<input id="ID" name="ID" type="hidden" value="<%=request.getParameter("AchievementId")%>" />
 						<%}%>
 							<div class="form-item">
 								<label for="thesisName">论文名称:</label>
@@ -91,9 +91,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                          				 </div>
 							</div>
 							<div class="form-item">
-							<label class="col-md-2">上传附件:&nbsp;&nbsp; </label>	
+							<label class="col-md-2">成果附件:&nbsp;&nbsp; </label>	
 								<input name="attachment" id="attachment" type="hidden" value="<%=t.getAttachment()%>" />						
-  								<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>  
+  								<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe> 
+  								<%if(t.getChecked()!=1){ %> 
 								<div class="row fileupload-buttonbar col-md-8">
 					                    <div class="span7">
 					                        <!-- The fileinput-button span is used to style the file input field as button -->
@@ -110,11 +111,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					                            <i class="icon-ban-circle icon-white"></i>
 					                            <span>取消上传</span>
 					                        </button>
-					                        <button type="button" class="btn btn-danger delete">
-					                            <i class="icon-trash icon-white"></i>
-					                            <span>删除选中附件</span>
-					                        </button>
-					                        <input type="checkbox" class="toggle">全选
 					                    </div>
 					                    <!-- The global progress information -->
 					                    <div class="span5 fileupload-progress fade">
@@ -126,21 +122,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					                        <div class="progress-extended">&nbsp;</div>
 					                    </div>
 					                </div>
+					                <%} %>
 					                <!-- The loading indicator is shown during file processing -->
 					                <div class="fileupload-loading col-md-10 col-md-offset-1"></div>
 					                <br>
-					                <!-- The table listing the files available for upload/download -->
-					                <table id="attachUrls" role="presentation" class="table table-striped"><tbody class="files col-md-10 col-md-offset-1" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+					                <!-- The table listing the files available for upload/download -->				               
+					                <table id="attachUrls" role="presentation" class="table table-striped" style="width:80%">
+					                <thead>
+					                	<tr>
+					                		<td></td>
+					                		<td><label>附件名</label></td>
+					                		<td ><label>文件大小</label></td>
+					                		<td></td>
+					                		<td></td>
+					                	</tr>
+					                </thead>
+					                <tbody class="files"></tbody>
+					                </table>
 							</div>
+						<div class="col-md-offset-2">
 						<%if(request.getParameter("AchievementId")!=null&&t.getChecked()!=1){%>						
 						<button type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交更新</button>
 						<button class="btn btn-default btn-warning" type="reset">撤销修改</button>	
-						<button class="btn btn-default btn-danger" type="button" onclick="deleteAchievement(<%=t.getID()%>)">删除</button>				
+						<button class="btn btn-default btn-danger" type="button" onclick="deleteAchievement(<%=t.getID()%>)">删除成果</button>				
 						<%}else if(request.getParameter("AchievementId")==null){%>
 						<button type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交</button>
 						<button class="btn btn-default btn-warning" type="reset">重置</button>
 						<%}%>						
-						<button type="button"class="btn btn-default" onclick="window.history.back(-1);">返回</button>
+						<button type="button"class="btn btn-default" onclick="window.location.href='<%=projectPath%>/template/teacher.jsp';">返回</button>
+						</div>
 						</form>
 				</div>
 	        </div>
@@ -149,26 +159,58 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript">
 	var load = function()
 	{		
-	   $.ajax({
-          	url: "<%=projectPath%>/services/FileUploadServlet?getlist="+"<%=t.getAttachment()%>",
+		var list = "<%=t.getAttachment()%>".split(";");
+		console.log(list);
+		for(var i=0;i<list.length;i++){
+			if(list[i]!=""){
+				$.ajax({
+          url: "<%=projectPath%>/services/FileUploadServlet?getlist="+list[i],
            dataType: 'json',
            method: 'GET',
            success: function(data) {
-              $('#fileupload').fileupload(
-			        'data',
-			        'redirect',
-			        window.location.href.replace(
-			            /\/[^\/]*$/,
-			            '/cors/result.html?%s'
-			        )
-			    ); 
+           		console.log(data[0]);
+           		var table = document.getElementById("attachUrls");
+           		var num=table.rows.length;
+           		var colsNum=5;
+           		var rownum=num;
+				table.insertRow(rownum);
+				table.rows[rownum].setAttribute("class","template-upload fade in");
+				for(var i=0;i<colsNum; i++)
+				{
+					table.rows[rownum].insertCell(i);//插入列
+				}
+              	table.rows[rownum].cells[0].setAttribute("class","preview");
+              	table.rows[rownum].cells[0].innerHTML="<a href="+data[0].url+" title="+data[0].name+"  download="+data[0].name+"><img src="+data[0].thumbnail_url+"></a>";
+              	table.rows[rownum].cells[1].setAttribute("class","name");
+				table.rows[rownum].cells[1].innerHTML="<a href="+data[0].url+" title="+data[0].name+" download="+data[0].name+">"+data[0].name+"</a>";	
+				table.rows[rownum].cells[2].setAttribute("class","size");
+				table.rows[rownum].cells[2].innerHTML="<span>"+formateFileSize(data[0].size)+"</span>";
+				table.rows[rownum].cells[3].setAttribute("colspan","2");
+				table.rows[rownum].cells[3].innerHTML="";
+				if(<%=t.getChecked()%>!=1){
+					table.rows[rownum].cells[4].setAttribute("class","delete");
+					table.rows[rownum].cells[4].innerHTML="<button class=\"btn btn-danger\" data-type="+data[0].delete_type+" data-url="+data[0].delete_url+"><i class=\"icon-trash icon-white\"></i><span>删除附件</span></button>";
+				}			
+				
+
           },
            error: function(xhr) {
                // 导致出错的原因较多，以后再研究
                alert('error:' + JSON.stringify(xhr));
            }
        });
+			}			
+		}	   
 	} 
+	var formateFileSize = function(size){
+		if(size<1024){
+			return size.toFixed(2)+"B";
+		}else if(size<(1024*1024)){
+			return (size/1024).toFixed(2)+"KB"; 
+		}else if(size<(1024*1024*1024)){
+			return (size/1024/1024).toFixed(2)+"MB"; 
+		}
+	}
 	</script>
   </body>
     <script type="text/javascript">
@@ -189,28 +231,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			form.setAttribute("enctype","multipart/form-data");
 			form.setAttribute("target","nm_iframe");
 			form.submit();
-			setTimeout(function() { 
-				updateTable();
-			}, 200); 
+			
+			var intervalId = window.setInterval(function() { 
+				updateTable(intervalId);				
+			}, 2000); 
 	}
-	function updateTable(){	
-		var attach = document.getElementById("attachment");
-		var attchUrls = document.getElementById("attachUrls");
-		attach.value ="";		
-		for(var i=0;i<attchUrls.rows.length;i++){
-			var href =attchUrls.rows[i].cells[0].children[0].href;
-			attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
-			console.log(attach.value);
-		}
+	function updateTable(intervalId){
+		try{
+			
+			var attach = document.getElementById("attachment");
+			var attchUrls = document.getElementById("attachUrls");
+			attach.value ="";	
+			
+			for(var i=1;i<attchUrls.rows.length;i++){
+				var href =attchUrls.rows[i].cells[0].children[0].href;
+				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
+			}
+			window.clearInterval(intervalId);
+			
+		}catch(e){
+		}		
 	}
-	
-	
-	function sleep(delay)
-	{
-	  var start = new Date().getTime();
-	  while (new Date().getTime() < start + delay);
-	}
-	
 	function deleteAchievement(ID){
 		if(confirm("确认删除成果?")){
 		 $.ajax({
@@ -250,7 +291,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </button>
                 {% } %}</td>
             {% } else { %}
-            <td colspan="2"></td>
             {% } %}
             <td class="cancel">{% if (!i) { %}
                 <button class="btn btn-warning">
@@ -281,11 +321,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td colspan="2"></td>
             {% } %}
             <td class="delete">
-                <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                <%if(t.getChecked()!=1){%>
+				<button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                         <i class="icon-trash icon-white"></i>
-                    <span>Delete</span>
+                    <span>删除附件</span>
                 </button>
-                <input type="checkbox" name="delete" value="1">
+				<%}%>
             </td>
         </tr>
         {% } %}
