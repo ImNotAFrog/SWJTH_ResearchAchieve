@@ -2,6 +2,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -9,8 +10,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <%@include file="../head_user.jsp"%> 
      <% Thesis t = new Thesis();
    if(request.getParameter("AchievementId")!=null){
-   	t=ThesisDao.getThesisById(Integer.parseInt(request.getParameter("AchievementId")));
-   } %>
+   	t=ThesisDao.getThesisById(Integer.parseInt(request.getParameter("AchievementId")));   	
+
+   } 
+   %>
   <head>
     <base href="<%=basePath%>">
     
@@ -23,9 +26,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/reset.css">
 	<link href="<%=projectPath%>/assets/css/uploadForm.css" rel="stylesheet">
+	<!-- Generic page styles -->
+        <link rel="stylesheet" href="<%=projectPath%>/assets/css/style.css">
+        <!-- Bootstrap styles for responsive website layout, supporting different screen sizes -->
+        <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-responsive.min.css">
+        <!-- Bootstrap CSS fixes for IE6 -->
+        <!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
+        <!-- Bootstrap Image Gallery styles -->
+        <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-image-gallery.min.css">
+        <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+        <link rel="stylesheet" href="<%=projectPath%>/assets/css/jquery.fileupload-ui.css">
   </head>
 
-  <body>
+  <body <% if(request.getParameter("AchievementId")!=null){%>onload="load()"<%}%>>
 <div class="container upload">
 	    <div class="row">
 	        <div class="col-md-8 col-md-offset-2">
@@ -35,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 						<h3>请填写论文信息</h3>
 						<a href="<%=projectPath%>/template/teacher.jsp" class="moco-modal-close"></a>
-						<form method="post" action="<%=projectPath%>/services/ThesisUpload" onsubmit="confirmSubmit()">
+						<form id="fileupload" method="post">
 						<%if(request.getParameter("AchievementId")!=null){%>
 						<input name="ID" type="hidden" value="<%=request.getParameter("AchievementId")%>" />
 						<%}%>
@@ -78,34 +91,126 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                          				 </div>
 							</div>
 							<div class="form-item">
-							<label>上传附件:&nbsp;&nbsp; </label>
-							<div class="moco-control-input" style="position: relative;top:12px;">
-                           				  <input type="file" name="attachment" id="attachment" autocomplete="off" class="moco-control-file" >
-                            				 <div class="rlf-tip-wrap errorHint color-red"></div>
-                        				 </div>
-						</div>
+							<label class="col-md-2">上传附件:&nbsp;&nbsp; </label>	
+								<input name="attachment" id="attachment" type="hidden" value="<%=t.getAttachment()%>" />						
+  								<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>  
+								<div class="row fileupload-buttonbar col-md-8">
+					                    <div class="span7">
+					                        <!-- The fileinput-button span is used to style the file input field as button -->
+					                        <span class="btn btn-success fileinput-button">
+					                            <i class="icon-plus icon-white"></i>
+					                            <span>添加附件...</span>
+					                            <input type="file" name="files[]" multiple>
+					                        </span>
+					                        <button type="submit" class="btn btn-primary start">
+					                            <i class="icon-upload icon-white" onclick="return uploadFile()"></i>
+					                            <span>上传所有</span>
+					                        </button>
+					                        <button type="reset" class="btn btn-warning cancel">
+					                            <i class="icon-ban-circle icon-white"></i>
+					                            <span>取消上传</span>
+					                        </button>
+					                        <button type="button" class="btn btn-danger delete">
+					                            <i class="icon-trash icon-white"></i>
+					                            <span>删除选中附件</span>
+					                        </button>
+					                        <input type="checkbox" class="toggle">全选
+					                    </div>
+					                    <!-- The global progress information -->
+					                    <div class="span5 fileupload-progress fade">
+					                        <!-- The global progress bar -->
+					                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+					                            <div class="bar" style="width:0%;"></div>
+					                        </div>
+					                        <!-- The extended global progress information -->
+					                        <div class="progress-extended">&nbsp;</div>
+					                    </div>
+					                </div>
+					                <!-- The loading indicator is shown during file processing -->
+					                <div class="fileupload-loading col-md-10 col-md-offset-1"></div>
+					                <br>
+					                <!-- The table listing the files available for upload/download -->
+					                <table id="attachUrls" role="presentation" class="table table-striped"><tbody class="files col-md-10 col-md-offset-1" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+							</div>
 						<%if(request.getParameter("AchievementId")!=null&&t.getChecked()!=1){%>						
-						<button type="submit" class="btn btn-primary submit" style="opacity: 0.75">提交更新</button>
+						<button type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交更新</button>
 						<button class="btn btn-default btn-warning" type="reset">撤销修改</button>	
 						<button class="btn btn-default btn-danger" type="button" onclick="deleteAchievement(<%=t.getID()%>)">删除</button>				
 						<%}else if(request.getParameter("AchievementId")==null){%>
-						<button type="submit" class="btn btn-primary submit" style="opacity: 0.75">提交</button>
+						<button type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交</button>
 						<button class="btn btn-default btn-warning" type="reset">重置</button>
 						<%}%>						
 						<button type="button"class="btn btn-default" onclick="window.history.back(-1);">返回</button>
 						</form>
-					
 				</div>
 	        </div>
 	    </div>
 	</div>
+	<script type="text/javascript">
+	var load = function()
+	{		
+	   $.ajax({
+          	url: "<%=projectPath%>/services/FileUploadServlet?getlist="+"<%=t.getAttachment()%>",
+           dataType: 'json',
+           method: 'GET',
+           success: function(data) {
+              $('#fileupload').fileupload(
+			        'data',
+			        'redirect',
+			        window.location.href.replace(
+			            /\/[^\/]*$/,
+			            '/cors/result.html?%s'
+			        )
+			    ); 
+          },
+           error: function(xhr) {
+               // 导致出错的原因较多，以后再研究
+               alert('error:' + JSON.stringify(xhr));
+           }
+       });
+	} 
+	</script>
   </body>
     <script type="text/javascript">
 	function confirmSubmit(){
-		if(!confirm("提交后成果将置为待审核状态，确认提交?")){  
+		if(confirm("提交后成果将置为待审核状态，确认提交?")){  
+			var form = document.getElementById("fileupload");
+			form.setAttribute("action", "<%=projectPath%>/services/ThesisUpload");
+			form.removeAttribute("enctype");
+			form.removeAttribute("target");
+			form.submit();			
+		}else{
 			return false;
 		}
 	}
+	function uploadFile(){	
+		var form = document.getElementById("fileupload");
+			form.setAttribute("action", "<%=projectPath%>/services/FileUploadServlet");
+			form.setAttribute("enctype","multipart/form-data");
+			form.setAttribute("target","nm_iframe");
+			form.submit();
+			setTimeout(function() { 
+				updateTable();
+			}, 200); 
+	}
+	function updateTable(){	
+		var attach = document.getElementById("attachment");
+		var attchUrls = document.getElementById("attachUrls");
+		attach.value ="";		
+		for(var i=0;i<attchUrls.rows.length;i++){
+			var href =attchUrls.rows[i].cells[0].children[0].href;
+			attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
+			console.log(attach.value);
+		}
+	}
+	
+	
+	function sleep(delay)
+	{
+	  var start = new Date().getTime();
+	  while (new Date().getTime() < start + delay);
+	}
+	
 	function deleteAchievement(ID){
 		if(confirm("确认删除成果?")){
 		 $.ajax({
@@ -125,5 +230,95 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              })
 		}	 
 	}
-  </script>   
+  </script>
+          <script id="template-upload" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+        	<tr class="template-upload fade">
+            <td class="preview"><span class="fade"></span></td>
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            {% if (file.error) { %}
+            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+            {% } else if (o.files.valid && !i) { %}
+            <td>
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+            </td>
+            <td class="start">{% if (!o.options.autoUpload) { %}
+                <button class="btn btn-primary" onclick="return uploadFile()">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Start</span>
+                </button>
+                {% } %}</td>
+            {% } else { %}
+            <td colspan="2"></td>
+            {% } %}
+            <td class="cancel">{% if (!i) { %}
+                <button class="btn btn-warning">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                {% } %}</td>
+        </tr>
+        {% } %}
+    </script>
+    <!-- The template to display files available for download -->
+    <script id="template-download" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-download fade">
+            {% if (file.error) { %}
+            <td></td>
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+            {% } else { %}
+            <td class="preview">{% if (file.thumbnail_url) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}"  download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                {% } %}</td>
+            <td class="name">
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
+            </td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td colspan="2"></td>
+            {% } %}
+            <td class="delete">
+                <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                        <i class="icon-trash icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1">
+            </td>
+        </tr>
+        {% } %}
+    </script>
+    <script src="<%=projectPath%>/assets/js/fileupload/jquery-1.8.2.min.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/jquery.ui.widget.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/tmpl.min.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/load-image.min.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/canvas-to-blob.min.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/bootstrap.min.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/bootstrap-image-gallery.min.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/jquery.iframe-transport.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload-fp.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload-ui.js"></script>
+    <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
+    <script type="text/javascript">
+    $(function () {
+    'use strict';
+
+    // Initialize the jQuery File Upload widget:
+    $('#fileupload').fileupload();
+
+    // Enable iframe cross-domain access via redirect option:
+    $('#fileupload').fileupload(
+        'option',
+        'redirect',
+        window.location.href.replace(
+            /\/[^\/]*$/,
+            '/cors/result.html?%s'
+        )
+    );
+	}); 
+	 
+    </script>   
 </html>

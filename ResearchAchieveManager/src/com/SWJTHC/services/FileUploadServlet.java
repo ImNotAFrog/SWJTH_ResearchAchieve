@@ -2,6 +2,9 @@ package com.SWJTHC.services;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -15,6 +18,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.imgscalr.Scalr;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class FileUploadServlet extends HttpServlet {
@@ -25,20 +29,41 @@ public class FileUploadServlet extends HttpServlet {
         */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String projectPath =request.getContextPath();
 		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
-        if (request.getParameter("getfile") != null && !request.getParameter("getfile").isEmpty()) {
-        	
+		response.setCharacterEncoding("utf-8");			
+        String username = request.getSession().getAttribute("username").toString();
+        System.out.println(request.getParameter("getlist"));
+        if(request.getParameter("getlist") != null && !request.getParameter("getlist").isEmpty()){
+        	File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+request.getParameter("getlist"));
+            response.setContentType("application/json");
+            PrintWriter writer = response.getWriter();
+            JSONArray json = new JSONArray();
+            JSONObject jsono = new JSONObject();
+            try {
+				jsono.put("name", request.getParameter("getlist"));
+	            jsono.put("size", file.length());
+	            jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + request.getParameter("getlist"));
+	            jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + request.getParameter("getlist"));
+	            jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + request.getParameter("getlist"));
+	            jsono.put("delete_type", "GET");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            json.put(jsono);
+            writer.write(json.toString());
+        }else if(request.getParameter("getfile") != null && !request.getParameter("getfile").isEmpty()) {       	
         	//这是文件保存的路径
-            File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+request.getParameter("getfile"));
+            File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+request.getParameter("getfile"));
             if (file.exists()) {
                 int bytes = 0;
                 ServletOutputStream op = response.getOutputStream();
 
                 response.setContentType(getMimeType(file));
                 response.setContentLength((int) file.length());
-                response.setHeader( "Content-Disposition", "inline; filename=\"" + file.getName() + "\"" );
+                response.setHeader( "Content-Disposition", "inline; filename=\"" + new String(file.getName().getBytes(), "ISO-8859-1") + "\"" );
 
                 byte[] bbuf = new byte[1024];
                 DataInputStream in = new DataInputStream(new FileInputStream(file));
@@ -52,13 +77,13 @@ public class FileUploadServlet extends HttpServlet {
                 op.close();
             }
         } else if (request.getParameter("delfile") != null && !request.getParameter("delfile").isEmpty()) {
-            File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+ request.getParameter("delfile"));
+            File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+ request.getParameter("delfile"));
             if (file.exists()) {
                 file.delete(); // TODO:check and report success
             } 
         } else if (request.getParameter("getthumb") != null && !request.getParameter("getthumb").isEmpty()) {
-            System.out.println(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+request.getParameter("getthumb"));
-            File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+request.getParameter("getthumb"));
+            System.out.println(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+request.getParameter("getthumb"));
+            File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+request.getParameter("getthumb"));
                 if (file.exists()) {
                     System.out.println(file.getAbsolutePath());
                     String mimetype = getMimeType(file);
@@ -84,7 +109,7 @@ public class FileUploadServlet extends HttpServlet {
                             }
                             ServletOutputStream srvos = response.getOutputStream();
                             response.setContentLength(os.size());
-                            response.setHeader( "Content-Disposition", "inline; filename=\"" + file.getName() + "\"" );
+                            response.setHeader( "Content-Disposition", "inline; filename=\"" + new String(file.getName().getBytes(), "ISO-8859-1") + "\"" );
                             os.writeTo(srvos);
                             srvos.flush();
                             srvos.close();
@@ -111,6 +136,12 @@ public class FileUploadServlet extends HttpServlet {
                     		shortcut = new File(request.getServletContext().getRealPath("/")+"assets/img/excel.jpg");
                     		im=ImageIO.read(shortcut);
                     		break;
+                    	case "rar":
+                    	case "7z":
+                    	case "zip":
+                    		shortcut = new File(request.getServletContext().getRealPath("/")+"assets/img/rar.jpg");
+                    		im=ImageIO.read(shortcut);
+                    		break;
                     	case "pdf":
                     		shortcut = new File(request.getServletContext().getRealPath("/")+"assets/img/pdf.jpg");
                     		im=ImageIO.read(shortcut);
@@ -128,7 +159,8 @@ public class FileUploadServlet extends HttpServlet {
                             response.setContentType("image/jpeg");
                             ServletOutputStream srvos = response.getOutputStream();
                             response.setContentLength(os.size());
-                            response.setHeader( "Content-Disposition", "inline; filename=\"" + file.getName() + "\"" );
+                            
+                            response.setHeader( "Content-Disposition", "inline; filename=\"" + new String(file.getName().getBytes(), "ISO-8859-1") + "\"" );
                             os.writeTo(srvos);
                             srvos.flush();
                             srvos.close();
@@ -154,13 +186,13 @@ public class FileUploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String projectPath =request.getContextPath();
-
 		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");		
         if (!ServletFileUpload.isMultipartContent(request)) {
             throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
         }
-
+       
+        String username = request.getSession().getAttribute("username").toString();
         ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
         PrintWriter writer = response.getWriter();
         response.setContentType("application/json");
@@ -168,16 +200,34 @@ public class FileUploadServlet extends HttpServlet {
         try {
             List<FileItem> items = uploadHandler.parseRequest(request);
             for (FileItem item : items) {
-                if (!item.isFormField()) {
-                        File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/", item.getName());
-                        System.out.println(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+item.getName());
-                        item.write(file);
+                if (!item.isFormField()&&!item.getName().equals("")) {
+                		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyyMMddHHmmss");  	                   
+                		String fileName =  sdf3.format(new Date())+item.getName();
+	                	String dirPath = request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/";
+	                    String filePath = request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+fileName;
+                        File dir = new File(dirPath);
+                        if (!dir.exists()) {
+                        	dir.mkdirs();
+                        }
+                        File file = new File(filePath);
+                        if (!file.exists()) {
+                            try {
+                            	file.createNewFile();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        try {
+							item.write(file);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+						}
                         JSONObject jsono = new JSONObject();
                         jsono.put("name", item.getName());
                         jsono.put("size", item.getSize());
-                        jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + item.getName());
-                        jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + item.getName());
-                        jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + item.getName());
+                        jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + fileName);
+                        jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + fileName);
+                        jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + fileName);
                         jsono.put("delete_type", "GET");
                         json.put(jsono);
                         System.out.println(json.toString());
