@@ -168,14 +168,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    </div>
 <script>
   function confirmSubmit(){
-		if(confirm("提交后成果将置为待审核状态，确认提交?")){  
-			var form = document.getElementById("fileupload");
-			form.setAttribute("action", "<%=projectPath%>/services/LawsUpload");
-			form.removeAttribute("enctype");
-			form.removeAttribute("target");
-			form.submit();			
-		}else{
-			return false;
+
+  	/*校验一些输入表单是否为空*/
+  		var error = document.getElementById("error");
+  		var lawName = document.getElementById("lawName");
+  		var lawNumber = document.getElementById("lawNumber");
+  		var wordsCount = document.getElementById("wordsCount");
+
+  		if(lawName.value == ""){
+  			lawName.next().innerText = "法规名称不能为空.";
+  			return false;
+  		}else if(lawNumber.value ==""){
+  			lawNumber.next().innerText = "法规编号不能为空.";
+  			return false;
+  		}else if(wordsCount.value ==""){
+  			wordsCount.next().innerText = "字数不能为空.";
+  			return false;
+  		}else{
+
+			if(confirm("提交后成果将置为待审核状态，确认提交?")){  
+				var form = document.getElementById("fileupload");
+				form.setAttribute("action", "<%=projectPath%>/services/LawsUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();			
+			}else{
+				return false;
+			}
 		}
 	}
 	function uploadFile(){	

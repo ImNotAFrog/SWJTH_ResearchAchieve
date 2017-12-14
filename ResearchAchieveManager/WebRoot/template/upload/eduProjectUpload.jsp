@@ -168,6 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<%}%>						
 						<button type="button"class="btn btn-default" onclick="window.location.href='<%=projectPath%>/template/teacher.jsp';">返回</button>
 						</div>
+						<span id="error" style="color:red"></span>
 					</form>
 					
 				</div>
@@ -177,14 +178,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   <script>
   function confirmSubmit(){
-		if(confirm("提交后成果将置为待审核状态，确认提交?")){  
-			var form = document.getElementById("fileupload");
-			form.setAttribute("action", "<%=projectPath%>/services/ProjectUpload");
-			form.removeAttribute("enctype");
-			form.removeAttribute("target");
-			form.submit();			
-		}else{
-			return false;
+  		/*校验一些输入表单是否为空*/
+  		var error = document.getElementById("error");
+  		var projectName = document.getElementById("projectName");
+  		var subject = document.getElementById("subject");
+  		var stateDate = document.getElementById("stateDate");
+
+  		if(projectName.value == ""){
+  			projectName.next().innerText = "输入的项目名称不能为空.";
+  			return false;
+  		}else if(subject.value ==""){
+  			subject.next().innerText = "项目主体不能为空.";
+  			return false;
+  		}else if(stateDate.value ==""){
+  			stateDate.next().innerText = "项目时间不能为空.";
+  			return false;
+  		}
+  		else{
+			if(confirm("提交后成果将置为待审核状态，确认提交?")){  
+				var form = document.getElementById("fileupload");
+				form.setAttribute("action", "<%=projectPath%>/services/ProjectUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();			
+			}else{
+				return false;
+			}
 		}
 	}
 	function uploadFile(){	

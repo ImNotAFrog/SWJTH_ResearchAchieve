@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                            					 </div>
 										</div>
 										<div class="form-item">
-											<label for="patentName">专利编号:</label>
+											<label for="patentNum">专利编号:</label>
 											<div class="moco-control-input">
 	                              				  <input type="text" name="patentNum" id="patentNum" autocomplete="off" class="moco-form-control" value="<%=p.getPatentNum() %>" placeholder="请输入专利编号...">
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
@@ -82,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                           				 </div>
 										</div>
 										<div class="form-item">
-											<label for="patentName">授权公告日期:</label>
+											<label for="patentDate">授权公告日期:</label>
 											<div class="moco-control-input">
 	                              				  <input type="text" name="patentDate" id="patentDate" autocomplete="off" class="moco-form-control" value="<%if(p.getPatentDate()!=null){%><%=p.getPatentDate()%><%}%>">
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
@@ -158,14 +158,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
   <script>
   function confirmSubmit(){
-		if(confirm("提交后成果将置为待审核状态，确认提交?")){  
-			var form = document.getElementById("fileupload");
-			form.setAttribute("action", "<%=projectPath%>/services/PatentUpload");
-			form.removeAttribute("enctype");
-			form.removeAttribute("target");
-			form.submit();			
-		}else{
-			return false;
+  	/*校验一些输入表单是否为空*/
+  		var error = document.getElementById("error");
+  		var patentName = document.getElementById("patentName");
+  		var patentNum = document.getElementById("patentNum");
+  		var patentHolder = document.getElementById("patentHolder");
+  		var patentDate = document.getElementById("patentDate");
+
+  		if(patentName.value == ""){
+  			patentName.next().innerText = "专利名称不能为空.";
+  			return false;
+  		}else if(patentNum.value ==""){
+  			patentNum.next().innerText = "专利编号不能为空.";
+  			return false;
+  		}else if(patentHolder.value ==""){
+  			patentHolder.next().innerText = "专利发明人不能为空.";
+  			return false;
+  		}else if(patentDate.value ==""){
+  			patentDate.next().innerText = "专利授权公告日期不能为空.";
+  			return false;
+  		}else{
+			if(confirm("提交后成果将置为待审核状态，确认提交?")){  
+				var form = document.getElementById("fileupload");
+				form.setAttribute("action", "<%=projectPath%>/services/PatentUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();			
+			}else{
+				return false;
+			}
 		}
 	}
 	function uploadFile(){	

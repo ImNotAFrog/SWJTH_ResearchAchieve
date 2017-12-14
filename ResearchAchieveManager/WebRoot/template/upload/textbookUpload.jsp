@@ -48,7 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<input id="type" name="type" type="hidden" value="TextbookUpload" />
 									<%}%>
 										<div class="form-item">
-											<label for="textName">名称:</label>
+											<label for="textbookName">名称:</label>
 											<div class="moco-control-input">
 	                              				  <input type="text" name="textbookName" id="textbookName" autocomplete="off" class="moco-form-control" value="<%=t.getName() %>" placeholder="请输入教材名称..." required>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
@@ -92,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             				</div>
                         				</div>
                         				<div class="form-item" style="margin-top: 12px;">
-			                            	<label for="" class="moco-control-label">出版时间：</label>
+			                            	<label for="publishDate" class="moco-control-label">出版时间：</label>
 			                            	<div class="moco-control-input">
 				                                <input type="text" name="publishDate" id="publishDate" autocomplete="off" class="moco-form-control" value="<%if(t.getPublishDate()!=null){%><%=t.getPublishDate()%><%}%>">
 				                           		<div class="rlf-tip-wrap errorHint color-red"></div>
@@ -169,14 +169,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <script>
 
   function confirmSubmit(){
-		if(confirm("提交后成果将置为待审核状态，确认提交?")){  
-			var form = document.getElementById("fileupload");
-			form.setAttribute("action", "<%=projectPath%>/services/TextbookUpload");
-			form.removeAttribute("enctype");
-			form.removeAttribute("target");
-			form.submit();			
-		}else{
-			return false;
+  	/*校验一些输入表单是否为空*/
+  		
+  		var textbookName = document.getElementById("textbookName");
+  		var publishDate = document.getElementById("publishDate");
+  		
+  		if(textbookName.value == ""){
+  			textbookName.next().innerText = "教材名称不能为空.";
+  			return false;
+  		}else if(publishDate.value ==""){
+  			publishDate.next().innerText = "教材出版时间不能为空.";
+  			return false;
+  		}else{
+			if(confirm("提交后成果将置为待审核状态，确认提交?")){  
+				var form = document.getElementById("fileupload");
+				form.setAttribute("action", "<%=projectPath%>/services/TextbookUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();			
+			}else{
+				return false;
+			}
 		}
 	}
 	function uploadFile(){	

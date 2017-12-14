@@ -74,14 +74,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         					 </div>
 							</div>
 							<div class="form-item">
-								<label for="chiefEditor">发表刊物:</label>
+								<label for="journalName">发表刊物:</label>
 								<div class="moco-control-input">
                             				  <input type="text" name="journalName" id="journalName" autocomplete="off" class="moco-form-control" value="<%=t.getJournalName()%>" placeholder="请输入发表刊物...">
                              				 <div class="rlf-tip-wrap errorHint color-red"></div>
                          				 </div>
 							</div>
 							<div class="form-item">
-								<label for="chiefEditor">刊号:</label>
+								<label for="journalNum">刊号:</label>
 								<div class="moco-control-input">
                             				  <input type="text" name="journalNum" id="journalNum" autocomplete="off" class="moco-form-control" value="<%=t.getJournalNum()%>" placeholder="请输入发表刊物...">
                              				 <div class="rlf-tip-wrap errorHint color-red"></div>
@@ -210,14 +210,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
     <script type="text/javascript">
 	function confirmSubmit(){
-		if(confirm("提交后成果将置为待审核状态，确认提交?")){  
-			var form = document.getElementById("fileupload");
-			form.setAttribute("action", "<%=projectPath%>/services/ThesisUpload");
-			form.removeAttribute("enctype");
-			form.removeAttribute("target");
-			form.submit();			
-		}else{
-			return false;
+		/*校验一些输入表单是否为空*/
+  		
+  		var thesisName = document.getElementById("thesisName");
+  		var journalName = document.getElementById("journalName");
+  		var journalNum = document.getElementById("journalNum");
+
+  		if(thesisName.value == ""){
+  			thesisName.next().innerText = "论文名称不能为空.";
+  			return false;
+  		}else if(journalName.value ==""){
+  			journalName.next().innerText = "发表刊物不能为空.";
+  			return false;
+  		}else if(journalNum.value ==""){
+  			journalNum.next().innerText = "论文刊号不能为空.";
+  			return false;
+  		}else{
+			if(confirm("提交后成果将置为待审核状态，确认提交?")){  
+				var form = document.getElementById("fileupload");
+				form.setAttribute("action", "<%=projectPath%>/services/ThesisUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();			
+			}else{
+				return false;
+			}
 		}
 	}
 	function uploadFile(){	
