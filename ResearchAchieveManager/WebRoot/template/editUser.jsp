@@ -19,7 +19,7 @@
 	        	<label>用户基本信息编辑表：</label>
 	        	<i class="mr_left_bg"></i>
 	        	<i class="mr_right_bg"></i>
-			    <form action="<%=projectPath%>/services/UserServlet"  class="form-horizontal">
+			    <form action="<%=projectPath%>/services/UserServlet"  class="form-horizontal" onsumbmit="return checkform()">
 			    	<div class="form-group">
 					    <label for="username" class="col-md-2 control-label">用户:</label>					   
 					    <div class="col-md-6">
@@ -108,7 +108,7 @@
 				    	<input type="submit" name="Submit" class="save" value="保存">
 				    	<a href="<%=projectPath%>/template/teacher.jsp" class="cancel">取消</a>
 					</div>
-				    
+				    <span id="error" style="color:red"></span>
 				</form>
 
 
@@ -142,6 +142,32 @@
 	    } 
 	}); 
   }
-  
+  function checkform(){
+  		var error = document.getElementById("error");
+  		var username = document.getElementById("username");
+  		var name = document.getElementById("name");
+  		var position = document.getElementById("position");
+  		var title = document.getElementById("title");
+  		var positionLevel = document.getElementById("positionLevel");
+  		var 
+  		if(username.value ==""){
+  			error.innerText = "用户名不能为空";
+  			return false;
+  		}else if(name.value == ""){
+  			error.innerText = "姓名不能为空";
+  			return false;
+  		}
+  		// }else if(position.value == ""){
+  		// 	error.innerText ="职务不能为空";
+  		// 	return false;
+  		// }else if(title.value == ""){
+  		// 	error.innerText ="职称不能为空";
+  		// 	return false;
+  		// }else if(positionLevel.value == ""){
+  		// 	error.innerText ="职级不能为空";
+  		// 	return false;
+  		// }
+  		return true;
+  }
   </script>
 </html>

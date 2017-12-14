@@ -49,7 +49,7 @@
 				    	<input type="submit" name="Submit" class="save" value="修改">
 				    	<a href="<%=projectPath%>/template/teacher.jsp" class="cancel">取消</a>
 					</div>
-				    
+				    <span id="error" style="color:red"></span>
 				</form>
 
 
@@ -84,14 +84,21 @@
 	}); 
   }
  	var checkPassword = function(){
+
+ 		var error = document.getElementById("error");
+
+ 		var oldPassword=document.getElementById("oldPassword").value;
   		var newPassword=document.getElementById("newPassword").value;
   		var confirmPassword = document.getElementById("confirmPassword").value;
-  		
-  		if(newPassword!=confirmPassword){
-  			alert("您输入的新密码不一致");
+  		if(newPassword == oldPassword){
+  			error.innerText = "您输入的新密码和旧密码相同";
   			return false;
   		}
-  		
+  		else if(newPassword != confirmPassword){
+  			error.innerText = "您输入的新密码不一致";
+  			return false;
+  		}
+  		return true;
   	}
   
   </script>
