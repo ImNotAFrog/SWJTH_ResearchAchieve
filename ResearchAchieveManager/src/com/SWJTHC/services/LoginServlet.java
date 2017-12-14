@@ -77,25 +77,7 @@ public class LoginServlet extends HttpServlet {
 				AppUser u = l.get(0);
 
 				request.getSession().setAttribute("role", u.getRole());
-				request.setAttribute("user", u);
-//				if(request.getParameterValues("rememberMe")!=null&&request.getParameterValues("rememberMe").length>0){
-//					
-//					
-//					Cookie usernameCookie = new Cookie("username",URLEncoder.encode(username, "utf-8"));
-//					usernameCookie.setMaxAge(604800);
-//					usernameCookie.setPath("/");			
-//					response.addCookie(usernameCookie);
-//				}else{
-//					Cookie[] cookies = request.getCookies();
-//					
-//					for(Cookie c : cookies){
-//						if(c.getName().equals("username")){
-//							c.setMaxAge(0);
-//							c.setPath("/");
-//							response.addCookie(c);							
-//						}					
-//					}					
-//				}
+				//request.setAttribute("user", u);
 				if(u.getRole().equals("teacher")){
 					request.getRequestDispatcher("/template/teacher.jsp").forward(request, response);
 				}else if(u.getRole().equals("admin")){

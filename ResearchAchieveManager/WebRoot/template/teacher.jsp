@@ -46,6 +46,9 @@
 				<div class="right">
 					<div id="detail" class="content-item">
 						<div class="common-title">个人信息
+								<a href="<%=projectPath %>/template/editPassword.jsp" class="pull-right edit">
+									修改密码
+								</a>
 								<a href="<%=projectPath %>/template/editUser.jsp" class="pull-right edit">
 									编辑
 								</a>

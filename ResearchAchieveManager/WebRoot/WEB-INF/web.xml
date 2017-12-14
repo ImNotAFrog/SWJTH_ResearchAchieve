@@ -69,6 +69,13 @@
     <servlet-name>FileUploadServlet</servlet-name>
     <servlet-class>com.SWJTHC.services.FileUploadServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>EditPasswordServlet</servlet-name>
+    <servlet-class>com.SWJTHC.services.EditPasswordServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -117,6 +124,10 @@
   <servlet-mapping>
     <servlet-name>FileUploadServlet</servlet-name>
     <url-pattern>/services/FileUploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditPasswordServlet</servlet-name>
+    <url-pattern>/services/EditPasswordServlet</url-pattern>
   </servlet-mapping>
   
      <filter>

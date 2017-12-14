@@ -119,7 +119,7 @@ create table Thesis(
 	)
 /*功能：创建用户成果表*/
 create table UserAchievement(
-	ID int key,--成果ID
+	ID int,--成果ID
 	name varchar(50), --成果名
 	username varchar(200),--用户名
 	category varchar(200), --成果类型
