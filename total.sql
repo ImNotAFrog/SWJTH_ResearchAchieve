@@ -9,7 +9,8 @@ create table AppUser(
 	positionLevel varchar(200), --职级
 	title varchar(200), --职称
 	department varchar(200),--所属部门
-	subDepartment varchar(50) --子部门
+	subDepartment varchar(50), --子部门
+	role varchar(50) --角色
 	)
 /*功能：创建刊物表*/
 create table Journal(
@@ -29,7 +30,7 @@ create table Laws(
 	level varchar(200), --级别
 	authorSituation varchar(200), --作者情况
 	score float, --分值
-	attachment varchar(200), --附件
+	attachment varchar(3000), --附件
 	owner varchar(50), --所有者
 	checked int	
 	)
@@ -42,7 +43,7 @@ create table Patent(
 	patentDate date, --授权日期
 	patentNum varchar(50), --专利编号
 	score float,--分值
-	attachment varchar(200), --附件
+	attachment varchar(3000), --附件
 	owner varchar(50), --成果申请人
 	checked int	
 	)
@@ -85,7 +86,7 @@ create table eduProject(
 	authorSituation varchar(200), --组长或成员
 	score float,--分值
 	state varchar(50), --项目情况
-	attachment varchar(200), --附件
+	attachment varchar(3000), --附件
 	owner varchar(50), --所有者
 	checked int	
 
@@ -100,7 +101,7 @@ create table Textbook(
 	ISBN varchar(50), --ISBN
 	publishingHouse varchar(200), --出版社
 	score float,--分值
-	attachment varchar(200), --附件
+	attachment varchar(3000), --附件
 	owner varchar(50), --所有者
 	checked int	
 	)
@@ -112,7 +113,7 @@ create table Thesis(
 	journa_name varchar(200), --刊物名称
 	journal_id varchar(200), --发表刊物ID
 	score float,--分值
-	attachment varchar(200), --附件
+	attachment varchar(3000), --附件
 	owner varchar(50), --所有者
 	checked int	
 	)

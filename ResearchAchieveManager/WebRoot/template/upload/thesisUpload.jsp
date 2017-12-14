@@ -16,9 +16,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    %>
   <head>
     <base href="<%=basePath%>">
-    
-    <title>My JSP 'thesisUpload.jsp' starting page</title>
-    
+    <%if(request.getParameter("AchievementId")!=null){%>
+    <title>论文成果编辑</title>
+    <%}else{ %>
+    <title>论文成果上传</title>
+    <%} %>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -29,12 +31,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- Generic page styles -->
         <link rel="stylesheet" href="<%=projectPath%>/assets/css/style.css">
         <!-- Bootstrap styles for responsive website layout, supporting different screen sizes -->
-        <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-responsive.min.css">
-        <!-- Bootstrap CSS fixes for IE6 -->
-        <!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
-        <!-- Bootstrap Image Gallery styles -->
-        <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-image-gallery.min.css">
-        <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
         <link rel="stylesheet" href="<%=projectPath%>/assets/css/jquery.fileupload-ui.css">
   </head>
 
@@ -51,6 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<form id="fileupload" method="post">
 						<%if(request.getParameter("AchievementId")!=null){%>
 						<input id="ID" name="ID" type="hidden" value="<%=request.getParameter("AchievementId")%>" />
+						<input id="type" name="type" type="hidden" value="ThesisUpload" />
 						<%}%>
 							<div class="form-item">
 								<label for="thesisName">论文名称:</label>
@@ -137,12 +134,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					                		<td></td>
 					                	</tr>
 					                </thead>
-					                <tbody class="files"></tbody>
+					                <tbody id ="fileBody" class="files"></tbody>
 					                </table>
 							</div>
 						<div class="col-md-offset-2">
 						<%if(request.getParameter("AchievementId")!=null&&t.getChecked()!=1){%>						
-						<button type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交更新</button>
+						<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交更新</button>
 						<button class="btn btn-default btn-warning" type="reset">撤销修改</button>	
 						<button class="btn btn-default btn-danger" type="button" onclick="deleteAchievement(<%=t.getID()%>)">删除成果</button>				
 						<%}else if(request.getParameter("AchievementId")==null){%>
@@ -160,47 +157,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var load = function()
 	{		
 		var list = "<%=t.getAttachment()%>".split(";");
-		console.log(list);
 		for(var i=0;i<list.length;i++){
 			if(list[i]!=""){
-				$.ajax({
-          url: "<%=projectPath%>/services/FileUploadServlet?getlist="+list[i],
-           dataType: 'json',
-           method: 'GET',
-           success: function(data) {
-           		console.log(data[0]);
-           		var table = document.getElementById("attachUrls");
-           		var num=table.rows.length;
-           		var colsNum=5;
-           		var rownum=num;
-				table.insertRow(rownum);
-				table.rows[rownum].setAttribute("class","template-upload fade in");
-				for(var i=0;i<colsNum; i++)
-				{
-					table.rows[rownum].insertCell(i);//插入列
-				}
-              	table.rows[rownum].cells[0].setAttribute("class","preview");
-              	table.rows[rownum].cells[0].innerHTML="<a href="+data[0].url+" title="+data[0].name+"  download="+data[0].name+"><img src="+data[0].thumbnail_url+"></a>";
-              	table.rows[rownum].cells[1].setAttribute("class","name");
-				table.rows[rownum].cells[1].innerHTML="<a href="+data[0].url+" title="+data[0].name+" download="+data[0].name+">"+data[0].name+"</a>";	
-				table.rows[rownum].cells[2].setAttribute("class","size");
-				table.rows[rownum].cells[2].innerHTML="<span>"+formateFileSize(data[0].size)+"</span>";
-				table.rows[rownum].cells[3].setAttribute("colspan","2");
-				table.rows[rownum].cells[3].innerHTML="";
-				if(<%=t.getChecked()%>!=1){
-					table.rows[rownum].cells[4].setAttribute("class","delete");
-					table.rows[rownum].cells[4].innerHTML="<button class=\"btn btn-danger\" data-type="+data[0].delete_type+" data-url="+data[0].delete_url+"><i class=\"icon-trash icon-white\"></i><span>删除附件</span></button>";
-				}			
-				
-
-          },
-           error: function(xhr) {
-               // 导致出错的原因较多，以后再研究
-               alert('error:' + JSON.stringify(xhr));
-           }
-       });
+			   $.ajax({
+	          	   url: "<%=projectPath%>/services/FileUploadServlet?getlist="+list[i],
+		           dataType: 'json',
+		           method: 'GET',
+		           success: function(data) {
+		           		var tbody = document.getElementById("fileBody");
+		           		var num=tbody.rows.length;
+		           		var colsNum=5;
+		           		var rownum=num;
+						tbody.insertRow(rownum);
+						tbody.rows[rownum].setAttribute("class","template-upload fade in");
+						for(var i=0;i<colsNum; i++)
+						{
+							tbody.rows[rownum].insertCell(i);//插入列
+						}
+		              	tbody.rows[rownum].cells[0].setAttribute("class","preview");
+		              	tbody.rows[rownum].cells[0].innerHTML="<a href="+data[0].url+" title="+data[0].name+"  download="+data[0].name+"><img src="+data[0].thumbnail_url+"></a>";
+		              	tbody.rows[rownum].cells[1].setAttribute("class","name");
+						tbody.rows[rownum].cells[1].innerHTML="<a href="+data[0].url+" title="+data[0].name+" download="+data[0].name+">"+data[0].name+"</a>";	
+						tbody.rows[rownum].cells[2].setAttribute("class","size");
+						tbody.rows[rownum].cells[2].innerHTML="<span>"+formateFileSize(data[0].size)+"</span>";
+						tbody.rows[rownum].cells[3].setAttribute("colspan","2");
+						tbody.rows[rownum].cells[3].innerHTML="";
+						if(<%=t.getChecked()%>!=1){
+							tbody.rows[rownum].cells[4].setAttribute("class","delete");
+							tbody.rows[rownum].cells[4].innerHTML="<button class=\"btn btn-danger\" data-type="+data[0].delete_type+" data-url="+data[0].delete_url+"><i class=\"icon-trash icon-white\"></i><span>删除附件</span></button>";
+						}			
+						
+		
+		          },
+		           error: function(xhr) {
+		               // 导致出错的原因较多，以后再研究
+		               alert('error:' + JSON.stringify(xhr));
+		           }
+		       });
 			}			
-		}	   
+		}
 	} 
 	var formateFileSize = function(size){
 		if(size<1024){
@@ -331,26 +326,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </tr>
         {% } %}
     </script>
-    <script src="<%=projectPath%>/assets/js/fileupload/jquery-1.8.2.min.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/jquery.ui.widget.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/tmpl.min.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/load-image.min.js"></script>
-    <script src="<%=projectPath%>/assets/js/fileupload/canvas-to-blob.min.js"></script>
-    <script src="<%=projectPath%>/assets/js/fileupload/bootstrap.min.js"></script>
-    <script src="<%=projectPath%>/assets/js/fileupload/bootstrap-image-gallery.min.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/jquery.iframe-transport.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload-fp.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload-ui.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
     <script type="text/javascript">
-    $(function () {
-    'use strict';
-
-    // Initialize the jQuery File Upload widget:
-    $('#fileupload').fileupload();
-
-    // Enable iframe cross-domain access via redirect option:
+    $(function () {    
+	'use strict';
+	$('#fileupload').fileupload();
+	
+	    // Enable iframe cross-domain access via redirect option:
     $('#fileupload').fileupload(
         'option',
         'redirect',
@@ -359,7 +348,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             '/cors/result.html?%s'
         )
     );
-	}); 
-	 
+
+    // Initialize the jQuery File Upload widget:
+  		
+	}); 	 
     </script>   
 </html>

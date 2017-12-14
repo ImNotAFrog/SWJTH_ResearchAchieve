@@ -20,7 +20,7 @@ public class UserDao {
 		
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into AppUser(username,password) values(?,?)",u,null);
+			i = Dao.executUpdate("insert into AppUser(username,password,role) values(?,?,?)",u,null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,6 +44,7 @@ public class UserDao {
 				a.setPosition(Position.valueOf(rs.getString("position")));
 				a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
 				a.setTitle(Title.valueOf(rs.getString("title")));
+				a.setRole(rs.getString("role"));
 				l.add(a);
 			}			
 		} catch (Exception e) {
@@ -72,6 +73,7 @@ public class UserDao {
 				if(rs.getString("position")!=null&&!rs.getString("position").equals(""))a.setPosition(Position.valueOf(rs.getString("position")));
 				if(rs.getString("positionLevel")!=null&&!rs.getString("positionLevel").equals(""))a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
 				if(rs.getString("title")!=null&&!rs.getString("title").equals(""))a.setTitle(Title.valueOf(rs.getString("title")));
+				a.setRole(rs.getString("role"));
 				l.add(a);
 			}			
 		} catch (Exception e) {

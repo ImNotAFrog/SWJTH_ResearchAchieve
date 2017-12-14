@@ -158,19 +158,20 @@
                                     function () {
                                         data.context = $(this);
                                         that._trigger('completed', e, data);
-                                    	
-                                    	var updateTable = function(intervalId){ 
+
+                                        document.getElementById("btnSubmit").disabled=false;
+                                    	var updateTable = function(intervalId){                                     		
                                     		try{
                                     			var attach = document.getElementById("attachment");
                     	            			var attchUrls = document.getElementById("attachUrls");
                     	            			attach.value ="";	
-
                     	            			for(var i=1;i<attchUrls.rows.length;i++){
                     	            				var href =attchUrls.rows[i].cells[0].children[0].href;
                     	            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
                     	            			}
                     	            			var form = document.getElementById("fileupload");
-                    	            			form.setAttribute("action", "/ResearchAchieveManager/services/ThesisUpload");
+                    	            			var type = document.getElementById("type").getAttribute("value");
+                    	            			form.setAttribute("action", "/ResearchAchieveManager/services/"+type);
                     	            			form.removeAttribute("enctype");
                     	            			form.setAttribute("target","nm_iframe");
                     	            			form.submit();
@@ -182,7 +183,7 @@
                                     	if(document.getElementById("ID")!=null){
                                     		var intervalId=window.setInterval(function(){	
                                             	updateTable(intervalId);                	                        
-                                            }, 1000);
+                                            }, 200);
                                     	}                                        
                                     }
                                 );
@@ -208,20 +209,33 @@
                         function () {
                             data.context = $(this);
                             that._trigger('completed', e, data);
-                            window.setTimeout(function(){	                        	
-                            	var attach = document.getElementById("attachment");
-    	            			var attchUrls = document.getElementById("attachUrls");
-    	            			attach.value ="";	
-    	            			for(var i=0;i<attchUrls.rows.length;i++){
-    	            				var href =attchUrls.rows[i].cells[0].children[0].href;
-    	            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
-    	            			}
-    	                        var form = document.getElementById("fileupload");
-    	            			form.setAttribute("action", "/ResearchAchieveManager/services/ThesisUpload");
-    	            			form.removeAttribute("enctype");
-    	            			form.setAttribute("target","nm_iframe");
-    	            			form.submit();
-                            }, 500);
+                            document.getElementById("btnSubmit").disabled=false;
+                            var updateTable = function(intervalId){ 
+                        		try{
+                        			var attach = document.getElementById("attachment");
+        	            			var attchUrls = document.getElementById("attachUrls");
+        	            			attach.value ="";	
+        	            			for(var i=1;i<attchUrls.rows.length;i++){
+        	            				var href =attchUrls.rows[i].cells[0].children[0].href;
+        	            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
+        	            			}
+        	            			var form = document.getElementById("fileupload");
+        	            			var type = document.getElementById("type").getAttribute("value");
+        	            			form.setAttribute("action", "/ResearchAchieveManager/services/"+type);
+        	            			console.log(type);
+        	            			form.removeAttribute("enctype");
+        	            			form.setAttribute("target","nm_iframe");
+        	            			form.submit();
+        	            			window.clearInterval(intervalId);
+                        		}catch(e){}
+                            	
+                        	}
+                        	
+                        	if(document.getElementById("ID")!=null){
+                        		var intervalId=window.setInterval(function(){	
+                                	updateTable(intervalId);                	                        
+                                }, 200);
+                        	} 
                         }
                     );
                 }
@@ -249,8 +263,11 @@
                                         function () {
                                             data.context = $(this);
                                             that._trigger('failed', e, data);
+
+                	            			document.getElementById("btnSubmit").disabled=false;
                                         }
                                     );
+
                                 }
                             );
                         } else {
@@ -258,6 +275,7 @@
                                 function () {
                                     $(this).remove();
                                     that._trigger('failed', e, data);
+                                    document.getElementById("btnSubmit").disabled=false;
                                 }
                             );
                         }
@@ -271,10 +289,12 @@
                         function () {
                             data.context = $(this);
                             that._trigger('failed', e, data);
+                            document.getElementById("btnSubmit").disabled=false;
                         }
                     );
                 } else {
                     that._trigger('failed', e, data);
+                    document.getElementById("btnSubmit").disabled=false;
                 }
             },
             // Callback for upload progress events:
@@ -315,7 +335,7 @@
                 that._transition($(this).find('.fileupload-progress')).done(
                     function () {
                         that._trigger('started', e);
-                       
+                        document.getElementById("btnSubmit").disabled=true;
                     }
                 );
             },
@@ -333,8 +353,9 @@
                 );
             },
             // Callback for file deletion:
-            destroy: function (e, data) {            	
-                var that = $(this).data('fileupload');
+            destroy: function (e, data) {      
+                var that = $(this).data('fileupload');                
+                
             	if(confirm("确认删除附件"+data.url.substring(59)+"?")){
 	        		 if (data.url) {
 	                 	
@@ -343,28 +364,38 @@
 	                 }
 	                that._transition(data.context).done(
 	                    function () {
-	                    	
-//	                        $(this).remove();
-	                    	var ele=e.srcElement.parentNode;
-	                    	while(ele.tagName!="TR"){
-	                    		ele = ele.parentNode;
-	                    	}
+//	                        
+	                    	var ele = e.originalEvent.srcElement?e.originalEvent.srcElement.parentNode : e.originalEvent.target.parentNode;
+	                		while(ele.tagName!="TR"){
+	                			ele = ele.parentNode;
+	                		}
 	                    	ele.remove();
 	                        that._trigger('destroyed', e, data);
-	                        window.setTimeout(function(){	                        	
-	                        	var attach = document.getElementById("attachment");
-		            			var attchUrls = document.getElementById("attachUrls");
-		            			attach.value ="";	
-		            			for(var i=0;i<attchUrls.rows.length;i++){
-		            				var href =attchUrls.rows[i].cells[0].children[0].href;
-		            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
-		            			}
-		                        var form = document.getElementById("fileupload");
-		            			form.setAttribute("action", "/ResearchAchieveManager/services/ThesisUpload");
-		            			form.removeAttribute("enctype");
-		            			form.setAttribute("target","nm_iframe");
-		            			form.submit();
-	                        }, 500);
+	                        var updateTable = function(intervalId){ 
+                        		try{
+                        			var attach = document.getElementById("attachment");
+        	            			var attchUrls = document.getElementById("attachUrls");
+        	            			attach.value ="";	
+        	            			for(var i=1;i<attchUrls.rows.length;i++){
+        	            				var href =attchUrls.rows[i].cells[0].children[0].href;
+        	            				attach.value = attach.value + href.substring(href.indexOf("getfile=")+8)+";"
+        	            			}
+        	            			var form = document.getElementById("fileupload");
+        	            			var type = document.getElementById("type").getAttribute("value");
+        	            			form.setAttribute("action", "/ResearchAchieveManager/services/"+type);
+        	            			form.removeAttribute("enctype");
+        	            			form.setAttribute("target","nm_iframe");
+        	            			form.submit();
+        	            			window.clearInterval(intervalId);
+                        		}catch(e){}
+                            	
+                        	}
+                        	
+                        	if(document.getElementById("ID")!=null){
+                        		var intervalId=window.setInterval(function(){	
+                                	updateTable(intervalId);                	                        
+                                }, 200);
+                        	}    
 	                        
 	                    }
 	                );
@@ -604,6 +635,7 @@
                 type: button.attr('data-type') || 'DELETE',
                 dataType: e.data.fileupload.options.dataType
             });
+            
         },
 
         _forceReflow: function (node) {

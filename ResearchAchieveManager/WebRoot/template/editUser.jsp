@@ -7,6 +7,7 @@
 <meta http-equiv="expires" content="0">    
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<title>用户基本信息编辑</title>
 <link rel="stylesheet" type="text/css" href="../assets/css/user_edit.css">
 
  </head>
@@ -15,7 +16,7 @@
  <div class="container">
 	    <div class="row">	    	
 	        <div class="col-md-6 col-md-offset-3 userinfo-edit">
-	        	<label>用户信息编辑表：</label>
+	        	<label>用户基本信息编辑表：</label>
 	        	<i class="mr_left_bg"></i>
 	        	<i class="mr_right_bg"></i>
 			    <form action="<%=projectPath%>/services/UserServlet"  class="form-horizontal">

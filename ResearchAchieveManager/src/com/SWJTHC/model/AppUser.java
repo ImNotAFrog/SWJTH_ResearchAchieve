@@ -21,9 +21,19 @@ public class AppUser {
 	private Title title; //Ö°³Æ
 	private Department department;
 	private SubDepartment subDepartment;
+	private String role;
 	public AppUser(){
 		
 	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public String getName() {
 		return name;
 	}

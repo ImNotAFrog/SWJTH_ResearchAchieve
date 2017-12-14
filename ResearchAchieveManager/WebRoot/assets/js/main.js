@@ -1,7 +1,7 @@
 // alert("hello");
 var nav= document.getElementsByClassName("left")[0];
 var navItem = nav.getElementsByTagName("li");
-// alert(navItem.length);
+alert(navItem.length);
 
 //鍙宠竟鐨勫唴瀹瑰尯
 var con = document.getElementsByClassName("content-item");

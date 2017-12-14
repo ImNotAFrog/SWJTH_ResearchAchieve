@@ -6,6 +6,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <%@include file="head.jsp"%>
 <head>
+<title>科研成果管理系统</title>
 <link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/index_main.css">
 </head>
 <%@page pageEncoding="UTF-8"%>

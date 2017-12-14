@@ -17,7 +17,6 @@
 <script type="text/javascript" src="<%=projectPath%>/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="<%=projectPath%>/assets/js/jquery-ui/jquery-ui.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <div id="header">
 		<div class="container">
@@ -31,7 +30,7 @@
 			<div class="image">
 				<a href="<%=projectPath%>/template/teacher.jsp" title="进入个人主页"><img src="<%=projectPath%>/assets/img/head.jpg"></a>
 			</div>
-			<p class="name ellipsis" >欢迎，<%=u.getName()%></p>
+			<p class="name ellipsis" >欢迎，<%if(u.getRole().equals("admin")){%>管理员<%}%> <%=u.getName()%></p>
 		</div>
 		<div class="clearfix">
 			

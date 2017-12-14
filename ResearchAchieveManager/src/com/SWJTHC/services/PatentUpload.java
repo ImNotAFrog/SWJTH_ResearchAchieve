@@ -62,6 +62,7 @@ public class PatentUpload extends HttpServlet {
 				p.setCategory(request.getParameter("category"));
 				p.setPatentNum(request.getParameter("patentNum"));
 				p.setPatentHolder(request.getParameter("patentHolder"));
+				p.setAttachment(request.getParameter("attachment"));
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("patentDate")).getTime());
 				p.setPatentDate(date);
 				p.setChecked(0);
@@ -72,7 +73,7 @@ public class PatentUpload extends HttpServlet {
 					i=PatentDao.insertPatent(p);
 				}
 			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果更新成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果已更新!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();
 				j.put("result",1);

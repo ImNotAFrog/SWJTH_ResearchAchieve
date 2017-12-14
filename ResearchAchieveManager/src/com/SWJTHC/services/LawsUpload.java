@@ -74,7 +74,7 @@ public class LawsUpload extends HttpServlet {
 					i=LawsDao.insertLaws(l);
 				}
 			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('法律法规成果更新成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('法律法规成果已更新!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();
 				j.put("result",1);

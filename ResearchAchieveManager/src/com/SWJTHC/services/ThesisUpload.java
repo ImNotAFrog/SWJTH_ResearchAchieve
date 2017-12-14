@@ -54,7 +54,6 @@ public class ThesisUpload extends HttpServlet {
 				i=ThesisDao.deleteThesis(Integer.parseInt(request.getParameter("deleteAchievement")));
 			}else{
 				Thesis t = new Thesis();
-				System.out.println(request.getParameter("thesisName"));
 				t.setName(request.getParameter("thesisName"));
 				t.setOwner(request.getSession().getAttribute("username").toString());
 				t.setJournalName(request.getParameter("journalName"));

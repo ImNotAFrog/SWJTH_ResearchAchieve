@@ -73,7 +73,10 @@ public class LoginServlet extends HttpServlet {
 				//登录成功
 				request.getSession().setAttribute("username", username);
 				List<AppUser> l = UserDao.getUserByUsername(username);
+				
 				AppUser u = l.get(0);
+
+				request.getSession().setAttribute("role", u.getRole());
 				request.setAttribute("user", u);
 //				if(request.getParameterValues("rememberMe")!=null&&request.getParameterValues("rememberMe").length>0){
 //					
@@ -92,8 +95,15 @@ public class LoginServlet extends HttpServlet {
 //							response.addCookie(c);							
 //						}					
 //					}					
-//				}						
-				request.getRequestDispatcher("/template/teacher.jsp").forward(request, response);
+//				}
+				if(u.getRole().equals("teacher")){
+					request.getRequestDispatcher("/template/teacher.jsp").forward(request, response);
+				}else if(u.getRole().equals("admin")){
+					request.getRequestDispatcher("/template/admin.jsp").forward(request, response);
+				}else {
+					request.getRequestDispatcher("/template/index.jsp").forward(request, response);
+				}
+				
 			}else{				
 				out.print("<script type='text/javascript'charset='utf-8'>alert('用户名或密码错误，登录失败!');window.location.href='"+projectPath+"/template/login.jsp"+"';</script>");
 
