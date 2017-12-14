@@ -222,9 +222,18 @@ p.state{
 .examined{
     margin-top: 50px;
 }
+
 /*我的成果列表结束*/
 
-
+/*详细科研成果信息开始*/
+    /*这里面用到了uploadForm.css的*/
+   .hide{
+        display: none;
+    }
+    .active{
+        display: block;
+    }
+/*详细科研成果信息结束*/
 
 
 

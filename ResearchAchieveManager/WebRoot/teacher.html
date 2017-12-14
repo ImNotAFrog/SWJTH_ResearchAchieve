@@ -8,8 +8,9 @@
 	
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/teacher.css">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link href="assets/css/uploadForm.css" rel="stylesheet">
 
-	
 	<script src="assets/js/jquery-3.2.1.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -94,70 +95,157 @@
 						</div>
 					</div>
 					<div id="research" class="content-item">
-						<div class="common-title">成果列表
+						<div class="list">
+							<div class="common-title">成果列表
+							</div>
+							<!--待审核-->
+							<div class="examing">
+								<p class="state">待审核</p>
+								<!-- <ul>
+									<li>
+										<a href="#">
+											<p>项目编号：ky0001</p>
+											<span>[1]“移动交互环境下的大媒体内容分析与检索”项目  2017.01-2021.12 国家级 国家级自然
+	    									科学基金重点项目</span>
+											<span>项目提交审核时间:2017-01-21</span>
+										</a>
+									</li>
+								</ul> -->
+								<table id="wating" class="table table-striped table-bordered">
+							      <thead>
+							          <th>项目名称</th>
+							          <th>类型</th>
+							          <th>提交审核时间</th>
+							        </tr>
+							      </thead>
+							      <tbody>
+							        <tr>
+							          <td>数字电视嵌入式软件开发平台 </td>
+							          <td>纵向项目</td>
+							          <td>2017年3月5日</td>
+							        </tr>
+							        <tr>
+							          <td>基于国产软硬件的数字电视终端解决方案及样机研制</td>
+							          <td>纵向项目</td>
+							          <td>2017年1月8日</td>
+							        </tr>
+							       </tbody>
+							    </table>
+							</div>
+							<!--已经审核-->
+							<div class="examined">
+								<p class="state">已通过审核</p>
+								
+								<table id="examined" class="table table-striped table-bordered">
+							      <thead>
+							          <th>项目名称</th>
+							          <th>类型</th>
+							          <th>提交审核时间</th>
+							        </tr>
+							      </thead>
+							      <tbody>
+							        <tr>
+							          <td>基于模糊神经网络的变频空调控制器关键技术研究及产业化  </td>
+							          <td>横向项目</td>
+							          <td>2016年6月5日</td>
+							        </tr>
+							        <tr>
+							          <td>实时可信服务软件的构件化研究 </td>
+							          <td>纵向项目</td>
+							          <td>2015年5月8日</td>
+							        </tr>
+							       </tbody>
+							    </table>
+							</div>
 						</div>
-						<!--带审核-->
-						<div class="examing">
-							<p class="state">待审核</p>
-							<!-- <ul>
-								<li>
-									<a href="#">
-										<p>项目编号：ky0001</p>
-										<span>[1]“移动交互环境下的大媒体内容分析与检索”项目  2017.01-2021.12 国家级 国家级自然
-    									科学基金重点项目</span>
-										<span>项目提交审核时间:2017-01-21</span>
-									</a>
-								</li>
-							</ul> -->
-							<table id="wating" class="table table-striped table-bordered">
-						      <thead>
-						          <th>项目名称</th>
-						          <th>类型</th>
-						          <th>提交审核时间</th>
-						        </tr>
-						      </thead>
-						      <tbody>
-						        <tr>
-						          <td>数字电视嵌入式软件开发平台 </td>
-						          <td>纵向项目</td>
-						          <td>2017年3月5日</td>
-						        </tr>
-						        <tr>
-						          <td>基于国产软硬件的数字电视终端解决方案及样机研制</td>
-						          <td>纵向项目</td>
-						          <td>2017年1月8日</td>
-						        </tr>
-						       </tbody>
-						    </table>
-						</div>
-						
-						<!--带审核-->
-						<div class="examined">
-							<p class="state">已通过审核</p>
-							
-							<table id="examined" class="table table-striped table-bordered">
-						      <thead>
-						          <th>项目名称</th>
-						          <th>类型</th>
-						          <th>提交审核时间</th>
-						        </tr>
-						      </thead>
-						      <tbody>
-						        <tr>
-						          <td>基于模糊神经网络的变频空调控制器关键技术研究及产业化  </td>
-						          <td>横向项目</td>
-						          <td>2016年6月5日</td>
-						        </tr>
-						        <tr>
-						          <td>实时可信服务软件的构件化研究 </td>
-						          <td>纵向项目</td>
-						          <td>2015年5月8日</td>
-						        </tr>
-						       </tbody>
-						    </table>
-						</div>
-					
+						<!--成果详细信息-->
+						<!--复用上传的时候的表单页面-->
+						<div class="detail">
+							我是详细信息
+							<!--刊物-->
+			  				<div id="journal" class="re-item col-md-12">	
+								<h3>请填写刊物信息</h3>
+								<a href="javascript:void(0)" class="moco-modal-close"></a>
+									<form method="post" action="">
+										<div class="form-item">
+										<label for="journalName">刊物名称:</label>
+										<div class="moco-control-input">
+				                             <input type="text" name="journalName" id="journalName" autocomplete="off" class="moco-form-control" value="中国远程教育" placeholder="请输入刊物名称...">
+				                        <div class="rlf-tip-wrap errorHint color-red"></div>
+				                         </div>
+										</div>
+													<div class="form-item">
+														<label>级别:</label>
+														<div class="moco-control-input">
+			                              				  <select class="moco-form-control rlf-select" name="journalLevel" hidefocus="true" id="journalLevel" data-validate="require-select">
+			                                   	 				<option value="1">省级</option>
+			                                                    <option value="2">国家普通</option>
+			                                                    <option value="3">国家核心</option>                              
+			                                                </select>
+			                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+			                           					 </div>
+													</div>
+													<div class="form-item">
+														<label for="journalNumber">刊号:</label>
+														<div class="moco-control-input">
+				                              				  <input type="text" name="journalNumber" id="journalNumber" autocomplete="off" class="moco-form-control" value="" placeholder="请输入刊物刊号...">
+				                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+				                           				 </div>
+													</div>
+
+													<button type="submit" class="btn btn-primary submit" style="opacity: 0.75">提交</button>
+													<button class="btn btn-default reset" type="reset"> reset </button>
+								</form>	        	
+							</div>
+							<!--专利和软件著作权-->
+							<div id="patent" class="re-item col-md-12">
+								
+									<h3>请填写专利或软件著作权信息</h3>
+									<a href="javascript:void(0)" class="moco-modal-close"></a>
+									<form method="post" action="">
+										<div class="form-item">
+											<label for="patentName">名称:</label>
+											<div class="moco-control-input">
+	                              				  <input type="text" name="patentName" id="patentName" autocomplete="off" class="moco-form-control" value="" placeholder="请输入专利、软件著作名称...">
+	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+	                           				 </div>
+										</div>
+										<div class="form-item">
+											<label>类型:</label>
+											<div class="moco-control-input">
+                              				  <select class="moco-form-control rlf-select" name="category" hidefocus="true" id="category" data-validate="require-select">
+                                   	 				<option value="1">实用新型专利</option>
+                                                    <option value="2">发明专利</option>
+                                                    <option value="3">外观设计专利</option>                              
+                                                </select>
+                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+                           					 </div>
+										</div>
+										<div class="form-item">
+											<label for="patentHolder">专利权利人:</label>
+											<div class="moco-control-input">
+	                              				  <input type="text" name="patentHolder" id="patentHolder" autocomplete="off" class="moco-form-control" value="" placeholder="请输入专利权利人...">
+	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+	                           				 </div>
+										</div>
+										<!--附件-->
+										<div class="form-item">
+										<label>上传附件:&nbsp;&nbsp; </label>
+										<div class="moco-control-input" style="position: relative;top:12px;">
+                              				  <input type="file" name="attachment" id="attachment" autocomplete="off" class="moco-control-file" >
+                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+                           					 </div>
+										</div>
+										<button type="submit" class="btn btn-primary submit" style="opacity: 0.75">提交</button>
+										<button class="btn btn-default reset" type="reset"> reset </button>
+									</form>
+								
+							</div>
+						</div>		
 					</div>
+
+
+
 					<div id="loadup"  class="content-item">
 						<div class="common-title">上传科研成果
 						</div>
