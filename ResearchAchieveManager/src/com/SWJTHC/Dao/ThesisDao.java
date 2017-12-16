@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import com.SWJTHC.model.AppUser;
 import com.SWJTHC.model.EduProject;
 import com.SWJTHC.model.Thesis;
 import com.SWJTHC.model.UserAchievement;
@@ -15,15 +16,21 @@ public class ThesisDao {
 
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into Thesis(name,score,attachment,owner,journalNum,journalName,journalLevel,checked) values(?,?,?,?,?,?,?,?)",t,null);
+			i = Dao.executUpdate("insert into thesis(name,score,attachment,owner,journalNum,journalName,journalLevel,checked,publishDate) values(?,?,?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
-				a.setUsername(t.getOwner());
+				AppUser u = UserDao.getUserByUsername(t.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("thesis");
 				a.setName(t.getName());
 				a.setChecked(0);
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);
+				a.setScore(t.getScore());
+				a.setDepartment(u.getDepartment());
+				a.setSubDepartment(u.getSubDepartment());
+				a.setAchievementDate(t.getPublishDate());
+				a.setMaxScore(500);
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -38,7 +45,7 @@ public class ThesisDao {
 		ResultSet rs=null;
 		Thesis thesis = null;
 		try {
-			rs = Dao.executQuery("select * from Thesis where id ="+id);
+			rs = Dao.executQuery("select * from thesis where id ="+id);
 			while(rs.next()){ 
 				thesis = new Thesis();
 				thesis.setID(id);
@@ -49,6 +56,7 @@ public class ThesisDao {
 				thesis.setJournalNum(rs.getString("journalNum"));
 				thesis.setJournalName(rs.getString("journalName"));
 				thesis.setChecked(rs.getInt("checked"));
+				thesis.setPublishDate(rs.getDate("publishDate"));
 				thesis.setAttachment(rs.getString("attachment"));				
 			}
 		} catch (Exception e) {
@@ -60,7 +68,7 @@ public class ThesisDao {
 	public static int updateThesis(Thesis t){
 
 		int i=-1;
-		String sql = "update Thesis set ";
+		String sql = "update thesis set ";
 		String key = "ID";
 		int k=1;
 		try {
@@ -115,13 +123,19 @@ public class ThesisDao {
 			}
 			sql+=" where "+key+" = ?";
 			i = Dao.executUpdate(sql,t,key);
-			if(i==0){
+			if(i!=-1){
 				UserAchievement a = new UserAchievement();
 				a.setID(t.getID()+"");
 				a.setName(t.getName());
-				a.setUsername(t.getOwner());
+				AppUser u = UserDao.getUserByUsername(t.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("thesis");
 				a.setChecked(t.getChecked());
+				a.setScore(t.getScore());
+				a.setSubDepartment(u.getSubDepartment());
+				a.setDepartment(u.getDepartment());
+				a.setAchievementDate(t.getPublishDate());
+				a.setMaxScore(500);
 				UserAchievementDao.updateUserAchievemetByUsername(a);
 			}
 		} catch (Exception e) {
@@ -135,7 +149,7 @@ public class ThesisDao {
 	public static int deleteThesis(int id){
 		int i=-1;
 		try {
-			i=Dao.executUpdate("delete from Thesis where id = "+id);
+			i=Dao.executUpdate("delete from thesis where id = "+id);
 			Dao.executUpdate("delete from UserAchievement where ID="+id+" and category='thesis'");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

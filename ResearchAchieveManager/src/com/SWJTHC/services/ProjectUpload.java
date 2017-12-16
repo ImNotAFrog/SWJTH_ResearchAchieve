@@ -13,6 +13,7 @@ import net.sf.json.JSONObject;
 
 import com.SWJTHC.Dao.EduProjectDao;
 import com.SWJTHC.Dao.LawsDao;
+import com.SWJTHC.Dao.PatentDao;
 import com.SWJTHC.Dao.ThesisDao;
 import com.SWJTHC.model.EduProject;
 import com.SWJTHC.model.Laws;
@@ -51,6 +52,7 @@ public class ProjectUpload extends HttpServlet {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		String role = request.getSession().getAttribute("role").toString();
 		PrintWriter out = response.getWriter();
 		try {
 			int i =-1; 
@@ -59,34 +61,108 @@ public class ProjectUpload extends HttpServlet {
 			}else{
 				EduProject p = new EduProject();
 				p.setName(request.getParameter("projectName"));
-				p.setOwner(request.getSession().getAttribute("username").toString());
 				p.setAuthorSituation(request.getParameter("authorSituation"));
 				p.setSubject(request.getParameter("subject"));
 				p.setLevel(request.getParameter("projectLevel"));
+				
 				p.setAttachment(request.getParameter("attachment"));
 				String state = request.getParameter("state");
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("stateDate")).getTime());
+				double countScore = 0;
+				switch(p.getLevel()){
+					case "1":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 100;
+							break;
+						case "2":
+							countScore = 20;
+							break;
+						}
+						break;
+					case "2":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 30;
+							break;
+						case "2":							
+							countScore = 10;
+							break;
+						}
+						break;
+					case "3":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 10;
+							break;
+						case "2":							
+							countScore = 5;
+							break;
+						}
+						break;
+					case "4":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 33.3;
+							break;
+						case "2":
+							countScore = 6.6;
+							break;
+						}
+						break;
+					case "5":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 10;
+							break;
+						case "2":
+							countScore = 3.3;
+							break;
+						}
+						break;
+					case "6":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 3.3;
+							break;
+						case "2":
+							countScore = 1.6;
+							break;
+						}
+						break;
+				}
+				p.setScore(countScore);			
 				
 				p.setState(date.toString()+state);
-				p.setChecked(0);
+				p.setChecked(Integer.parseInt(request.getParameter("checked")));
 				if(request.getParameter("ID")!=null){
 					p.setID(Integer.parseInt(request.getParameter("ID")));
+					double getScore = Double.parseDouble(request.getParameter("score"));
+					if(EduProjectDao.getEduProjectById(p.getID()).getScore()!=getScore){
+						p.setScore(getScore);
+					}
+					p.setOwner(request.getParameter("owner"));
+					if(p.getChecked()==-1&&role.equals("teacher")){
+						p.setChecked(0);
+					}
 					i=EduProjectDao.updateEduProject(p);
 				}else{
+					p.setOwner(request.getSession().getAttribute("username").toString());
+					
 					i=EduProjectDao.insertEduProject(p);
 				}
 			}
 			if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('教研项目成果已更新!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();
 				j.put("result",1);
 				out.write(j.toString());
 			}else if(i!=-1){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('教研项目成果上传成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果上传成功!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}
 			else{
-				out.print("<script type='text/javascript'charset='utf-8'>alert('教研项目成果上传失败!');window.history.back(-1);</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果上传失败!');window.history.back(-1);</script>");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

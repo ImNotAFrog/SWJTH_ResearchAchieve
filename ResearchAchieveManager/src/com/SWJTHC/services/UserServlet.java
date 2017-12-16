@@ -57,6 +57,7 @@ public class UserServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		String value=request.getParameter("Submit");
+		String role = request.getSession().getAttribute("role").toString();
 		if(value!=null){			
 			AppUser u = UserDao.getUserByUsername(request.getParameter("username")).get(0);
 			u.setName(request.getParameter("name"));
@@ -66,7 +67,7 @@ public class UserServlet extends HttpServlet {
 			u.setDepartment(Department.valueOf(request.getParameter("department")));
 			u.setSubDepartment(request.getParameter("subDepartment"));
 			UserDao.updateUserByUsername(u);
-			out.print("<script type='text/javascript'charset='utf-8'>alert('个人资料修改成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+			out.print("<script type='text/javascript'charset='utf-8'>alert('个人资料修改成功!');window.location.href='"+projectPath+"/template/"+role+".jsp';</script>");
 		}else{
 			String department = request.getParameter("department");
 			JSONObject j = new JSONObject();

@@ -4,9 +4,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
   <display-name></display-name>	
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>/template/index.jsp</welcome-file>
   </welcome-file-list>
   
    <servlet>
@@ -75,6 +78,13 @@
     <servlet-name>EditPasswordServlet</servlet-name>
     <servlet-class>com.SWJTHC.services.EditPasswordServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>EduReformProjectUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.EduReformProjectUpload</servlet-class>
+  </servlet>
+
 
 
 
@@ -128,6 +138,10 @@
   <servlet-mapping>
     <servlet-name>EditPasswordServlet</servlet-name>
     <url-pattern>/services/EditPasswordServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EduReformProjectUpload</servlet-name>
+    <url-pattern>/services/EduReformProjectUpload</url-pattern>
   </servlet-mapping>
   
      <filter>

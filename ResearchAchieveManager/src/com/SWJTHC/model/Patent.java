@@ -15,9 +15,19 @@ public class Patent{
 	private String patentNum="";
 	private Date patentDate;
 	private int checked =0;
+	private String authorSituation="";
 	public Patent(){
 		
 	}
+	
+	public String getAuthorSituation() {
+		return authorSituation;
+	}
+
+	public void setAuthorSituation(String authorSituation) {
+		this.authorSituation = authorSituation;
+	}
+
 	public int getID() {
 		return ID;
 	}

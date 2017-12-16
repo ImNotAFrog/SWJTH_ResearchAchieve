@@ -106,7 +106,7 @@
 				    <!-- <button type="submit" class="btn btn-primary submit">Submit</button> -->
 				    <div class="submit">
 				    	<input type="submit" name="Submit" class="save" value="保存">
-				    	<a href="<%=projectPath%>/template/teacher.jsp" class="cancel">取消</a>
+				    	<a href="<%=projectPath%>/template/<%=role%>.jsp" class="cancel">取消</a>
 					</div>
 				    <span id="error" style="color:red"></span>
 				</form>
@@ -149,7 +149,6 @@
   		var position = document.getElementById("position");
   		var title = document.getElementById("title");
   		var positionLevel = document.getElementById("positionLevel");
-  		var 
   		if(username.value ==""){
   			error.innerText = "用户名不能为空";
   			return false;

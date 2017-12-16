@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import com.SWJTHC.model.AppUser;
 import com.SWJTHC.model.Textbook;
 import com.SWJTHC.model.Thesis;
 import com.SWJTHC.model.UserAchievement;
@@ -14,15 +15,31 @@ public class TextbookDao {
 
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into Textbook(name,score,attachment,owner,publishDate,authorSituation,publishingHouse,ISBN,level,checked) values(?,?,?,?,?,?,?,?,?,?)",t,null);
+			i = Dao.executUpdate("insert into textbook(name,score,attachment,owner,publishDate,authorSituation,publishingHouse,ISBN,level,checked) values(?,?,?,?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
-				a.setUsername(t.getOwner());
+				AppUser u = UserDao.getUserByUsername(t.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("textbook");
 				a.setName(t.getName());
 				a.setChecked(0);
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);
+				a.setDepartment(u.getDepartment());
+				a.setSubDepartment(u.getSubDepartment());
+				a.setScore(t.getScore());
+				a.setAchievementDate(t.getPublishDate());
+				switch(t.getLevel()){
+					case "1":
+						a.setMaxScore(45);
+						break;
+					case "2":
+						a.setMaxScore(15);
+						break;
+					case "3":
+						a.setMaxScore(5);
+						break;
+				}
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -36,7 +53,7 @@ public class TextbookDao {
 		ResultSet rs=null;
 		Textbook textbook = null;
 		try {
-			rs = Dao.executQuery("select * from Textbook where id ="+id);
+			rs = Dao.executQuery("select * from textbook where id ="+id);
 			while(rs.next()){ 
 				textbook = new Textbook();
 				textbook.setID(id);
@@ -60,7 +77,7 @@ public class TextbookDao {
 	public static int updateTextbook(Textbook t){
 
 		int i=-1;
-		String sql = "update Textbook set ";
+		String sql = "update textbook set ";
 		String key = "ID";
 		int k=1;
 		try {
@@ -119,9 +136,25 @@ public class TextbookDao {
 				UserAchievement a = new UserAchievement();
 				a.setID(t.getID()+"");
 				a.setName(t.getName());
-				a.setUsername(t.getOwner());
+				AppUser u = UserDao.getUserByUsername(t.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("textbook");
 				a.setChecked(t.getChecked());
+				a.setScore(t.getScore());
+				a.setDepartment(u.getDepartment());
+				a.setSubDepartment(u.getSubDepartment());
+				a.setAchievementDate(t.getPublishDate());
+				switch(t.getLevel()){
+					case "1":
+						a.setMaxScore(45);
+						break;
+					case "2":
+						a.setMaxScore(15);
+						break;
+					case "3":
+						a.setMaxScore(5);
+						break;
+				}
 				UserAchievementDao.updateUserAchievemetByUsername(a);
 			}
 		} catch (Exception e) {
@@ -135,7 +168,7 @@ public class TextbookDao {
 	public static int deleteTextbook(int id){
 		int i=-1;
 		try {
-			i=Dao.executUpdate("delete from Textbook where id = "+id);
+			i=Dao.executUpdate("delete from textbook where id = "+id);
 			Dao.executUpdate("delete from UserAchievement where ID="+id+" and category='textbook'");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

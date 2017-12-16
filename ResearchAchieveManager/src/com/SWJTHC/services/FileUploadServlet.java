@@ -33,20 +33,22 @@ public class FileUploadServlet extends HttpServlet {
         String projectPath =request.getContextPath();
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");			
-        String username = request.getSession().getAttribute("username").toString();
+        String username = request.getParameter("owner");
+        System.out.println();
         if(request.getParameter("getlist") != null && !request.getParameter("getlist").isEmpty()){
             String[] lists = request.getParameter("getlist").split(";");            
         	File file = new File(request.getServletContext().getRealPath("/")+"META-INF\\Attachments\\"+username+"\\"+lists[0]);
-            response.setContentType("application/json");
+            System.out.println(request.getServletContext().getRealPath("/")+"META-INF\\Attachments\\"+username+"\\"+lists[0]);
+        	response.setContentType("application/json");
             PrintWriter writer = response.getWriter();
             JSONArray json = new JSONArray();
             JSONObject jsono = new JSONObject();
             try {
 				jsono.put("name", lists[0]);
 	            jsono.put("size", file.length());
-	            jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + lists[0]);
-	            jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + lists[0]);
-	            jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + lists[0]);
+	            jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + lists[0]+"&owner="+username);
+	            jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + lists[0]+"&owner="+username);
+	            jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + lists[0]+"&owner="+username);
 	            jsono.put("delete_type", "GET");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -225,9 +227,9 @@ public class FileUploadServlet extends HttpServlet {
                         JSONObject jsono = new JSONObject();
                         jsono.put("name", item.getName());
                         jsono.put("size", item.getSize());
-                        jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + fileName);
-                        jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + fileName);
-                        jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + fileName);
+                        jsono.put("url", projectPath+"/services/FileUploadServlet?getfile=" + fileName+"&owner="+username);
+                        jsono.put("thumbnail_url", projectPath+"/services/FileUploadServlet?getthumb=" + fileName+"&owner="+username);
+                        jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + fileName+"&owner="+username);
                         jsono.put("delete_type", "GET");
                         json.put(jsono);
                         System.out.println(json.toString());

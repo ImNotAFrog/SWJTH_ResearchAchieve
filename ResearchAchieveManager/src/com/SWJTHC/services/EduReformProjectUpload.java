@@ -12,15 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import com.SWJTHC.Dao.EduProjectDao;
-import com.SWJTHC.Dao.ThesisDao;
-import com.SWJTHC.model.Thesis;
+import com.SWJTHC.Dao.EduReformProjectDao;
+import com.SWJTHC.model.EduProject;
+import com.SWJTHC.model.EduReformProject;
 
-public class ThesisUpload extends HttpServlet {
+public class EduReformProjectUpload extends HttpServlet {
 
 	/**
 	 * Constructor of the object.
 	 */
-	public ThesisUpload() {
+	public EduReformProjectUpload() {
 		super();
 	}
 
@@ -44,84 +45,66 @@ public class ThesisUpload extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		String projectPath = request.getContextPath();
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		String role = request.getSession().getAttribute("role").toString();
-		PrintWriter out = response.getWriter();		
+		PrintWriter out = response.getWriter();
 		try {
 			int i =-1; 
 			if(request.getParameter("deleteAchievement")!=null){
-				i=ThesisDao.deleteThesis(Integer.parseInt(request.getParameter("deleteAchievement")));
+				i=EduReformProjectDao.deleteEduReformProject(Integer.parseInt(request.getParameter("deleteAchievement")));
 			}else{
-				Thesis t = new Thesis();
-				t.setName(request.getParameter("thesisName"));
+				EduReformProject p = new EduReformProject();
+				p.setName(request.getParameter("projectName"));
+				p.setAuthorSituation(request.getParameter("authorSituation"));
+				p.setAttachment(request.getParameter("attachment"));
+				String state = request.getParameter("state");
+				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("stateDate")).getTime());
 				
-				t.setJournalName(request.getParameter("journalName"));
-				t.setJournalNum(request.getParameter("journalNum"));
-				t.setJournalLevel(request.getParameter("journalLevel"));
-				t.setAttachment(request.getParameter("attachment"));
-				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("publishDate")).getTime());
-				t.setPublishDate(date);
-				t.setChecked(Integer.parseInt(request.getParameter("checked")));
+				p.setState(date.toString()+state);
+				p.setChecked(Integer.parseInt(request.getParameter("checked")));
+				
 				double countScore = 0;
-				switch(t.getJournalLevel()){
-				case "1":
-					countScore=50;
-					break;
-				case "2":
-					countScore=20;
-					break;
-				case "3":
-					countScore=15;
-					break;
-				case "4":
-					countScore=12;
-					break;
-				case "5":
-					countScore=10;
-					break;
-				case "6":
-					countScore=6;
-					break;
-				case "7":
-					countScore=4;
-					break;
-				case "8":
-					countScore=1;
-					break;
-				default:
-					break;
+				switch(p.getAuthorSituation()){
+					case "1":
+						countScore=8;
+						break;
+					case "2":
+						countScore=4;
+						break;
 				}
-				t.setScore(countScore);
+				p.setScore(countScore);		
 				
 				if(request.getParameter("ID")!=null){
-					t.setID(Integer.parseInt(request.getParameter("ID")));	
+					p.setID(Integer.parseInt(request.getParameter("ID")));
 					double getScore = Double.parseDouble(request.getParameter("score"));
-					if(ThesisDao.getThesisById(t.getID()).getScore()!=getScore){
-						t.setScore(getScore);
+					if(EduReformProjectDao.getEduReformProjectById(p.getID()).getScore()!=getScore){
+						p.setScore(getScore);
 					}
-					t.setOwner(request.getParameter("owner"));
-					if(t.getChecked()==-1&&role.equals("teacher")){
-						t.setChecked(0);
+					p.setOwner(request.getParameter("owner"));
+					if(p.getChecked()==-1&&role.equals("teacher")){
+						p.setChecked(0);
 					}
-					i=ThesisDao.updateThesis(t);
+					i=EduReformProjectDao.updateEduReformProject(p);
 				}else{
-					t.setOwner(request.getSession().getAttribute("username").toString());
-					i=ThesisDao.insertThesis(t);
+					p.setOwner(request.getSession().getAttribute("username").toString());
+					i=EduReformProjectDao.insertEduReformProject(p);
 				}
 			}
 			if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('论文成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('教学改革项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();
 				j.put("result",1);
 				out.write(j.toString());
 			}else if(i!=-1){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('论文成果上传成功!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
-			}else{
-				out.print("<script type='text/javascript'charset='utf-8'>alert('论文成果上传失败!');window.history.back(-1);</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('教学改革项目成果上传成功!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
+			}
+			else{
+				out.print("<script type='text/javascript'charset='utf-8'>alert('教学改革项目成果上传失败!');window.history.back(-1);</script>");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

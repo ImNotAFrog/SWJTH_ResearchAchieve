@@ -10,16 +10,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <% Patent p = new Patent();
    if(request.getParameter("AchievementId")!=null){
    	p=PatentDao.getPatentById(Integer.parseInt(request.getParameter("AchievementId")));
-   } %>
+   } 
+   String username = request.getSession().getAttribute("username").toString(); 
+   String owner = p.getOwner();
+   %>
   <head>
     <base href="<%=basePath%>">
-    
-    <%if(request.getParameter("AchievementId")!=null){%>
+    <%if(request.getParameter("AchievementId")!=null&&(request.getSession().getAttribute("role").equals("admin"))){%>
+    <title>专利成果查看</title>
+    <%}else if(request.getParameter("AchievementId")!=null){ %>
     <title>专利成果编辑</title>
     <%}else{ %>
     <title>专利成果上传</title>
     <%} %>
-    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -27,9 +30,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 
 	<link href="<%=projectPath%>/assets/css/uploadForm.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-image-gallery.min.css">
-        <link rel="stylesheet" href="<%=projectPath%>/assets/css/jquery.fileupload-ui.css">
+    <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="<%=projectPath%>/assets/css/bootstrap-image-gallery.min.css">
+    <link rel="stylesheet" href="<%=projectPath%>/assets/css/jquery.fileupload-ui.css">
 
   </head>
   
@@ -41,24 +44,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<!--专利和软件著作权-->
 							<div class="re-item">
 								
-									<h3>请填写专利或软件著作权信息</h3>
-									<a href="<%=projectPath%>/template/teacher.jsp" class="moco-modal-close"></a>
-									<form id="fileupload" method="post">
+									<h3>专利或软件著作权信息</h3>
+									<a href="<%=projectPath%>/template/<%=role%>.jsp" class="moco-modal-close"></a>
+									<form id="fileupload" method="post" target="nm_iframe" onchange="confirmFlag=0;">
+									<input id="owner" name="owner" type="hidden" value="<%=p.getOwner()%>" />
+									<input id="type" name="type" type="hidden" value="PatentUpload" />
+									<input name="checked" id="checked" type="hidden" value="<%=p.getChecked()%>" />
 									<%if(request.getParameter("AchievementId")!=null){%>
 									<input id="ID" name="ID" type="hidden" value="<%=request.getParameter("AchievementId")%>" />
-									<input id="type" name="type" type="hidden" value="PatentUpload" />
 									<%}%>
 										<div class="form-item">
 											<label for="patentName">名称:</label>
 											<div class="moco-control-input">
-	                              				  <input type="text" name="patentName" id="patentName" autocomplete="off" class="moco-form-control" value="<%=p.getName() %>" placeholder="请输入专利、软件著作名称...">
+	                              				  <input type="text" name="patentName" id="patentName" autocomplete="off" class="moco-form-control" value="<%=p.getName() %>" placeholder="请输入专利、软件著作名称..."<%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%>readonly="readonly"<%}%>>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
 	                           				 </div>
 										</div>
 										<div class="form-item">
 											<label>类型:</label>
 											<div class="moco-control-input">
-                              				  <select class="moco-form-control rlf-select" name="category" hidefocus="true" id="category" data-validate="require-select">
+                              				  <select class="moco-form-control rlf-select" name="category" hidefocus="true" id="category" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%> onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;"<%}%>>
                                    	 				<option value="1" <%if(p.getCategory().equals("1")){%>selected="true"<%}%>>发明专利</option>
                                                     <option value="2" <%if(p.getCategory().equals("2")){%>selected="true"<%}%>>实用新型专利</option>
                                                     <option value="3" <%if(p.getCategory().equals("3")){%>selected="true"<%}%>>外观设计专利</option> 
@@ -68,32 +73,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                            					 </div>
 										</div>
 										<div class="form-item">
+											<label>作者排名:</label>
+											<div class="moco-control-input">
+                              				  <select class="moco-form-control rlf-select" name="authorSituation" hidefocus="true" id="authorSituation" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%> onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;"<%}%>>
+                                   	 				<option value="1" <%if(p.getAuthorSituation().equals("1")){%>selected="true"<%}%>>1</option>
+                                                    <option value="2" <%if(p.getAuthorSituation().equals("2")){%>selected="true"<%}%>>2</option>
+                                                    <option value="3" <%if(p.getAuthorSituation().equals("3")){%>selected="true"<%}%>>3</option> 
+                                                    <option value="4" <%if(p.getAuthorSituation().equals("4")){%>selected="true"<%}%>>4</option>
+                                                    <option value="5" <%if(p.getAuthorSituation().equals("5")){%>selected="true"<%}%>>1</option>
+                                                    <option value="6" <%if(p.getAuthorSituation().equals("6")){%>selected="true"<%}%>>2</option>
+                                                    <option value="7" <%if(p.getAuthorSituation().equals("7")){%>selected="true"<%}%>>3</option> 
+                                                    <option value="8" <%if(p.getAuthorSituation().equals("8")){%>selected="true"<%}%>>4</option> 
+                                                    <option value="9" <%if(p.getAuthorSituation().equals("9")){%>selected="true"<%}%>>3</option> 
+                                                    <option value="10" <%if(p.getAuthorSituation().equals("10")){%>selected="true"<%}%>>4</option>                                                                                
+                                                </select>
+                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+                           					 </div>
+										</div>
+										<div class="form-item">
 											<label for="patentNum">专利编号:</label>
 											<div class="moco-control-input">
-	                              				  <input type="text" name="patentNum" id="patentNum" autocomplete="off" class="moco-form-control" value="<%=p.getPatentNum() %>" placeholder="请输入专利编号...">
+	                              				  <input type="text" name="patentNum" id="patentNum" autocomplete="off" class="moco-form-control" value="<%=p.getPatentNum() %>" placeholder="请输入专利编号..." <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%>readonly="readonly"<%}%>>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
 	                           				 </div>
 										</div>
 										<div class="form-item">
 											<label for="patentHolder">专利发明人:</label>
 											<div class="moco-control-input">
-	                              				  <input type="text" name="patentHolder" id="patentHolder" autocomplete="off" class="moco-form-control" value="<%=p.getPatentHolder() %>" placeholder="请输入专利发明人...">
+	                              				  <input type="text" name="patentHolder" id="patentHolder" autocomplete="off" class="moco-form-control" value="<%=p.getPatentHolder() %>" placeholder="请输入专利发明人..." <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%>readonly="readonly"<%}%>>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
 	                           				 </div>
 										</div>
 										<div class="form-item">
 											<label for="patentDate">授权公告日期:</label>
 											<div class="moco-control-input">
-	                              				  <input type="text" name="patentDate" id="patentDate" autocomplete="off" class="moco-form-control" value="<%if(p.getPatentDate()!=null){%><%=p.getPatentDate()%><%}%>">
+	                              				  <input type="text" name="patentDate" id="patentDate" autocomplete="off" class="moco-form-control" value="<%if(p.getPatentDate()!=null){%><%=p.getPatentDate()%><%}%>" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%>readonly="readonly"<%}%>>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
 	                           				 </div>
 										</div>
+										<%if(request.getParameter("AchievementId")!=null){%>
+											<div class="form-item">
+												<label for="chiefEditor">成果得分:</label>
+												<div class="moco-control-input">
+				                            				  <input type="text" name="score" id="score" autocomplete="off" class="moco-form-control" value="<%=p.getScore()%>" <%if(!role.equals("admin")||p.getChecked()==1){%>readonly="readonly"<%}%>>
+				                             				 <div class="rlf-tip-wrap errorHint color-red"></div>
+				                         				 </div>
+										</div>
+										<%}%>
 										<!--附件-->
 										<div class="form-item">
 										<label>成果附件:&nbsp;&nbsp; </label>
 										<input name="attachment" id="attachment" type="hidden" value="<%=p.getAttachment()%>" />						
 		  								<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe> 
-		  								<%if(p.getChecked()!=1){ %> 
+		  								<%if(p.getChecked()!=1&&((role.equals("admin")&&owner.equals(username))||owner.equals("")||role.equals("teacher"))){%>
 										<div class="row fileupload-buttonbar col-md-8">
 						                    <div class="span7">
 						                        <!-- The fileinput-button span is used to style the file input field as button -->
@@ -139,16 +171,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						                <tbody id="fileBody" class="files"></tbody>
 						                </table>
 										</div>
+										<div id="countdown" class="col-md-offset-2 col-md-10" style="color:#F00"></div>
 										<div class="col-md-offset-2">
-										<%if(request.getParameter("AchievementId")!=null&&p.getChecked()!=1){%>						
-										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交更新</button>
+										<%if(request.getParameter("AchievementId")!=null&&p.getChecked()!=1&&role.equals("admin")&&!owner.equals(username)){%>			
+										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmSubmit()">修改分数</button>
+										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmPass()">通过</button>
+										<button id="btnSubmit" type="submit" class="btn btn-danger submit" style="opacity: 0.75" onclick="return confirmUnpass()">不通过</button>
+										<%}else if(request.getParameter("AchievementId")!=null&&p.getChecked()!=1&&(role.equals("teacher")||owner.equals(username))){%>						
+										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmSubmit()">提交更新</button>
 										<button class="btn btn-default btn-warning" type="reset">撤销修改</button>	
 										<button class="btn btn-default btn-danger" type="button" onclick="deleteAchievement(<%=p.getID()%>)">删除成果</button>				
 										<%}else if(request.getParameter("AchievementId")==null){%>
-										<button type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="confirmSubmit()">提交</button>
+										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmSubmit()">提交</button>
 										<button class="btn btn-default btn-warning" type="reset">重置</button>
 										<%}%>						
-										<button type="button"class="btn btn-default" onclick="window.location.href='<%=projectPath%>/template/teacher.jsp';">返回</button>
+										<button type="button"class="btn btn-default" onclick="window.location.href='<%=projectPath%>/template/<%=role%>.jsp';">返回</button>
 										</div>
 									</form>
 								
@@ -157,29 +194,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    </div>
 	</div>
   <script>
-  function confirmSubmit(){
-  	/*校验一些输入表单是否为空*/
-  		var error = document.getElementById("error");
-  		var patentName = document.getElementById("patentName");
-  		var patentNum = document.getElementById("patentNum");
-  		var patentHolder = document.getElementById("patentHolder");
-  		var patentDate = document.getElementById("patentDate");
+   	function confirmPass(){
+		/*校验一些输入表单是否为空*/
+  		
+  		var score = document.getElementById("score");
 
-  		if(patentName.value == ""){
-  			patentName.next().innerText = "专利名称不能为空.";
-  			return false;
-  		}else if(patentNum.value ==""){
-  			patentNum.next().innerText = "专利编号不能为空.";
-  			return false;
-  		}else if(patentHolder.value ==""){
-  			patentHolder.next().innerText = "专利发明人不能为空.";
-  			return false;
-  		}else if(patentDate.value ==""){
-  			patentDate.next().innerText = "专利授权公告日期不能为空.";
+  		if(score.value == ""){
+  			thesisName.nextElementSibling.innerText = "分数不能为空.";
   			return false;
   		}else{
-			if(confirm("提交后成果将置为待审核状态，确认提交?")){  
+			if(confirm("提交后成果将无法修改，确认通过?")){  
 				var form = document.getElementById("fileupload");
+				var checked = document.getElementById("checked");
+				checked.value=1;
 				form.setAttribute("action", "<%=projectPath%>/services/PatentUpload");
 				form.removeAttribute("enctype");
 				form.removeAttribute("target");
@@ -189,6 +216,80 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		}
 	}
+	function confirmUnpass(){
+		/*校验一些输入表单是否为空*/
+  		
+  		var score = document.getElementById("score");
+
+  		if(score.value == ""){
+  			thesisName.nextElementSibling.innerText = "分数不能为空.";
+  			return false;
+  		}else{
+			if(confirm("确认将成果设置为不通过?")){  
+				var form = document.getElementById("fileupload");
+				var checked = document.getElementById("checked");
+				checked.value=-1;
+				form.setAttribute("action", "<%=projectPath%>/services/PatentUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();			
+			}else{
+				return false;
+			}
+		}
+	}
+	var confirmFlag=0;
+	var timer;
+	
+	var maxtime = 2;
+  function confirmSubmit(){
+  	/*校验一些输入表单是否为空*/
+  		var error = document.getElementById("error");
+  		var patentName = document.getElementById("patentName");
+  		var patentNum = document.getElementById("patentNum");
+  		var patentHolder = document.getElementById("patentHolder");
+  		var patentDate = document.getElementById("patentDate");
+
+  		if(patentName.value == ""){
+  			patentName.nextElementSibling.innerText = "专利名称不能为空.";
+  			return false;
+  		}else if(patentNum.value ==""){
+  			patentNum.nextElementSibling.innerText = "专利编号不能为空.";
+  			return false;
+  		}else if(patentHolder.value ==""){
+  			patentHolder.nextElementSibling.innerText = "专利发明人不能为空.";
+  			return false;
+  		}else if(patentDate.value ==""){
+  			patentDate.nextElementSibling.innerText = "专利授权公告日期不能为空.";
+  			return false;
+  		}else if(confirmFlag==0){
+  			document.getElementById("countdown").innerHTML="请确认您填写的信息无误后再次点提交 - "+(maxtime+1);     
+			timer = setInterval("CountDown()",1000);  
+			document.getElementById("btnSubmit").disabled=true; 
+			confirmFlag=1;
+			return false;
+		}else if(window.confirmFlag==1){
+				var form = document.getElementById("fileupload");
+				form.setAttribute("action", "<%=projectPath%>/services/PatentUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();				
+		}
+		return false;
+	}
+	function CountDown(){     
+	        if(maxtime>=0){    
+	            document.getElementById("countdown").innerHTML="请确认您填写的信息无误后再次点提交 - "+maxtime;     
+	            if(maxtime !=0){   
+	                --maxtime;     
+	            }else{   
+	            	document.getElementById("countdown").innerHTML="";       
+	            	document.getElementById("btnSubmit").disabled=false; 
+	                clearInterval(timer);  
+	                maxtime=2;   
+	            }     
+	        }         
+	}  
 	function uploadFile(){	
 		var form = document.getElementById("fileupload");
 			form.setAttribute("action", "<%=projectPath%>/services/FileUploadServlet");
@@ -225,7 +326,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  success: function(data) {
                     if (data.result == 1) {
                          alert("删除成功！");
-                         window.location="<%=projectPath%>/template/teacher.jsp";
+                         window.location="<%=projectPath%>/template/<%=role%>.jsp";
                     }
                 },
                  error: function(xhr) {
@@ -242,7 +343,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<list.length;i++){
 			if(list[i]!=""){
 				$.ajax({
-           url: "<%=projectPath%>/services/FileUploadServlet?getlist="+list[i],
+           url: "<%=projectPath%>/services/FileUploadServlet?getlist="+list[i]+"&owner=<%=p.getOwner()%>",
            dataType: 'json',
            method: 'GET',
            success: function(data) {
@@ -264,7 +365,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				tbody.rows[rownum].cells[2].innerHTML="<span>"+formateFileSize(data[0].size)+"</span>";
 				tbody.rows[rownum].cells[3].setAttribute("colspan","2");
 				tbody.rows[rownum].cells[3].innerHTML="";
-				if(<%=p.getChecked()%>!=1){
+				if(<%=p.getChecked()%>!=1&&<%=owner.equals(username)%>){
 					tbody.rows[rownum].cells[4].setAttribute("class","delete");
 					tbody.rows[rownum].cells[4].innerHTML="<button class=\"btn btn-danger\" data-type="+data[0].delete_type+" data-url="+data[0].delete_url+"><i class=\"icon-trash icon-white\"></i><span>删除附件</span></button>";
 				}			
@@ -304,7 +405,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td class="start">{% if (!o.options.autoUpload) { %}
                 <button class="btn btn-primary" onclick="return uploadFile()">
                     <i class="icon-upload icon-white"></i>
-                    <span>Start</span>
+                    <span>开始上传</span>
                 </button>
                 {% } %}</td>
             {% } else { %}
@@ -312,7 +413,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td class="cancel">{% if (!i) { %}
                 <button class="btn btn-warning">
                     <i class="icon-ban-circle icon-white"></i>
-                    <span>Cancel</span>
+                    <span>取消</span>
                 </button>
                 {% } %}</td>
         </tr>
@@ -359,9 +460,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload-ui.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
     <script type="text/javascript">
+    <%if((role.equals("admin")&&owner.equals(username))||owner.equals("")||!role.equals("admin")){%>
+    
      $(function() {
-    $( "#patentDate" ).datepicker({dateFormat: "yy-mm-dd"});
-  	});
+    	$( "#patentDate" ).datepicker({dateFormat: "yy-mm-dd"});
+ 	});
+  	<%}%>
    $(function () {
     'use strict';
 

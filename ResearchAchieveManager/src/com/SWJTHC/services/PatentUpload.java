@@ -50,6 +50,7 @@ public class PatentUpload extends HttpServlet {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		String role = request.getSession().getAttribute("role").toString();
 		PrintWriter out = response.getWriter();
 		try {
 			int i =-1; 
@@ -58,28 +59,82 @@ public class PatentUpload extends HttpServlet {
 			}else{
 				Patent p = new Patent();
 				p.setName(request.getParameter("patentName"));
-				p.setOwner(request.getSession().getAttribute("username").toString());
+				
 				p.setCategory(request.getParameter("category"));
 				p.setPatentNum(request.getParameter("patentNum"));
 				p.setPatentHolder(request.getParameter("patentHolder"));
 				p.setAttachment(request.getParameter("attachment"));
+				p.setAuthorSituation(request.getParameter("authorSituation"));
+				
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("patentDate")).getTime());
 				p.setPatentDate(date);
-				p.setChecked(0);
+				p.setChecked(Integer.parseInt(request.getParameter("checked")));
+				double countScore = 0;
+				switch(p.getCategory()){
+					case "1":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 8;
+							break;
+						case "2":
+							countScore = 3;
+							break;
+						case "3":
+							countScore = 1;
+							break;
+						}
+						break;
+					case "2":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 5;
+							break;
+						}
+						break;
+					case "3":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 4;
+							break;
+						}
+						break;
+					case "4":
+						switch(p.getAuthorSituation()){
+						case "1":							
+							countScore = 4;
+							break;
+						case "2":
+							countScore = 2;
+							break;
+						}
+						break;
+				}
+				p.setScore(countScore);
+				
+				
 				if(request.getParameter("ID")!=null){
 					p.setID(Integer.parseInt(request.getParameter("ID")));
+					p.setOwner(request.getParameter("owner"));
+					double getScore = Double.parseDouble(request.getParameter("score"));
+					if(PatentDao.getPatentById(p.getID()).getScore()!=getScore){
+						p.setScore(getScore);
+					}
+					if(p.getChecked()==-1&&role.equals("teacher")){
+						p.setChecked(0);
+					}
 					i=PatentDao.updatePatent(p);
 				}else{
+					p.setOwner(request.getSession().getAttribute("username").toString());
 					i=PatentDao.insertPatent(p);
 				}
 			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果已更新!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();
 				j.put("result",1);
 				out.write(j.toString());
 			}else if(i!=-1){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果上传成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果上传成功!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else{
 				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果上传失败!');window.history.back(-1);</script>");
 			}

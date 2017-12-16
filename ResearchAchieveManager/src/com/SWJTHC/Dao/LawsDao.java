@@ -2,9 +2,12 @@ package com.SWJTHC.Dao;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.SWJTHC.model.AppUser;
 import com.SWJTHC.model.Laws;
 import com.SWJTHC.model.Patent;
 import com.SWJTHC.model.Thesis;
@@ -15,15 +18,31 @@ public class LawsDao {
 
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into Laws(name,score,attachment,owner,level,authorSituation,category,lawNumber,wordsCount,checked) values(?,?,?,?,?,?,?,?,?,?)",l,null);
+			i = Dao.executUpdate("insert into laws(name,score,attachment,owner,level,authorSituation,lawNumber,wordsCount,checked) values(?,?,?,?,?,?,?,?,?)",l,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
-				a.setUsername(l.getOwner());
+				AppUser u = UserDao.getUserByUsername(l.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("laws");
 				a.setName(l.getName());
 				a.setChecked(0);
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);
+				a.setDepartment(u.getDepartment());
+				a.setSubDepartment(u.getSubDepartment());
+				a.setScore(l.getScore());
+				a.setAchievementDate(new java.sql.Date(new java.util.Date().getTime()));
+				switch(l.getLevel()){
+				case "1":
+					a.setMaxScore(300);
+					break;
+				case "2":
+					a.setMaxScore(90);
+					break;
+				case "3":
+					a.setMaxScore(45);
+					break;
+				}
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievement,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -38,12 +57,11 @@ public class LawsDao {
 		ResultSet rs=null;
 		Laws law = null;
 		try {
-			rs = Dao.executQuery("select * from Laws where id ="+id);
+			rs = Dao.executQuery("select * from laws where id ="+id);
 			while(rs.next()){ 
 				law = new Laws();
 				law.setID(id);
 				law.setName(rs.getString("name"));
-				law.setCategory(rs.getString("category"));
 				law.setScore(rs.getDouble("score"));
 				law.setOwner(rs.getString("owner"));
 				law.setAuthorSituation(rs.getString("authorSituation"));
@@ -63,7 +81,7 @@ public class LawsDao {
 	public static int updateLaw(Laws l){
 
 		int i=-1;
-		String sql = "update Laws set ";
+		String sql = "update laws set ";
 		String key = "ID";
 		int k=1;
 		try {
@@ -122,9 +140,24 @@ public class LawsDao {
 				UserAchievement a = new UserAchievement();
 				a.setID(l.getID()+"");
 				a.setName(l.getName());
-				a.setUsername(l.getOwner());
+				AppUser u = UserDao.getUserByUsername(l.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("laws");
 				a.setChecked(l.getChecked());
+				a.setScore(l.getScore());
+				a.setDepartment(u.getDepartment());
+				a.setSubDepartment(u.getSubDepartment());
+				switch(l.getLevel()){
+				case "1":
+					a.setMaxScore(300);
+					break;
+				case "2":
+					a.setMaxScore(90);
+					break;
+				case "3":
+					a.setMaxScore(45);
+					break;
+				}
 				UserAchievementDao.updateUserAchievemetByUsername(a);
 			}
 		} catch (Exception e) {
@@ -139,8 +172,8 @@ public class LawsDao {
 	public static int deleteLaw(int id){
 		int i=-1;
 		try {
-			i=Dao.executUpdate("delete from Laws where id = "+id);
-			Dao.executUpdate("delete from UserAchievement where ID="+id+" and category='Laws'");
+			i=Dao.executUpdate("delete from laws where id = "+id);
+			Dao.executUpdate("delete from UserAchievement where ID="+id+" and category='laws'");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

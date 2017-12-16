@@ -34,12 +34,6 @@
 							<span class="icon">&gt;</span>
 						</a>
 					</li>
-					<!-- <li>
-						<a href="">
-							<span>ä¸ä¼ ææ</span>
-							<span class="icon">&gt;</span>
-						</a>
-					</li> -->
 				</ul>
 			</div>
 			<div class="right-fix">
@@ -102,21 +96,11 @@
 						</div>
 						<!--待审核-->
 						<div class="examing">
-							<!-- <ul>
-								<li>
-									<a href="#">
-										<p>项目编号：ky0001</p>
-										<span>[1]“移动交互环境下的大媒体内容分析与检索”项目  2017.01-2021.12 国家级 国家级自然
-    									科学基金重点项目</span>
-										<span>项目提交审核时间:2017-01-21</span>
-									</a>
-								</li>
-							</ul> -->
 							<table id="wating" class="table table-striped table-bordered table-hover" search="true">
 						      <thead>
 						      	<tr>
-						          <th>项目名称</th>
-						      	  <th>项目类型编号</th>
+						          <th>成果名称</th>
+						      	  <th>成果编号</th>
 						          <th>类型</th>
 						          <th>审核状态</th>
 						        </tr>
@@ -142,7 +126,7 @@
 									<%if(l.get(i).getCategory().equals("thesis")){
 									%><td>论文</td><%
 									}else if(l.get(i).getCategory().equals("eduProject")){
-									%><td>教学项目</td><%
+									%><td>课题项目</td><%
 									}else if (l.get(i).getCategory().equals("textbook")){
 									%><td>教材、论著</td><%
 									}else if (l.get(i).getCategory().equals("patent")){
@@ -150,7 +134,7 @@
 									}else if (l.get(i).getCategory().equals("laws")){
 									%><td>法律、法规</td><%
 									}else{
-									%><td></td><%
+									%><td>教改项目</td><%
 									}%>						          	
 						          	<% switch(l.get(i).getChecked()){
 						          		case -1:
@@ -196,7 +180,7 @@
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
-										<img src="../assets/img/project.png">
+										<img src="../assets/img/paper.png">
 										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/textbookUpload.jsp';">
 											<div>论著、教材类</div>
 											<div>TextBook</div>
@@ -208,12 +192,19 @@
 											<div>专利</div>
 											<div>Patent</div>
 										</dic>
-									</li>
+<!-- 									</li> -->
+<!-- 									<li class="load-item  clearfix"> -->
+<!-- 										<img src="../assets/img/paper.png"> -->
+<!-- 										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/lawsUpload.jsp';"> -->
+<!-- 											<div>法律法规类</div> -->
+<!-- 											<div>Laws and Regulations</div> -->
+<!-- 										</dic> -->
+<!-- 									</li> -->
 									<li class="load-item  clearfix">
-										<img src="../assets/img/patent.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/lawsUpload.jsp';">
-											<div>法律法规类</div>
-											<div>Laws and Regulations</div>
+										<img src="../assets/img/project.png">
+										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/eduReformProjectUpload.jsp';">
+											<div>教学改革项目类</div>
+											<div>Edu-Reform Project</div>
 										</dic>
 									</li>
 								</ul>

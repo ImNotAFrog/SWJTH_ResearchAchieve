@@ -49,6 +49,7 @@ public class TextbookUpload extends HttpServlet {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		String role = request.getSession().getAttribute("role").toString();
 		PrintWriter out = response.getWriter();
 		try {
 			int i =-1; 
@@ -57,7 +58,6 @@ public class TextbookUpload extends HttpServlet {
 			}else{
 				Textbook t = new Textbook();
 				t.setName(request.getParameter("textbookName"));
-				t.setOwner(request.getSession().getAttribute("username").toString());
 				t.setLevel(request.getParameter("level"));
 				t.setAuthorSituation(request.getParameter("authorSituation"));
 				t.setAttachment(request.getParameter("attachment"));
@@ -65,21 +65,74 @@ public class TextbookUpload extends HttpServlet {
 				t.setPublishingHouse(request.getParameter("publishingHouse"));
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("publishDate")).getTime());
 				t.setPublishDate(date);
-				t.setChecked(0);
+				t.setChecked(Integer.parseInt(request.getParameter("checked")));
+				double countScore = 0;
+				switch(t.getLevel()){
+					case "1":
+						switch(t.getAuthorSituation()){
+						case "1":							
+							countScore = 15;
+							break;
+						case "2":
+							countScore = 10;
+							break;
+						case "3":
+							countScore = 7;
+							break;
+						}
+						break;
+					case "2":
+						switch(t.getAuthorSituation()){
+						case "1":							
+							countScore = 5;
+							break;
+						case "2":
+							countScore = 3;
+							break;
+						case "3":
+							countScore = 1;
+							break;
+						}
+						break;
+					case "3":
+						switch(t.getAuthorSituation()){
+						case "1":							
+							countScore = 5;
+							break;
+						case "2":
+							countScore = 3.3;
+							break;
+						case "3":
+							countScore = 2.3;
+							break;
+						}
+						break;
+				}
+				t.setScore(countScore);
 				if(request.getParameter("ID")!=null){
 					t.setID(Integer.parseInt(request.getParameter("ID")));
+					t.setOwner(request.getParameter("owner"));
+					double getScore = Double.parseDouble(request.getParameter("score"));
+					if(TextbookDao.getTextbookById(t.getID()).getScore()!=getScore){
+						t.setScore(getScore);
+					}
+					if(t.getChecked()==-1&&role.equals("teacher")){
+						t.setChecked(0);
+					}
 					i=TextbookDao.updateTextbook(t);
 				}else{
+
+					t.setOwner(request.getSession().getAttribute("username").toString());
 					i=TextbookDao.insertTextbook(t);
 				}
 			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('论著、教材成果已更新!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('论著、教材成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();
 				j.put("result",1);
 				out.write(j.toString());
 			}else if(i!=-1){
-				out.print("<script type='text/javascript'charset='utf-8'>alert('论著、教材成果上传成功!');window.location.href='"+projectPath+"/template/teacher.jsp"+"';</script>");
+				out.print("<script type='text/javascript'charset='utf-8'>alert('论著、教材成果上传成功!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else{
 				out.print("<script type='text/javascript'charset='utf-8'>alert('论著、教材成果上传失败!');window.history.back(-1);</script>");
 			}

@@ -1,4 +1,4 @@
-<%@page import="com.SWJTHC.Dao.EduProjectDao"%>
+<%@page import="com.SWJTHC.Dao.EduReformProjectDao"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -8,9 +8,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
    <%@include file="../head_user.jsp"%> 
-   <% EduProject p = new EduProject();
+   <% EduReformProject p = new EduReformProject();
    if(request.getParameter("AchievementId")!=null){
-   	p=EduProjectDao.getEduProjectById(Integer.parseInt(request.getParameter("AchievementId")));
+   	p=EduReformProjectDao.getEduReformProjectById(Integer.parseInt(request.getParameter("AchievementId")));
    } 
    String username = request.getSession().getAttribute("username").toString(); 
    String owner = p.getOwner();
@@ -18,11 +18,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     <%if(request.getParameter("AchievementId")!=null&&(request.getSession().getAttribute("role").equals("admin"))){%>
-    <title>课题项目成果查看</title>
+    <title>教学改革项目成果查看</title>
     <%}else if(request.getParameter("AchievementId")!=null){ %>
-    <title>课题项目成果编辑</title>
+    <title>教学改革项目成果编辑</title>
     <%}else{ %>
-    <title>课题项目成果上传</title>
+    <title>教学改革项目成果上传</title>
     <%} %>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -45,11 +45,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<!--教学改革项目-->
 				<div class="re-item">
 					
-					<h3>课题项目信息</h3>
+					<h3>教学改革项目信息</h3>
 					<a href="<%=projectPath%>/template/<%=role%>.jsp" class="moco-modal-close"></a>
 					<form id="fileupload" method="post" target="nm_iframe" onchange="confirmFlag=0;">
 					<input id="owner" name="owner" type="hidden" value="<%=p.getOwner()%>" />
-					<input id="type" name="type" type="hidden" value="ProjectUpload" />
+					<input id="type" name="type" type="hidden" value="EduReformProjectUpload" />
 					<input name="checked" id="checked" type="hidden" value="<%=p.getChecked()%>" />
 					<%if(request.getParameter("AchievementId")!=null){%>
 					<input id="ID" name="ID" type="hidden" value="<%=request.getParameter("AchievementId")%>" />
@@ -71,28 +71,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </select>
                                 <div class="rlf-tip-wrap errorHint color-red"></div>
                         	</div>
-						</div>
-						
-						<div class="form-item">
-							<label for="projectLevel">项目级别:</label>
-							<div class="moco-control-input">
-                           				  <select class="moco-form-control rlf-select" name="projectLevel" hidefocus="true" id="projectLevel" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%> onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;"<%}%>>
-	                           	 				<option value="1"<%if(p.getLevel().equals("1")){%>selected="true"<%}%>>公安消防部队高等专科学校：国家级</option>
-	                                            <option value="2"<%if(p.getLevel().equals("2")){%>selected="true"<%}%>>公安消防部队高等专科学校：省部级</option>
-	                                            <option value="3"<%if(p.getLevel().equals("3")){%>selected="true"<%}%>>公安消防部队高等专科学校：校级</option> 
-	                                            <option value="4"<%if(p.getLevel().equals("4")){%>selected="true"<%}%>>外单位项目：国家级</option>   
-	                                            <option value="5"<%if(p.getLevel().equals("5")){%>selected="true"<%}%>>外单位项目：省部级</option>   
-	                                            <option value="6"<%if(p.getLevel().equals("6")){%>selected="true"<%}%>>外单位项目：校级</option>                                                                               
-	                                        </select>
-                     				 <div class="rlf-tip-wrap errorHint color-red"></div>
-               				 </div>
-						</div>
-						<div class="form-item">
-							<label for="subject">项目主体名称:</label>
-							<div class="moco-control-input">
-                           				  <input type="text" name="subject" id="subject" autocomplete="off" class="moco-form-control" value="<%=p.getSubject() %>" placeholder="如：消防局科研项目..." <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%>readonly="readonly"<%}%>>
-                            				 <div class="rlf-tip-wrap errorHint color-red"></div>
-                        				 </div>
 						</div>
 						<div class="form-item">
 							<label for="state">项目状态</label>
@@ -209,10 +187,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var form = document.getElementById("fileupload");
 				var checked = document.getElementById("checked");
 				checked.value=1;
-				form.setAttribute("action", "<%=projectPath%>/services/ProjectUpload");
+				form.setAttribute("action", "<%=projectPath%>/services/EduReformProjectUpload");
 				form.removeAttribute("enctype");
 				form.removeAttribute("target");
-				form.submit();			
+				//form.submit();			
 			}else{
 				return false;
 			}
@@ -231,7 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				var form = document.getElementById("fileupload");
 				var checked = document.getElementById("checked");
 				checked.value=-1;
-				form.setAttribute("action", "<%=projectPath%>/services/ProjectUpload");
+				form.setAttribute("action", "<%=projectPath%>/services/EduReformProjectUpload");
 				form.removeAttribute("enctype");
 				form.removeAttribute("target");
 				form.submit();			
@@ -248,13 +226,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		/*校验一些输入表单是否为*/
   		var error = document.getElementById("error");
   		var projectName = document.getElementById("projectName");
-  		var subject = document.getElementById("subject");
   		var stateDate = document.getElementById("stateDate");
   		if(projectName.value == ""){
   			projectName.nextElementSibling.innerText = "输入的项目名称不能为空.";
-  			return false;
-  		}else if(subject.value ==""){
-  			subject.nextElementSibling.innerText = "项目主体不能为空.";
   			return false;
   		}else if(stateDate.value ==""){
   			stateDate.nextElementSibling.innerText = "项目时间不能为空.";
@@ -268,32 +242,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			return false;
 		}else if(window.confirmFlag==1){
 				var form = document.getElementById("fileupload");
-				form.setAttribute("action", "<%=projectPath%>/services/ProjectUpload");
+				form.setAttribute("action", "<%=projectPath%>/services/EduReformProjectUpload");
 				form.removeAttribute("enctype");
 				form.removeAttribute("target");
-				form.submit();	
+				form.submit();
 		}
 		return false;
-	}      
+	}
 	function CountDown(){     
 	        if(maxtime>=0){    
 	            document.getElementById("countdown").innerHTML="请确认您填写的信息无误后再次点提交 - "+maxtime;     
 	            if(maxtime !=0){   
 	                --maxtime;     
 	            }else{   
-	            	document.getElementById("countdown").innerHTML=" ";       
+	            	document.getElementById("countdown").innerHTML="";       
 	            	document.getElementById("btnSubmit").disabled=false; 
 	                clearInterval(timer);  
 	                maxtime=2;   
 	            }     
 	        }         
 	}  
-	
 	function uploadFile(){	
 		var form = document.getElementById("fileupload");
 			form.setAttribute("action", "<%=projectPath%>/services/FileUploadServlet");
 			form.setAttribute("enctype","multipart/form-data");
 			form.setAttribute("target","nm_iframe");
+			form.submit();
 			
 			var intervalId = window.setInterval(function() { 
 				updateTable(intervalId);				
@@ -318,7 +292,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function deleteAchievement(ID){
 		if(confirm("确认删除成果?")){
 		 $.ajax({
-                url: "<%=projectPath%>/services/ProjectUpload?deleteAchievement="+ID,
+                url: "<%=projectPath%>/services/EduReformProjectUpload?deleteAchievement="+ID,
                  dataType: 'json',
                  method: 'GET',
                  success: function(data) {

@@ -2,9 +2,12 @@ package com.SWJTHC.Dao;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.SWJTHC.model.AppUser;
 import com.SWJTHC.model.EduProject;
 import com.SWJTHC.model.Laws;
 import com.SWJTHC.model.Thesis;
@@ -15,15 +18,41 @@ public class EduProjectDao {
 
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into EduProject(name,score,attachment,owner,subject,level,authorSituation,state,checked) values(?,?,?,?,?,?,?,?,?)",p,null);
+			i = Dao.executUpdate("insert into eduProject(name,score,attachment,owner,subject,level,authorSituation,state,checked) values(?,?,?,?,?,?,?,?,?)",p,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
 				a.setID(i+"");
-				a.setUsername(p.getOwner());
+				AppUser u = UserDao.getUserByUsername(p.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("eduProject");
+				a.setDepartment(u.getDepartment());
+				a.setSubDepartment(u.getSubDepartment());
 				a.setName(p.getName());
-				a.setChecked(0);
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked) values(?,?,?,?,?)", a, null);
+				a.setChecked(p.getChecked());
+				a.setScore(p.getScore());
+				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(p.getState().substring(0, 10)).getTime());
+				a.setAchievementDate(date);
+				switch(p.getLevel()){
+				case "1":							
+					a.setMaxScore(300);
+					break;
+				case "2":
+					a.setMaxScore(90);
+					break;
+				case "3":
+					a.setMaxScore(30);
+					break;
+				case "4":
+					a.setMaxScore(100);
+					break;
+				case "5":
+					a.setMaxScore(30);
+					break;
+				case "6":
+					a.setMaxScore(10);
+					break;
+				}
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -36,7 +65,7 @@ public class EduProjectDao {
 	public static int updateEduProject(EduProject p){
 
 		int i=-1;
-		String sql = "update EduProject set ";
+		String sql = "update eduProject set ";
 		String key = "ID";
 		int k=1;
 		try {
@@ -95,9 +124,35 @@ public class EduProjectDao {
 				UserAchievement a = new UserAchievement();
 				a.setID(p.getID()+"");
 				a.setName(p.getName());
-				a.setUsername(p.getOwner());
+				AppUser u = UserDao.getUserByUsername(p.getOwner()).get(0);
+				a.setUsername(u.getName());
 				a.setCategory("eduProject");
 				a.setChecked(p.getChecked());
+				a.setScore(p.getScore());
+				a.setDepartment(u.getDepartment());
+				a.setSubDepartment(u.getSubDepartment());
+				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(p.getState().substring(0, 10)).getTime());
+				a.setAchievementDate(date);
+				switch(p.getLevel()){
+				case "1":							
+					a.setMaxScore(300);
+					break;
+				case "2":
+					a.setMaxScore(90);
+					break;
+				case "3":
+					a.setMaxScore(30);
+					break;
+				case "4":
+					a.setMaxScore(100);
+					break;
+				case "5":
+					a.setMaxScore(30);
+					break;
+				case "6":
+					a.setMaxScore(10);
+					break;
+				}
 				UserAchievementDao.updateUserAchievemetByUsername(a);
 			}
 		} catch (Exception e) {
@@ -113,7 +168,7 @@ public class EduProjectDao {
 		ResultSet rs=null;
 		EduProject eduProject = null;
 		try {
-			rs = Dao.executQuery("select * from EduProject where id ="+id);
+			rs = Dao.executQuery("select * from eduProject where id ="+id);
 			while(rs.next()){ 
 				eduProject = new EduProject();
 				eduProject.setID(id);
@@ -137,7 +192,7 @@ public class EduProjectDao {
 	public static int deleteEduProject(int id){
 		int i=-1;
 		try {
-			i=Dao.executUpdate("delete from EduProject where id = "+id);
+			i=Dao.executUpdate("delete from eduProject where id = "+id);
 			Dao.executUpdate("delete from UserAchievement where ID="+id+" and category='eduProject'");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

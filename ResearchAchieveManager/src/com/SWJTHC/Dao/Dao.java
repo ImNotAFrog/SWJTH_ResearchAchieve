@@ -89,8 +89,14 @@ public class Dao {
 				Method getMethod = model.getClass().getMethod("get"+name);			//合成get方法
 				value = getMethod.invoke(model);									//调用类的get方法
                 if(value != null){
-                	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass()); 	//合成pstat的set方法
-                	setMethod.invoke(pstat,k,value);																	//调用pstat的set方法
+                	if(typeName.equals("double")){
+                		Method setMethod = pstat.getClass().getDeclaredMethod("setDouble",int.class,double.class);
+                    	setMethod.invoke(pstat,k,value);
+                	}else{
+                		Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());
+                    	setMethod.invoke(pstat,k,value);
+                	}
+                	 	//合成pstat的set方法																	//调用pstat的set方法
                 	k++;																								//k用来标识当前sql语句中的参数位置	
                }
 			}

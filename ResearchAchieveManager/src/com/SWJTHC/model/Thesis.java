@@ -1,5 +1,7 @@
 package com.SWJTHC.model;
 
+import java.sql.Date;
+
 import com.SWJTHC.enums.AchieveType;
 
 public class Thesis{
@@ -12,10 +14,19 @@ public class Thesis{
 	private String journalName ="";
 	private String journalLevel="";
 	private int checked =0;
+	private Date publishDate;
 	public Thesis(){
 		
 	}
 	
+	public Date getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
+	}
+
 	public int getChecked() {
 		return checked;
 	}

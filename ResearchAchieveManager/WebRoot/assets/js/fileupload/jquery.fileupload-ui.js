@@ -371,6 +371,8 @@
 	                		}
 	                    	ele.remove();
 	                        that._trigger('destroyed', e, data);
+
+	            			window.confirmFlag=0;
 	                        var updateTable = function(intervalId){ 
                         		try{
                         			var attach = document.getElementById("attachment");
