@@ -45,6 +45,7 @@ public class ThesisUpload extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String projectPath = request.getContextPath();
+		String username= request.getSession().getAttribute("username").toString();
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
@@ -53,7 +54,9 @@ public class ThesisUpload extends HttpServlet {
 		try {
 			int i =-1; 
 			if(request.getParameter("deleteAchievement")!=null){
+				System.out.println(username+"£ºÉ¾³ýÂÛÎÄ"+ request.getParameter("deleteAchievement"));
 				i=ThesisDao.deleteThesis(Integer.parseInt(request.getParameter("deleteAchievement")));
+			
 			}else{
 				Thesis t = new Thesis();
 				t.setName(request.getParameter("thesisName"));

@@ -46,6 +46,7 @@ public class TextbookUpload extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String projectPath = request.getContextPath();
+		String username= request.getSession().getAttribute("username").toString();
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
@@ -54,6 +55,7 @@ public class TextbookUpload extends HttpServlet {
 		try {
 			int i =-1; 
 			if(request.getParameter("deleteAchievement")!=null){
+				System.out.println(username+"£ºÉ¾³ý½Ì²Ä¡¢Öø×÷"+ request.getParameter("deleteAchievement"));
 				i=TextbookDao.deleteTextbook(Integer.parseInt(request.getParameter("deleteAchievement")));
 			}else{
 				Textbook t = new Textbook();

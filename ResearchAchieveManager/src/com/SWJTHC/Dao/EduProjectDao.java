@@ -18,6 +18,7 @@ public class EduProjectDao {
 
 		int i=-1;
 		try {
+			System.out.println(p.getOwner()+"：提交课题项目"+p.getID()+p.getName());
 			i = Dao.executUpdate("insert into eduProject(name,score,attachment,owner,subject,level,authorSituation,state,checked) values(?,?,?,?,?,?,?,?,?)",p,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
@@ -120,6 +121,7 @@ public class EduProjectDao {
                }
 			}
 			sql+=" where "+key+" = ?";
+			System.out.println(p.getOwner()+"：更新课题项目"+p.getID()+p.getName());
 			i = Dao.executUpdate(sql,p,key);
 			if(i==0){
 				UserAchievement a = new UserAchievement();

@@ -50,11 +50,13 @@ public class PatentUpload extends HttpServlet {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		String username= request.getSession().getAttribute("username").toString();
 		String role = request.getSession().getAttribute("role").toString();
 		PrintWriter out = response.getWriter();
 		try {
 			int i =-1; 
 			if(request.getParameter("deleteAchievement")!=null){
+				System.out.println(username+"：删除专利项目"+ request.getParameter("deleteAchievement"));
 				i=PatentDao.deletePatent(Integer.parseInt(request.getParameter("deleteAchievement")));
 			}else{
 				Patent p = new Patent();

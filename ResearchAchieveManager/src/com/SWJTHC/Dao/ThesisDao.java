@@ -16,6 +16,7 @@ public class ThesisDao {
 
 		int i=-1;
 		try {
+			System.out.println(t.getOwner()+"：提交论文"+t.getID()+t.getName());
 			i = Dao.executUpdate("insert into thesis(name,score,attachment,owner,journalNum,journalName,journalLevel,checked,publishDate) values(?,?,?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
@@ -32,6 +33,7 @@ public class ThesisDao {
 				a.setUserId(u.getUsername());
 				a.setMaxScore(500);
 				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
+				
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -124,6 +126,7 @@ public class ThesisDao {
                }
 			}
 			sql+=" where "+key+" = ?";
+			System.out.println(t.getOwner()+"：提交论文"+t.getID()+t.getName());
 			i = Dao.executUpdate(sql,t,key);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
@@ -154,6 +157,7 @@ public class ThesisDao {
 		try {
 			i=Dao.executUpdate("delete from thesis where id = "+id);
 			Dao.executUpdate("delete from UserAchievement where ID="+id+" and category='thesis'");
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

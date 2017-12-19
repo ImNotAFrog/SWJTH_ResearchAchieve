@@ -16,6 +16,8 @@ public class PatentDao {
 
 		int i=-1;
 		try {
+
+			System.out.println(p.getOwner()+"：提交专利"+p.getID()+p.getName());
 			i = Dao.executUpdate("insert into patent(name,score,attachment,owner,category,patentHolder,patentNum,patentDate,checked,authorSituation) values(?,?,?,?,?,?,?,?,?,?)",p,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
@@ -138,6 +140,8 @@ public class PatentDao {
                }
 			}
 			sql+=" where "+key+" = ?";
+
+			System.out.println(p.getOwner()+"：更新专利"+p.getID()+p.getName());
 			i = Dao.executUpdate(sql,p,key);
 			if(i==0){
 				UserAchievement a = new UserAchievement();

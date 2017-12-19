@@ -15,6 +15,7 @@ public class EduReformProjectDao {
 
 		int i=-1;
 		try {
+			System.out.println(p.getOwner()+"：提交教改项目"+p.getID()+p.getName());
 			i = Dao.executUpdate("insert into eduReformProject(name,score,attachment,owner,authorSituation,state,checked) values(?,?,?,?,?,?,?)",p,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
@@ -98,6 +99,7 @@ public class EduReformProjectDao {
                }
 			}
 			sql+=" where "+key+" = ?";
+			System.out.println(p.getOwner()+"：更新教改项目"+p.getID()+p.getName());
 			i = Dao.executUpdate(sql,p,key);
 			if(i==0){
 				UserAchievement a = new UserAchievement();

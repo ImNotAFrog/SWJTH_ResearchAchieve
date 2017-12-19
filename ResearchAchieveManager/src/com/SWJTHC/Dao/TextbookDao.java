@@ -15,6 +15,7 @@ public class TextbookDao {
 
 		int i=-1;
 		try {
+			System.out.println(t.getOwner()+"：提交教材、著作"+t.getID()+t.getName());
 			i = Dao.executUpdate("insert into textbook(name,score,attachment,owner,publishDate,authorSituation,publishingHouse,ISBN,level,checked) values(?,?,?,?,?,?,?,?,?,?)",t,null);
 			if(i!=-1){
 				UserAchievement a = new UserAchievement();
@@ -133,6 +134,7 @@ public class TextbookDao {
                }
 			}
 			sql+=" where "+key+" = ?";
+			System.out.println(t.getOwner()+"：提交教材、著作"+t.getID()+t.getName());
 			i = Dao.executUpdate(sql,t,key);
 			if(i==0){
 				UserAchievement a = new UserAchievement();

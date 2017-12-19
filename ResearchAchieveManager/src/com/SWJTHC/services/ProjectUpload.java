@@ -52,11 +52,13 @@ public class ProjectUpload extends HttpServlet {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		String username= request.getSession().getAttribute("username").toString();
 		String role = request.getSession().getAttribute("role").toString();
 		PrintWriter out = response.getWriter();
 		try {
 			int i =-1; 
 			if(request.getParameter("deleteAchievement")!=null){
+				System.out.println(username+"£ºÉ¾³ý¿ÎÌâÏîÄ¿"+ request.getParameter("deleteAchievement"));
 				i=EduProjectDao.deleteEduProject(Integer.parseInt(request.getParameter("deleteAchievement")));
 			}else{
 				EduProject p = new EduProject();
