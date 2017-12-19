@@ -28,6 +28,7 @@ public class TextbookDao {
 				a.setSubDepartment(u.getSubDepartment());
 				a.setScore(t.getScore());
 				a.setAchievementDate(t.getPublishDate());
+				a.setUserId(u.getUsername());
 				switch(t.getLevel()){
 					case "1":
 						a.setMaxScore(45);
@@ -39,7 +40,7 @@ public class TextbookDao {
 						a.setMaxScore(5);
 						break;
 				}
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -72,6 +73,7 @@ public class TextbookDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+		Dao.close();
 		return textbook;		
 	}
 	public static int updateTextbook(Textbook t){
@@ -143,6 +145,7 @@ public class TextbookDao {
 				a.setScore(t.getScore());
 				a.setDepartment(u.getDepartment());
 				a.setSubDepartment(u.getSubDepartment());
+				a.setUserId(u.getUsername());
 				a.setAchievementDate(t.getPublishDate());
 				switch(t.getLevel()){
 					case "1":
@@ -162,7 +165,7 @@ public class TextbookDao {
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 	public static int deleteTextbook(int id){
@@ -174,7 +177,7 @@ public class TextbookDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		Dao.close();
 		return i;
 	}
 }

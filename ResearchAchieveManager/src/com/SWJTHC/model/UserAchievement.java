@@ -20,6 +20,7 @@ public class UserAchievement {
 	private SubDepartment subDepartment=null;
 	private Date achievementDate;
 	private double maxScore=0;
+	private String userId;
 	
 	public UserAchievement(){
 		
@@ -27,6 +28,14 @@ public class UserAchievement {
 	
 	public double getMaxScore() {
 		return maxScore;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public void setMaxScore(double maxScore) {

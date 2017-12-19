@@ -67,10 +67,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                  <option value="2"<%if(t.getJournalLevel().equals("2")){%>selected="true"<%}%>>2.SCI收录</option>
                                                  <option value="3"<%if(t.getJournalLevel().equals("3")){%>selected="true"<%}%>>3.EI（JA）、SSCI、A&HCI收录</option>   
                                                  <option value="4"<%if(t.getJournalLevel().equals("4")){%>selected="true"<%}%>>4.EI（CA）、CPCI</option>     
-                                                 <option value="5"<%if(t.getJournalLevel().equals("6")){%>selected="true"<%}%>>5.核心刊物正刊(含北大核心期刊、CSCD、CSSCI、RCCSE)</option>   
-                                                 <option value="6"<%if(t.getJournalLevel().equals("7")){%>selected="true"<%}%>>6.《武警学院学报》、《消防技术与产品信息》、全国性或行业性学会论文集（一等奖）、国际会议论文集</option>   
-                                                 <option value="7"<%if(t.getJournalLevel().equals("8")){%>selected="true"<%}%>>7.专业期刊（正刊）、全国性或行业性学会论文集（二等奖）、《消防科学与技术》增刊、《武警学院学报》增刊、《消防技术与产品信息》增刊</option>
-                                                 <option value="8"<%if(t.getJournalLevel().equals("9")){%>selected="true"<%}%>>8.一般期刊、其它增刊、其它论文集、校刊</option>                                
+                                                 <option value="5"<%if(t.getJournalLevel().equals("5")){%>selected="true"<%}%>>5.核心刊物正刊(含北大核心期刊、CSCD、CSSCI、RCCSE)</option>   
+                                                 <option value="6"<%if(t.getJournalLevel().equals("6")){%>selected="true"<%}%>>6.《武警学院学报》、《消防技术与产品信息》、全国性或行业性学会论文集（一等奖）、国际会议论文集</option>   
+                                                 <option value="7"<%if(t.getJournalLevel().equals("7")){%>selected="true"<%}%>>7.专业期刊（正刊）、全国性或行业性学会论文集（二等奖）、《消防科学与技术》增刊、《武警学院学报》增刊、《消防技术与产品信息》增刊</option>
+                                                 <option value="8"<%if(t.getJournalLevel().equals("8")){%>selected="true"<%}%>>8.一般期刊、其它增刊、其它论文集、校刊</option>                                
                                              </select>
                             				 <div class="rlf-tip-wrap errorHint color-red"></div>
                         					 </div>
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                          				 </div>
 							</div>
 							<div class="form-item" style="margin-top: 12px;">
-                           		<label for="publishDate" class="moco-control-label">发表时间：</label>
+                           		<label for="publishDate" class="moco-control-label">发表日期：</label>
                            		<div class="moco-control-input">
                                 	<input type="text" name="publishDate" id="publishDate" autocomplete="off" class="moco-form-control" value="<%if(t.getPublishDate()!=null){%><%=t.getPublishDate()%><%}%>" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||t.getChecked()==1){%>readonly="readonly"<%}%>>
                            			<div class="rlf-tip-wrap errorHint color-red"></div>
@@ -299,7 +299,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			journalNum.nextElementSibling.innerText = "论文刊号不能为空.";
   			return false;
   		}else if(publishDate.value ==""){
-  			publishDate.nextElementSibling.innerText = "发表时间不能为空.";
+  			publishDate.nextElementSibling.innerText = "发表日期不能为空.";
   			return false;
   		}else if(confirmFlag==0){
   			document.getElementById("countdown").innerHTML="请确认您填写的信息无误后再次点提交 - "+(maxtime+1);     
@@ -416,7 +416,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
             {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}"  download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}"  onclick="window.open({%=file.url%});" target="_blank"><img src="{%=file.thumbnail_url%}"></a>
                 {% } %}</td>
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
@@ -446,9 +446,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript">
     $(function () {    
      <%if((role.equals("admin")&&owner.equals(username))||owner.equals("")||!role.equals("admin")){%>
+      <%if(t.getChecked()!=1){%>
       $(function() {
-    		$( "#publishDate" ).datepicker({dateFormat: "yy-mm-dd"});
+    		$( "#publishDate" ).datepicker({
+   		  	  dateFormat: "yy-mm-dd",
+              showOtherMonths: true,
+              selectOtherMonths: true,
+              showButtonPanel: true,
+              showOn: "both",
+              buttonImageOnly: true,
+              buttonText: "",
+              changeMonth: true,
+              changeYear: true
+          });
   		});
+	<%}%>
 	<%}%>
 	'use strict';
 	$('#fileupload').fileupload();

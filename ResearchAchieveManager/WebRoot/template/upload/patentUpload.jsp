@@ -430,7 +430,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
             {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}"  download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}" onclick="window.open({%=file.url%});" target="_blank"><img src="{%=file.thumbnail_url%}"></a>
                 {% } %}</td>
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
@@ -461,10 +461,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
     <script type="text/javascript">
     <%if((role.equals("admin")&&owner.equals(username))||owner.equals("")||!role.equals("admin")){%>
-    
+    <%if(p.getChecked()!=1){%>
      $(function() {
-    	$( "#patentDate" ).datepicker({dateFormat: "yy-mm-dd"});
+    	$( "#patentDate" ).datepicker({
+   		  	  dateFormat: "yy-mm-dd",
+              showOtherMonths: true,
+              selectOtherMonths: true,
+              showButtonPanel: true,
+              showOn: "both",
+              buttonImageOnly: true,
+              buttonText: "",
+              changeMonth: true,
+              changeYear: true
+          });
  	});
+ 	<%}%>
   	<%}%>
    $(function () {
     'use strict';

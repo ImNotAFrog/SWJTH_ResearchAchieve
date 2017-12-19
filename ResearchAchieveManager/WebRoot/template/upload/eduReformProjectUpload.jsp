@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="form-item">
 							<label for="" class="moco-control-label">作者参与情况：</label>
                            	<div class="moco-control-input">
-                                <select class="moco-form-control rlf-select" name="authorSituation" hidefocus="true" id="authorSituation" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%> onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;"<%}%>>
+                                <select class="moco-form-control rlf-select" name="authorSituation" hidefocus="true" id="authorSituation" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%> onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;""<%}%>>
                             		<option value="1"<%if(p.getAuthorSituation().equals("1")){%>selected="true"<%}%>>1.组长</option>
                                     <option value="2"<%if(p.getAuthorSituation().equals("2")){%>selected="true"<%}%>>2.研究人员</option>                             
                                 </select>
@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            				 </div>
 						</div>
 						<div class="form-item">
-							<label for="stateDate">时间:</label>
+							<label for="stateDate">验收日期:</label>
 							<div class="moco-control-input">
 	                            <input type="text" name="stateDate" id="stateDate" autocomplete="off" class="moco-form-control" value="<%if(!p.getState().equals("")){%><%=p.getState().substring(0,10)%><%}%>" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||p.getChecked()==1){%>readonly="readonly"<%}%>>
                				 <div class="rlf-tip-wrap errorHint color-red"></div>
@@ -231,7 +231,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			projectName.nextElementSibling.innerText = "输入的项目名称不能为空.";
   			return false;
   		}else if(stateDate.value ==""){
-  			stateDate.nextElementSibling.innerText = "项目时间不能为空.";
+  			stateDate.nextElementSibling.innerText = "项目验收或立项日期不能为空.";
   			return false;
   		}
   		else if(confirmFlag==0){
@@ -403,7 +403,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
             {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}"  download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}" onclick="window.open({%=file.url%});" target="_blank"><img src="{%=file.thumbnail_url%}"></a>
                 {% } %}</td>
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
@@ -432,9 +432,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
   <script type="text/javascript">
   <%if((role.equals("admin")&&owner.equals(username))||owner.equals("")||!role.equals("admin")){%>
+   <%if(p.getChecked()!=1){%>
    $(function() {
     	$( "#stateDate" ).datepicker({dateFormat: "yy-mm-dd"});
 	});
+	<%}%>
 	<%}%>
    $(function () {
 	    'use strict';

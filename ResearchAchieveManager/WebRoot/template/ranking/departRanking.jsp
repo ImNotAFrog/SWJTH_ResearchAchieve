@@ -96,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'departRanking.jsp' starting page</title>
+    <title>集体成果评比排名</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -107,6 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 	<link href="<%=projectPath%>/assets/css/uploadForm.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/bootstrap-table.min.css">
 
   </head>
   
@@ -117,13 +118,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 				<!--教学改革项目-->
 				<div class="re-item">
-				<table id="wating" class="table table-striped table-bordered table-hover" search="true">
+				<table id="wating" class="table table-striped table-bordered table-hover" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
 			      <thead>
 			      	<tr>			      	
 			          <th>排名</th>
 			          <th>部门名称</th>
 			      	  <th>成果总量</th>
 			          <th>总分</th>
+			          <th>操作</th>
 			        </tr>
 			      </thead>
 			      <tbody>
@@ -133,7 +135,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          <td><%=result.get(i).getSubDepartment().getName() %></td>
 			      	  <td><%=achieveNum.get(result.get(i).getSubDepartment().getName()) %></td>
 			          <td><%=result.get(i).getScore()%></td>
-			        </tr>		      	
+			          <td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/ranking/departRankingLookup.jsp?department=<%=result.get(i).getSubDepartment().getName()%>'">详情</button></td>					        			      	
+			        </tr>			        
 			      <%} %>
 			      </tbody>
 			      </table>
@@ -144,5 +147,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
   </body>
 </html>

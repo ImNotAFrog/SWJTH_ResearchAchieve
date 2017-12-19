@@ -30,7 +30,8 @@ public class EduReformProjectDao {
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(p.getState().substring(0, 10)).getTime());
 				a.setAchievementDate(date);
 				a.setMaxScore(24);
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
+				a.setUserId(p.getOwner());
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -112,6 +113,7 @@ public class EduReformProjectDao {
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(p.getState().substring(0, 10)).getTime());
 				a.setAchievementDate(date);
 				a.setMaxScore(24);
+				a.setUserId(p.getOwner());
 				UserAchievementDao.updateUserAchievemetByUsername(a);
 			}
 		} catch (Exception e) {
@@ -119,7 +121,7 @@ public class EduReformProjectDao {
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 	
@@ -143,6 +145,7 @@ public class EduReformProjectDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+		Dao.close();
 		return eduReformProject;		
 	}
 	
@@ -155,7 +158,7 @@ public class EduReformProjectDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		Dao.close();
 		return i;
 	}
 }

@@ -38,6 +38,7 @@ public class Dao {
 			return null;
 		}
 	}
+	
 	public static ResultSet executQuery(String sql,Object model){
 		ResultSet rs=null;
 		try{
@@ -102,6 +103,7 @@ public class Dao {
 			}
 			rs = pstat.executeQuery();
 			return rs;//conn.createStatement().executeQuery(sql);
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -121,6 +123,7 @@ public class Dao {
 			return -1;
 		}
 	}
+	
 	public static int executUpdate(String sql,Object model , String key){
 		int gKeys=-1;
 		ResultSet rs=null;
@@ -238,7 +241,9 @@ public class Dao {
 	}
 	public static void close(){
 		try {
-			conn.close();
+			if(conn!=null){
+				conn.close();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

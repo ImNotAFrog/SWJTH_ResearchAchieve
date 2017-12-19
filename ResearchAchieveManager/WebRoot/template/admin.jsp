@@ -1,13 +1,16 @@
 <%@page import="java.util.*,com.SWJTHC.model.*,com.SWJTHC.Dao.*" pageEncoding="UTF-8"%>
 
 <html>
+<%@include file="head_user.jsp"%>
 <head>
 	<meta charset="utf-8">
 	<title>管理员主页</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<link rel="stylesheet" type="text/css" href="../assets/css/teacher_main.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-table.min.css">
+	<link rel="shortcut icon " type="images/x-icon" href="<%=projectPath%>/assets/img/logo-2.png">
 </head>
-<%@include file="head_user.jsp"%>
+
 <% 	List<UserAchievement> l = UserAchievementDao.getAchievementByUsername(u.getUsername());
 	List<UserAchievement> all = UserAchievementDao.getAchievementList();
 	List<UserAchievement> approval=new ArrayList();
@@ -124,13 +127,22 @@
 						<div class="list">
 							<div class="common-title">成果列表</div>
 							<div class="approval">
-								<p class="state">已通过</p>
-								<table id="approval" class="table table-striped table-bordered">
+								<p class="state">按类别查看</p>
+								<select hidefocus="true" id="approvalFilter" onchange="filterByCategory(this)">
+									<option value="">所有</option>
+									<option value="论文">论文</option>
+									<option value="教改项目">教改项目</option>
+									<option value="课题项目">课题项目</option>
+									<option value="专利">专利</option>
+									<option value="教材、著作">教材、著作</option>
+								</select>
+								<table id="approvalTable" class="table table-striped table-bordered" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
 							      <thead>
 							          <th>成果名称</th>
 							          <th>类型</th>
 							          <th>提交人</th>
-							          <th>成果得分</th>
+							          <th>成果得分</th>						          
+							          <th>操作</th>
 							        </tr>
 							      </thead>
 							      <tbody>
@@ -150,9 +162,11 @@
 											%><td>法律、法规</td><%
 											}else{
 											%><td>教改项目</td><%
-											}%>						          	
+											}%>	
+																          	
 								          	<td><%=approval.get(i).getUsername()%></td>		
-								          	<td><%=approval.get(i).getScore()%></td>						        	
+								          	<td><%=approval.get(i).getScore()%></td>
+								          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=approval.get(i).getCategory()%>Upload.jsp?AchievementId=<%=approval.get(i).getID()%>'">详情</button></td>						        	
 								      </tr>
 								      <%
 								      	}
@@ -166,13 +180,22 @@
 						<div class="list">
 							<div class="common-title">成果列表</div>
 							<div class="pending">
-								<p class="state">待审核</p>
-								<table id="pending" class="table table-striped table-bordered">
+								<p class="state">按类别查看</p>
+								<select hidefocus="true" id="pendingFilter" onchange="filterByCategory(this)">
+									<option value="">所有</option>
+									<option value="论文">论文</option>
+									<option value="教改项目">教改项目</option>
+									<option value="课题项目">课题项目</option>
+									<option value="专利">专利</option>
+									<option value="教材、著作">教材、著作</option>
+								</select>
+								<table id="pendingTable" class="table table-striped table-bordered" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
 							      <thead>
 							          <th>成果名称</th>
 							          <th>类型</th>
 							          <th>提交人</th>
 							          <th>自评得分</th>
+							          <th>操作</th>
 							        </tr>
 							      </thead>
 							      <tbody>
@@ -194,7 +217,8 @@
 											%><td>教改项目</td><%
 											}%>						          	
 								          	<td><%=pending.get(i).getUsername()%></td>		
-								          	<td><%=pending.get(i).getScore()%></td>					        	
+								          	<td><%=pending.get(i).getScore()%></td>	
+								          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=pending.get(i).getCategory()%>Upload.jsp?AchievementId=<%=pending.get(i).getID()%>'">详情</button></td>				        	
 								      </tr>
 								      <%
 								      	}
@@ -208,13 +232,22 @@
 						<div class="list">
 							<div class="common-title">成果列表</div>
 							<div class="denied">
-								<p class="state">未通过</p>
-								<table id="denied" class="table table-striped table-bordered">
+								<p class="state">按类别查看</p>
+								<select hidefocus="true" id="deniedFilter" onchange="filterByCategory(this)">
+									<option value="">所有</option>
+									<option value="论文">论文</option>
+									<option value="教改项目">教改项目</option>
+									<option value="课题项目">课题项目</option>
+									<option value="专利">专利</option>
+									<option value="教材、著作">教材、著作</option>
+								</select>
+								<table id="deniedTable" class="table table-striped table-bordered" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
 							      <thead>
 							          <th>成果名称</th>
 							          <th>类型</th>
 							          <th>提交人</th>
 							          <th>自评得分</th>
+							          <th>操作</th>
 							        </tr>
 							      </thead>
 							      <tbody>
@@ -236,7 +269,8 @@
 											%><td>教改项目</td><%
 											}%>						          	
 								          	<td><%=denied.get(i).getUsername()%></td>		
-								          	<td><%=denied.get(i).getScore()%></td>				        	
+								          	<td><%=denied.get(i).getScore()%></td>	
+								          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=denied.get(i).getCategory()%>Upload.jsp?AchievementId=<%=denied.get(i).getID()%>'">详情</button></td>			        	
 								      </tr>
 								      <%
 								      	}
@@ -256,7 +290,7 @@
 										<button type="button" class="btn btn-info btn-lg" onclick="window.location.href='<%=projectPath%>/template/ranking/indivRanking.jsp';">查看个人成果评比排名列表</button>
 									</li>
 									<li class="load-item  clearfix">
-										<button type="button" class="btn btn-info btn-lg" onclick="window.location.href='<%=projectPath%>/template/ranking/departRanking.jsp';">查看成果评比排名列表</button>
+										<button type="button" class="btn btn-info btn-lg" onclick="window.location.href='<%=projectPath%>/template/ranking/departRanking.jsp';">查看集体成果评比排名列表</button>
 									</li>
 								</ul>
 						</div>
@@ -267,6 +301,71 @@
 	</div>
 	<!--内容区域结束-->
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/main.js"></script>
+	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
+	<script>
+
+	$(function(){
+		
+		  var approvalFilter = document.getElementById("approvalFilter"); 
+		  var pendingFilter = document.getElementById("pendingFilter"); 
+		  var deniedFilter = document.getElementById("deniedFilter"); 
+		  pendingFilter.selectedIndex = getCookie('pendingFilter');
+		  approvalFilter.selectedIndex = getCookie('approvalFilter');
+		  deniedFilter.selectedIndex = getCookie('deniedFilter');
+		  if(getCookie('approvalFilter')=='0'){
+		  	$('#deniedTable').bootstrapTable('filterBy', {});
+		  }else{
+		  	$('#approvalTable').bootstrapTable('filterBy', { 1:approvalFilter.value});
+		  }
+		  
+  		  if(getCookie('pendingFilter')=='0'){
+		  	$('#deniedTable').bootstrapTable('filterBy', {});
+		  }else{
+		  	$('#pendingTable').bootstrapTable('filterBy', { 1:pendingFilter.value});
+		  }
+		  
+   		  if(getCookie('deniedFilter')=='0'){
+		 	 $('#deniedTable').bootstrapTable('filterBy', {});
+		  }else{
+		  	$('#deniedTable').bootstrapTable('filterBy', { 1:deniedFilter.value});
+		  }		   
+	});
+	function filterByCategory(ele){
+		var tableName=ele.id.replace('Filter','');
+		if(ele.value==""){
+			$('#'+tableName+'Table').bootstrapTable('filterBy', {});
+		}else{
+		 $('#'+tableName+'Table').bootstrapTable('filterBy', { 1:ele.value});
+		 }
+		 addCookie(ele.id,ele.selectedIndex,1);
+	}
+	
+	 function getCookie(NameOfCookie)
+	    {
+	        var arrStr = document.cookie.split("; ");
+	        for(var i = 0;i < arrStr.length;i ++){
+	            var temp = arrStr[i].split("=");
+	            //alert(temp);
+	            if(temp[0] == NameOfCookie) 
+	                return unescape(temp[1]);
+	        }
+	        return "0";
+	    }
+
+	function addCookie(NameOfCookie,objValue,expiredays)
+    {
+        
+        //var tmp = typeof(oldCookie);
+        //alert(tmp);
+        //需要设置过期时长，否则关闭浏览器就会清除cookie
+        var exp = new Date();
+        exp.setTime(exp.getTime() + expiredays*24*60*60*1000);
+        var expires = "expires="+exp.toUTCString();
+        //alert(expires);
+        document.cookie = NameOfCookie+"="+objValue+";"+ expires;
+    }
+
+	</script>
 </body>
 
 </html>

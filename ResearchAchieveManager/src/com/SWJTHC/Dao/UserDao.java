@@ -153,7 +153,7 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 }

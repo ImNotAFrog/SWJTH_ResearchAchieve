@@ -160,6 +160,7 @@
                                         that._trigger('completed', e, data);
 
                                         document.getElementById("btnSubmit").disabled=false;
+                                        window.confirmFlag=0;
                                     	var updateTable = function(intervalId){                                     		
                                     		try{
                                     			var attach = document.getElementById("attachment");

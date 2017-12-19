@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	for(int i=0;i<all.size();i++){
 	
 		if(all.get(i).getChecked()==1&&all.get(i).getAchievementDate().after(start)&&all.get(i).getAchievementDate().before(end)){
-			System.out.println(all.get(i).getUsername()+all.get(i).getName()+all.get(i).getAchievementDate());
+			//System.out.println(all.get(i).getUsername()+all.get(i).getName()+all.get(i).getAchievementDate());
 			approval.add(all.get(i));
 		}
 	}
@@ -31,13 +31,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		if(place==-1){
 			sumed.add(approval.get(i));
-			achieveNum.put(approval.get(i).getName(),1);
+			achieveNum.put(approval.get(i).getUsername(),1);
 		}else{
 			double sum = sumed.get(place).getScore()+approval.get(i).getScore();
 			
 			sumed.get(place).setScore(sum);
-			int n = achieveNum.get(sumed.get(place).getName());
-			achieveNum.put(sumed.get(place).getName(),n+1);
+			int n = achieveNum.get(sumed.get(place).getUsername());
+			achieveNum.put(sumed.get(place).getUsername(),n+1);
 			
 		}
 	} 
@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'indivRanking.jsp' starting page</title>
+    <title>个人成果评比排名</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 	<link href="<%=projectPath%>/assets/css/uploadForm.css" rel="stylesheet">
-
+	<link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/bootstrap-table.min.css">
   </head>
   
   <body>
@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 				<!--教学改革项目-->
 				<div class="re-item">
-				<table id="wating" class="table table-striped table-bordered table-hover" search="true">
+				<table id="wating" class="table table-striped table-bordered table-hover" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
 			      <thead>
 			      	<tr>			      	
 			          <th>排名</th>
@@ -76,17 +76,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          <th>总分</th>
 			          <th>所属部门</th>
 			          <th>所属子部门</th>
+			          <th>操作</th>
 			        </tr>
 			      </thead>
 			      <tbody>
 			      <%for(int i=0;i<sumed.size();i++){%>
-			      	<tr>
+			      	<tr onclick="window.location.href='<%=projectPath%>/template/ranking/indivRankingLookup.jsp?chosenUser=<%=sumed.get(i).getUsername()%>';">
 			      	<td><%=i+1 %></td>
 			      	<td><%=sumed.get(i).getUsername() %></td>
-			      	<td><%=achieveNum.get(sumed.get(i).getName()) %></td>
+			      	<td><%=achieveNum.get(sumed.get(i).getUsername()) %></td>
 			        <td><%=sumed.get(i).getScore()%></td>
 			        <td><%=sumed.get(i).getDepartment().getName()%></td>
 			        <td><%=sumed.get(i).getSubDepartment().getName()%></td>	
+			        <td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/ranking/indivRankingLookup.jsp?chosenUser=<%=sumed.get(i).getUsername()%>';">详情</button></td>					        	
 			        </tr>		      	
 			      <%} %>
 			      </tbody>
@@ -98,5 +100,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
   </body>
 </html>

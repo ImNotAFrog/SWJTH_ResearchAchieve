@@ -95,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             				</div>
                         				</div>
                         				<div class="form-item" style="margin-top: 12px;">
-			                            	<label for="publishDate" class="moco-control-label">出版时间：</label>
+			                            	<label for="publishDate" class="moco-control-label">出版日期：</label>
 			                            	<div class="moco-control-input">
 				                                <input type="text" name="publishDate" id="publishDate" autocomplete="off" class="moco-form-control" value="<%if(t.getPublishDate()!=null){%><%=t.getPublishDate()%><%}%>" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||t.getChecked()==1){%>readonly="readonly"<%}%>>
 				                           		<div class="rlf-tip-wrap errorHint color-red"></div>
@@ -242,7 +242,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			textbookName.nextElementSibling.innerText = "教材名称不能为空.";
   			return false;
   		}else if(publishDate.value ==""){
-  			publishDate.nextElementSibling.innerText = "教材出版时间不能为空.";
+  			publishDate.nextElementSibling.innerText = "教材出版日期不能为空.";
   			return false;
   		}else if(confirmFlag==0){
   			document.getElementById("countdown").innerHTML="请确认您填写的信息无误后再次点提交 - "+(maxtime+1);     
@@ -412,7 +412,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
             {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}"  download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}"  onclick="window.open({%=file.url%});" target="_blank"><img src="{%=file.thumbnail_url%}"></a>
                 {% } %}</td>
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
@@ -443,9 +443,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
     <script type="text/javascript">
      <%if((role.equals("admin")&&owner.equals(username))||owner.equals("")||!role.equals("admin")){%>
+      <%if(t.getChecked()!=1){%>
       $(function() {
-    		$( "#publishDate" ).datepicker({dateFormat: "yy-mm-dd"});
+    		$( "#publishDate" ).datepicker({
+   		  	  dateFormat: "yy-mm-dd",
+              showOtherMonths: true,
+              selectOtherMonths: true,
+              showButtonPanel: true,
+              showOn: "both",
+              buttonImageOnly: true,
+              buttonText: "",
+              changeMonth: true,
+              changeYear: true
+          });
   		});
+  		<%}%>
 	<%}%>
    $(function () {
     'use strict';

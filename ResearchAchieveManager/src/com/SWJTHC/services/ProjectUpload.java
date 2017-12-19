@@ -131,6 +131,10 @@ public class ProjectUpload extends HttpServlet {
 						}
 						break;
 				}
+				System.out.print(state);
+				if(state.equals("立项在研")){
+					countScore=0;
+				}
 				p.setScore(countScore);			
 				
 				p.setState(date.toString()+state);

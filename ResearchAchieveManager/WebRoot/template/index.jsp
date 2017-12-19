@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<img src="<%=projectPath%>/assets/img/slide-2.png">
 				<div class="slide-info">
 					<div class="info-title"></div>
-					<div class="date">2017.05.11</div>
+					<div class="date">2017.12.17</div>
 					<div class="content">《公安消防部队高等专科学校科研成果管理系统》学术先进集体、先进个人评比模块试运行</div>
 					<a class="detail" href="#">查看详情</a>
 				</div>

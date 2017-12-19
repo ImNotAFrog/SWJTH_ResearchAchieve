@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<div class="form-item">
 											<label>级别:</label>
 											<div class="moco-control-input">
-                              				  <select class="moco-form-control rlf-select" name="lawLevel" hidefocus="true" id="lawLevel" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%> onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;"<%}%>>
+                              				  <select class="moco-form-control rlf-select" name="lawLevel" hidefocus="true" id="lawLevel" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%> disabled="true"<%}%>>
                                    	 				<option value="1"<%if(l.getLevel().equals("1")){%>selected="true"<%}%>>法律、行政法规、国家标准</option>
                                                     <option value="2"<%if(l.getLevel().equals("2")){%>selected="true"<%}%>>部门规章、行业标准规范</option>
                                                     <option value="3"<%if(l.getLevel().equals("3")){%>selected="true"<%}%>>地方性法规、政府规章、地方性标准规范</option>                              
@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<div class="form-item">
 											<label for="" class="moco-control-label">作者参与情况：</label>
 			                            	<div class="moco-control-input">
-				                                <select class="moco-form-control rlf-select" name="authorSituation" hidefocus="true" id="authorSituation" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%> onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;"<%}%>>
+				                                <select class="moco-form-control rlf-select" name="authorSituation" hidefocus="true" id="authorSituation" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%> disabled="true"<%}%>>
                                 	 				 <option value="1"<%if(l.getAuthorSituation().equals("1")){%>selected="true"<%}%>>1.主编</option>
 	                                                 <option value="2"<%if(l.getAuthorSituation().equals("2")){%>selected="true"<%}%>>2.参编</option>                               
 	                                             </select>
@@ -408,7 +408,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
             {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}"  download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}" onclick="window.open({%=file.url%});" target="_blank"><img src="{%=file.thumbnail_url%}"></a>
                 {% } %}</td>
             <td class="name">
                 <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}">{%=file.name%}</a>
@@ -439,9 +439,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
     <script type="text/javascript">
     <%if((role.equals("admin")&&owner.equals(username))||owner.equals("")||!role.equals("admin")){%>
+     <%if(l.getChecked()!=1){%>
      $(function() {
-    $( "#patentDate" ).datepicker({dateFormat: "yy-mm-dd"});
+    $( "#patentDate" ).datepicker({
+   		  	  dateFormat: "yy-mm-dd",
+              showOtherMonths: true,
+              selectOtherMonths: true,
+              showButtonPanel: true,
+              showOn: "both",
+              buttonImageOnly: true,
+              buttonText: "",
+              changeMonth: true,
+              changeYear: true
+          });
   	});
+  	<%}%>
   	<%}%>
    $(function () {
     'use strict';

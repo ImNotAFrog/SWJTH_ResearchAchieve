@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'departRankingLookup.jsp' starting page</title>
+    <title>My JSP 'indivRankingLookup.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -20,15 +20,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<% String department = request.getParameter("department");
+	<% String chosenUser = request.getParameter("chosenUser");
 		
 		List<UserAchievement> all = UserAchievementDao.getAchievementList();
-		List<UserAchievement> depAchieve = new ArrayList();
+		List<UserAchievement> userAchieve = new ArrayList();
 		java.sql.Date start = java.sql.Date.valueOf("2015-1-1");
 		java.sql.Date end = java.sql.Date.valueOf("2017-11-1");
 		for(int i=0;i<all.size();i++){
-		if(all.get(i).getSubDepartment().getName().equals(department)&&all.get(i).getChecked()==1&&all.get(i).getAchievementDate().after(start)&&all.get(i).getAchievementDate().before(end)){
-			depAchieve.add(all.get(i));
+		if(all.get(i).getUsername().equals(chosenUser)&&all.get(i).getChecked()==1&&all.get(i).getAchievementDate().after(start)&&all.get(i).getAchievementDate().before(end)){
+			userAchieve.add(all.get(i));
 			}
 		}
 	 %>
@@ -52,25 +52,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        </tr>
 			      </thead>
 			      <tbody>
-			      <%for(int i=0;i<depAchieve.size();i++){%>
+			       <%for(int i=0;i<userAchieve.size();i++){%>
 			      	<tr class="success">
-			      	  <th><%=depAchieve.get(i).getUsername() %></th>
-			          <th><%=depAchieve.get(i).getName() %></th>
-         				<%if(depAchieve.get(i).getCategory().equals("thesis")){
+			      	  <th><%=userAchieve.get(i).getUsername() %></th>
+			          <th><%=userAchieve.get(i).getName() %></th>
+         				<%if(userAchieve.get(i).getCategory().equals("thesis")){
 						%><td>论文</td><%
-						}else if(depAchieve.get(i).getCategory().equals("eduProject")){
+						}else if(userAchieve.get(i).getCategory().equals("eduProject")){
 						%><td>课题项目</td><%
-						}else if (depAchieve.get(i).getCategory().equals("textbook")){
+						}else if (userAchieve.get(i).getCategory().equals("textbook")){
 						%><td>教材、论著</td><%
-						}else if (depAchieve.get(i).getCategory().equals("patent")){
+						}else if (userAchieve.get(i).getCategory().equals("patent")){
 						%><td>专利</td><%
-						}else if (depAchieve.get(i).getCategory().equals("laws")){
+						}else if (userAchieve.get(i).getCategory().equals("laws")){
 						%><td>法律、法规</td><%
 						}else{
 						%><td>教改项目</td><%
 						}%>							
-			      	  <th><%=depAchieve.get(i).getScore() %></th>					          	
-			          	<% switch(depAchieve.get(i).getChecked()){
+			      	  <th><%=userAchieve.get(i).getScore() %></th>					          	
+			          	<% switch(userAchieve.get(i).getChecked()){
 			          		case -1:
 			          		%><td>未通过</td><%
 			          		break;
@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          		%><td>异常</td><%
 			          		break;
 			          	}%>	
-			          <th><%=depAchieve.get(i).getAchievementDate() %></th>
+			          <th><%=userAchieve.get(i).getAchievementDate() %></th>
 			        </tr>		      	
 			      <%} %>
 			      </tbody>

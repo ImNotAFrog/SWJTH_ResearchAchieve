@@ -6,9 +6,10 @@
 	<title>教师主页</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<link rel="stylesheet" type="text/css" href="../assets/css/teacher_main.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-table.min.css">
 </head>
 <%@include file="head_user.jsp"%>
-<% List<UserAchievement> l = UserAchievementDao.getAchievementByUsername(u.getUsername());
+<% List<UserAchievement> l = UserAchievementDao.getAchievementByUserId(u.getUsername());
  %>
 <body>
 	<div class="content">
@@ -96,13 +97,14 @@
 						</div>
 						<!--待审核-->
 						<div class="examing">
-							<table id="wating" class="table table-striped table-bordered table-hover" search="true">
+							<table id="wating" class="table table-striped table-bordered table-hover" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
 						      <thead>
 						      	<tr>
 						          <th>成果名称</th>
 						      	  <th>成果编号</th>
 						          <th>类型</th>
 						          <th>审核状态</th>
+						          <th>操作</th>
 						        </tr>
 						      </thead>
 						      <tbody>
@@ -120,7 +122,7 @@
 						          		default:
 						          		%>warning<%
 						          		break;
-						          	}%>" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>'">					          	
+						          	}%>">					          	
 						          	<td><%=l.get(i).getName()%></td>
 									<td><%=l.get(i).getID()%></td>
 									<%if(l.get(i).getCategory().equals("thesis")){
@@ -149,7 +151,8 @@
 						          		default:
 						          		%><td>异常</td><%
 						          		break;
-						          	}%>						        	
+						          	}%>	
+						          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>'">查看</button></td>					        	
 						      </tr>
 						      <%
 						      	}
@@ -167,28 +170,28 @@
 								<ul>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/eduProjectUpload.jsp';">
+										<dic class="item-info" onclick="goToUpload('eduProjectUpload.jsp');">
 											<div>课题项目类</div>
 											<div>Poject</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix" >
 										<img src="../assets/img/paper.png">
-										<dic class="item-info"  onclick="window.location.href='<%=projectPath%>/template/upload/thesisUpload.jsp';">
+										<dic class="item-info"  onclick="goToUpload('thesisUpload.jsp');">
 											<div>论文类</div>
 											<div>Thesis</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/paper.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/textbookUpload.jsp';">
+										<dic class="item-info" onclick="goToUpload('textbookUpload.jsp');">
 											<div>论著、教材类</div>
 											<div>TextBook</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/patentUpload.jsp';">
+										<dic class="item-info" onclick="goToUpload('patentUpload.jsp');">
 											<div>专利</div>
 											<div>Patent</div>
 										</dic>
@@ -202,7 +205,7 @@
 <!-- 									</li> -->
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/eduReformProjectUpload.jsp';">
+										<dic class="item-info" onclick="goToUpload('eduReformProjectUpload.jsp')">
 											<div>教学改革项目类</div>
 											<div>Edu-Reform Project</div>
 										</dic>
@@ -217,6 +220,21 @@
 	</div>
 	<!--内容区域结束-->
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/main.js"></script>
+	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript">
+	var goToUpload = function(page){
+		<%if(u.getName()==null){%>
+			alert("请先完善个人资料");
+			window.location.href="<%=projectPath %>/template/editUser.jsp";
+		<%}else{%>
+			window.location.href="<%=projectPath%>/template/upload/"+page;
+		<%}%>
+	}
+	var openAchievement = function(row,$element,filed){
+		console.log("aaa");
+		window.location.href='<%=projectPath%>/template/upload/'+row.category+'Upload.jsp?AchievementId='+row.ID;
+	}
+	</script>
 </body>
 
 </html>

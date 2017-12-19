@@ -76,6 +76,9 @@ public class EduReformProjectUpload extends HttpServlet {
 						countScore=4;
 						break;
 				}
+				if(state.equals("立项在研")){
+					countScore=0;
+				}
 				p.setScore(countScore);		
 				
 				if(request.getParameter("ID")!=null){

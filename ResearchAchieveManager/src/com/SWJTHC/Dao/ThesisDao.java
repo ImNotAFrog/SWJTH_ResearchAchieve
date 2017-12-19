@@ -29,8 +29,9 @@ public class ThesisDao {
 				a.setDepartment(u.getDepartment());
 				a.setSubDepartment(u.getSubDepartment());
 				a.setAchievementDate(t.getPublishDate());
+				a.setUserId(u.getUsername());
 				a.setMaxScore(500);
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -62,7 +63,8 @@ public class ThesisDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}	
+		Dao.close();
 		return thesis;		
 	}
 	public static int updateThesis(Thesis t){
@@ -134,6 +136,7 @@ public class ThesisDao {
 				a.setScore(t.getScore());
 				a.setSubDepartment(u.getSubDepartment());
 				a.setDepartment(u.getDepartment());
+				a.setUserId(u.getUsername());
 				a.setAchievementDate(t.getPublishDate());
 				a.setMaxScore(500);
 				UserAchievementDao.updateUserAchievemetByUsername(a);
@@ -143,7 +146,7 @@ public class ThesisDao {
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 	public static int deleteThesis(int id){
@@ -155,7 +158,7 @@ public class ThesisDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		Dao.close();
 		return i;
 	}
 }

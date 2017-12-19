@@ -30,6 +30,7 @@ public class EduProjectDao {
 				a.setName(p.getName());
 				a.setChecked(p.getChecked());
 				a.setScore(p.getScore());
+				a.setUserId(p.getOwner());
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(p.getState().substring(0, 10)).getTime());
 				a.setAchievementDate(date);
 				switch(p.getLevel()){
@@ -52,7 +53,7 @@ public class EduProjectDao {
 					a.setMaxScore(10);
 					break;
 				}
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -131,6 +132,7 @@ public class EduProjectDao {
 				a.setScore(p.getScore());
 				a.setDepartment(u.getDepartment());
 				a.setSubDepartment(u.getSubDepartment());
+				a.setUserId(p.getOwner());
 				java.sql.Date date = new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(p.getState().substring(0, 10)).getTime());
 				a.setAchievementDate(date);
 				switch(p.getLevel()){
@@ -160,7 +162,7 @@ public class EduProjectDao {
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 	
@@ -185,8 +187,9 @@ public class EduProjectDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		return eduProject;		
+		}					
+		Dao.close();
+		return eduProject;	
 	}
 	
 	public static int deleteEduProject(int id){
@@ -198,7 +201,7 @@ public class EduProjectDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		Dao.close();
 		return i;
 	}
 }

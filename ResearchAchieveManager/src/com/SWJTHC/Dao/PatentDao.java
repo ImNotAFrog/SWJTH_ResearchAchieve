@@ -29,6 +29,7 @@ public class PatentDao {
 				a.setSubDepartment(u.getSubDepartment());
 				a.setScore(p.getScore());
 				a.setAchievementDate(p.getPatentDate());
+				a.setUserId(u.getUsername());
 				switch(p.getCategory()){
 				case "1":
 					a.setMaxScore(24);
@@ -43,7 +44,7 @@ public class PatentDao {
 					a.setMaxScore(12);
 					break;
 				}
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -68,7 +69,6 @@ public class PatentDao {
 				patent.setOwner(rs.getString("owner"));
 				patent.setCategory(rs.getString("category"));
 				patent.setPatentDate(rs.getDate("patentDate"));
-				System.out.println(patent.getPatentDate()+"-"+rs.getDate("patentDate"));
 				patent.setChecked(rs.getInt("checked"));
 				patent.setAttachment(rs.getString("attachment"));
 				patent.setAuthorSituation(rs.getString("authorSituation"));
@@ -77,6 +77,7 @@ public class PatentDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+		Dao.close();
 		return patent;		
 	}
 	
@@ -149,6 +150,7 @@ public class PatentDao {
 				a.setScore(p.getScore());
 				a.setDepartment(u.getDepartment());
 				a.setSubDepartment(u.getSubDepartment());
+				a.setUserId(u.getUsername());
 				a.setAchievementDate(p.getPatentDate());
 				switch(p.getCategory()){
 				case "1":
@@ -171,7 +173,7 @@ public class PatentDao {
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 	public static int deletePatent(int id){
@@ -183,7 +185,7 @@ public class PatentDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		Dao.close();
 		return i;
 	}
 }

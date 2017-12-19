@@ -30,6 +30,7 @@ public class LawsDao {
 				a.setDepartment(u.getDepartment());
 				a.setSubDepartment(u.getSubDepartment());
 				a.setScore(l.getScore());
+				a.setUserId(u.getUsername());
 				a.setAchievementDate(new java.sql.Date(new java.util.Date().getTime()));
 				switch(l.getLevel()){
 				case "1":
@@ -42,7 +43,7 @@ public class LawsDao {
 					a.setMaxScore(45);
 					break;
 				}
-				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievement,maxScore) values(?,?,?,?,?,?,?,?,?,?)", a, null);
+				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievement,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -74,7 +75,8 @@ public class LawsDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}	
+		Dao.close();
 		return law;		
 	}
 	
@@ -147,6 +149,7 @@ public class LawsDao {
 				a.setScore(l.getScore());
 				a.setDepartment(u.getDepartment());
 				a.setSubDepartment(u.getSubDepartment());
+				a.setUserId(u.getUsername());
 				switch(l.getLevel()){
 				case "1":
 					a.setMaxScore(300);
@@ -165,7 +168,7 @@ public class LawsDao {
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 
@@ -178,7 +181,7 @@ public class LawsDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		Dao.close();
 		return i;
 	}
 }

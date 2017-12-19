@@ -34,11 +34,9 @@ public class FileUploadServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");			
         String username = request.getParameter("owner");
-        System.out.println();
         if(request.getParameter("getlist") != null && !request.getParameter("getlist").isEmpty()){
             String[] lists = request.getParameter("getlist").split(";");            
         	File file = new File(request.getServletContext().getRealPath("/")+"META-INF\\Attachments\\"+username+"\\"+lists[0]);
-            System.out.println(request.getServletContext().getRealPath("/")+"META-INF\\Attachments\\"+username+"\\"+lists[0]);
         	response.setContentType("application/json");
             PrintWriter writer = response.getWriter();
             JSONArray json = new JSONArray();
@@ -81,13 +79,14 @@ public class FileUploadServlet extends HttpServlet {
         } else if (request.getParameter("delfile") != null && !request.getParameter("delfile").isEmpty()) {
             File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+ request.getParameter("delfile"));
             if (file.exists()) {
-                file.delete(); // TODO:check and report success
+                file.delete();
+
+                System.out.println(username+"：文件"+request.getParameter("delfile")+"已删除");// TODO:check and report success
+            
             } 
         } else if (request.getParameter("getthumb") != null && !request.getParameter("getthumb").isEmpty()) {
-            System.out.println(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+request.getParameter("getthumb"));
             File file = new File(request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+request.getParameter("getthumb"));
                 if (file.exists()) {
-                    System.out.println(file.getAbsolutePath());
                     String mimetype = getMimeType(file);
                     
                     /*显示图片的缩略图*/
@@ -207,7 +206,10 @@ public class FileUploadServlet extends HttpServlet {
                 		String fileName =  sdf3.format(new Date())+item.getName();
 	                	String dirPath = request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/";
 	                    String filePath = request.getServletContext().getRealPath("/")+"META-INF/Attachments/"+username+"/"+fileName;
-                        File dir = new File(dirPath);
+                        String backupDirPath = "D:\\Attachments/"+username+"/";
+                        String backupFilePath = "D:\\Attachments/"+username+"/"+fileName;
+                        
+	                    File dir = new File(dirPath);
                         if (!dir.exists()) {
                         	dir.mkdirs();
                         }
@@ -219,8 +221,23 @@ public class FileUploadServlet extends HttpServlet {
                                 e.printStackTrace();
                             }
                         }
+                        File backupDir = new File(backupDirPath);
+                        if (!backupDir.exists()) {
+                        	backupDir.mkdirs();
+                        }
+                        File backupFile = new File(backupFilePath);
+                        if (!backupFile.exists()) {
+                            try {
+                            	backupFile.createNewFile();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        
+                        
                         try {
 							item.write(file);
+							item.write(backupFile);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 						}
@@ -232,7 +249,7 @@ public class FileUploadServlet extends HttpServlet {
                         jsono.put("delete_url", projectPath+"/services/FileUploadServlet?delfile=" + fileName+"&owner="+username);
                         jsono.put("delete_type", "GET");
                         json.put(jsono);
-                        System.out.println(json.toString());
+                        System.out.println(username+"：文件"+fileName+"上传成功");
                 }
             }
         } catch (FileUploadException e) {

@@ -77,6 +77,7 @@ public class LoginServlet extends HttpServlet {
 				AppUser u = l.get(0);
 
 				request.getSession().setAttribute("role", u.getRole());
+				System.out.println("ÓÃ»§"+username+"µÇÂ¼");
 				//request.setAttribute("user", u);
 				if(u.getRole().equals("teacher")){
 					request.getRequestDispatcher("/template/teacher.jsp").forward(request, response);
