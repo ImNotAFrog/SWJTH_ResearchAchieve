@@ -126,18 +126,18 @@ create table thesis(
 	score float,--分值
 	attachment varchar(max), --附件
 	owner varchar(50), --所有者
-	checked int，
+	checked int,
 	publishDate date
 	)
 /*功能：创建用户成果表*/
 create table UserAchievement(
 	ID int,--成果ID
-	name varchar(50), --成果名
+	name varchar(200), --成果名
 	username varchar(200),--用户名
 	category varchar(200), --成果类型	
 	department varchar(200),--所属部门
 	subDepartment varchar(200), --子部门
-	checked int， --状态
+	checked int, --状态
 	achievementDate date,
 	maxScore float,
 	score float		--评分
