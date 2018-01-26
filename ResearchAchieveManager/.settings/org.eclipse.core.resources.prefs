@@ -1,4 +1,14 @@
 eclipse.preferences.version=1
+encoding//WebRoot/assets/css/index_footer.css=UTF-8
+encoding//WebRoot/assets/css/index_main.css=UTF-8
 encoding//WebRoot/assets/css/main.css=UTF-8
 encoding//WebRoot/assets/css/teacher.css=UTF-8
+encoding//WebRoot/assets/css/teacher_main.css=UTF-8
+encoding//WebRoot/assets/css/uploadForm.css=UTF-8
+encoding//WebRoot/assets/js/fileupload/jquery.fileupload-ui.js=UTF-8
+encoding//WebRoot/assets/js/fileupload/main.js=UTF-8
+encoding//WebRoot/assets/js/main.js=UTF-8
+encoding//WebRoot/template/head_user.jsp=UTF-8
+encoding//WebRoot/template/ranking/departRankingLookup.jsp=UTF-8
+encoding//WebRoot/template/ranking/indivRankingLookup.jsp=UTF-8
 encoding//WebRoot/template/teacher.jsp=UTF-8

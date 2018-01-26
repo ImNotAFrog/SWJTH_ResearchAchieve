@@ -3,19 +3,20 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
+<%@include file="head.jsp"%>
 <head>
-<link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
-<link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+<title>科研成果管理系统</title>
+<link rel="stylesheet" type="text/css" href="<%=projectPath%>/assets/css/index_main.css">
 </head>
 <%@page pageEncoding="UTF-8"%>
 <body style="position:relative;">
-<%@include file="head.jsp"%>
 	<div class="news">
 		<div class="icon">
 			
 		</div>
 		<div class="content-title">
-			<h2>新闻/<span class="en-title">News</span></h2>
+			<label class="pull-left">新闻/<span class="en-title">News</span></label>
 			<a href="#">更多&nbsp;&nbsp;&gt;</a>
 		</div>
 		<div class="clear-fix">
@@ -24,11 +25,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!--轮播图模块-->
 		<div class="slide-box">
 			<div class="slide">
-				<img src="../assets/img/slide2.jpg">
+				<img src="<%=projectPath%>/assets/img/slide-2.png">
 				<div class="slide-info">
-					<div class="info-title">我校11项成果获四川省第十七次社会科学优秀成果奖</div>
-					<div class="date">2017.05.11</div>
-					<div class="content">5 月23日，德阳市副市长李成金一行来校调研，副校长杨晓波会见来宾。双方就校地产学研合作进行了重点研讨。 德阳市政府</div>
+					<div class="info-title"></div>
+					<div class="date">2017.12.17</div>
+					<div class="content">《公安消防部队高等专科学校科研成果管理系统》学术先进集体、先进个人评比模块试运行</div>
 					<a class="detail" href="#">查看详情</a>
 				</div>
 			</div>
@@ -52,8 +53,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 		</div>
 		<div class="content-title">
-			<h2>通知公告/<span class="en-title">Announcement
-			</span></h2>
+			<label class="pull-left">通知公告/<span class="en-title">Announcement</span></label>
+			<a href="#">更多&nbsp;&nbsp;&gt;</a>
 		</div>
 		</div>
 		<div  style= "postion:fixed;bottom:0;">

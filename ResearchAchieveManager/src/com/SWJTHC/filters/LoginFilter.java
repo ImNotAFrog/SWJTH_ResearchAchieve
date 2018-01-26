@@ -41,9 +41,7 @@ public class LoginFilter implements Filter {
 				}
 			}
 		}
-		
 		if(session.getAttribute("username")==null){
-			System.out.println("123123");
 			response.sendRedirect("/ResearchAchieveManager/template/index.jsp");
 			
 		}else{

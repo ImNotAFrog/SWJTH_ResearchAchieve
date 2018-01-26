@@ -38,6 +38,7 @@ public class Dao {
 			return null;
 		}
 	}
+	
 	public static ResultSet executQuery(String sql,Object model){
 		ResultSet rs=null;
 		try{
@@ -74,19 +75,35 @@ public class Dao {
 						}
 					}
 					value = new ArrayList<>();
-				}else{
+				}else if(className.equals("int")){
+					value = Class.forName("java.lang.Integer");
+					value = model.getClass().getMethod("get"+name).invoke(model);
+					typeName="Int";
+					if((Integer)value==-2)continue;   //-2代表未赋值
+				}
+				else if(className.equals("double")){
+					value = Class.forName("java.lang.Double");
+				}
+				else{
 					value = Class.forName(className);								//根据类型名称生成类
 				}				 
 				Method getMethod = model.getClass().getMethod("get"+name);			//合成get方法
-				value = getMethod.invoke(model); 									//调用类的get方法
+				value = getMethod.invoke(model);									//调用类的get方法
                 if(value != null){
-                	Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass()); 	//合成pstat的set方法
-                	setMethod.invoke(pstat,k,value);																	//调用pstat的set方法
+                	if(typeName.equals("double")){
+                		Method setMethod = pstat.getClass().getDeclaredMethod("setDouble",int.class,double.class);
+                    	setMethod.invoke(pstat,k,value);
+                	}else{
+                		Method setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());
+                    	setMethod.invoke(pstat,k,value);
+                	}
+                	 	//合成pstat的set方法																	//调用pstat的set方法
                 	k++;																								//k用来标识当前sql语句中的参数位置	
                }
 			}
 			rs = pstat.executeQuery();
 			return rs;//conn.createStatement().executeQuery(sql);
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -106,6 +123,7 @@ public class Dao {
 			return -1;
 		}
 	}
+	
 	public static int executUpdate(String sql,Object model , String key){
 		int gKeys=-1;
 		ResultSet rs=null;
@@ -123,7 +141,7 @@ public class Dao {
 			
 			int k=1;
 			for(int i=0;i<field.length;i++){
-				String name = field[i].getName();  
+				String name = field[i].getName(); 
 				if(key!=null&&key.equals(name)){
 					continue;
 				}
@@ -151,7 +169,8 @@ public class Dao {
 				}else if(className.equals("int")){
 					value = Class.forName("java.lang.Integer");
 					value = model.getClass().getMethod("get"+name).invoke(model);
-					if((Integer)value==-2)continue;
+					typeName="Int";
+					if((Integer)value==-2)continue;  //-2代表未赋值
 				}
 				else if(className.equals("double")){
 					value = Class.forName("java.lang.Double");
@@ -163,7 +182,6 @@ public class Dao {
                 value = getMethod.invoke(model); 
                 if(value != null){
 
-    				System.out.println(value);
                 	Method setMethod;
 					try {
 						setMethod = pstat.getClass().getDeclaredMethod("set"+typeName,int.class,value.getClass());
@@ -179,11 +197,32 @@ public class Dao {
 			}
 			if (key!=null) {
 				key = key.substring(0, 1).toUpperCase() + key.substring(1);
+				
 				Method getMethod = model.getClass().getMethod("get" + key);
 				Object value = getMethod.invoke(model);
 				if (value != null) {
-					Method setMethod = pstat.getClass().getDeclaredMethod(
-							"setString", int.class, value.getClass());
+					String type = value.getClass().getName();
+					String[] typeSplited = type.split("\\.");
+					String typeName = typeSplited[typeSplited.length-1];
+					Method setMethod;
+					switch(typeName){
+					case "String":
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setString", int.class, value.getClass());
+						break;
+					case "Integer":
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setInt", int.class, int.class);
+						break;
+					case "Double":
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setDouble", int.class, value.getClass());
+						break;
+						default:
+						setMethod = pstat.getClass().getDeclaredMethod(
+								"setString", int.class, value.getClass());
+							break;
+					}
 					setMethod.invoke(pstat, k, value);
 					
 				}
@@ -202,7 +241,9 @@ public class Dao {
 	}
 	public static void close(){
 		try {
-			conn.close();
+			if(conn!=null){
+				conn.close();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

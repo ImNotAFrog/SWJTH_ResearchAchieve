@@ -1,4 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8" %>
+<html>
+<link rel="stylesheet" type="text/css" href="../assets/css/index_footer.css">
 <div class="footer" >
 	<div class="container">
 		<div class="col1">
@@ -20,4 +22,6 @@
 	</div>
 		
 </div>
+</html>
+
 

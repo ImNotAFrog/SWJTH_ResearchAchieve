@@ -46,8 +46,9 @@ public class LogoutServlet extends HttpServlet {
         //request.getRequestDispatcher(request.getContextPath()+"/template/head.jsp").include(request, response);
         HttpSession session = request.getSession();
         // 清除数据
+
+        System.out.println(request.getSession().getAttribute("username")+"退出系统");
         session.invalidate();
-        out.print("您已成功注销退出系统!");
         response.sendRedirect(request.getContextPath()+"/template/index.jsp");
         out.close();
 	}

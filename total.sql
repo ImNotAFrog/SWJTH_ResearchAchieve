@@ -9,7 +9,8 @@ create table AppUser(
 	positionLevel varchar(200), --职级
 	title varchar(200), --职称
 	department varchar(200),--所属部门
-	subDepartment varchar(50) --子部门
+	subDepartment varchar(200), --子部门
+	role varchar(50) --角色
 	)
 /*功能：创建刊物表*/
 create table Journal(
@@ -17,26 +18,34 @@ create table Journal(
 	name varchar(200),--名称
 	level varchar(200), --级别
 	number varchar(200) --刊号
+
 	)
 /*功能：创建法规标准表*/
-create table Laws(
+create table laws(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
+	lawNumber varchar(50), --编号
+	wordsCount varchar(50), --字数
 	level varchar(200), --级别
-	chiefEditor varchar(200), --主编
-	editors varchar(200), --参编
+	authorSituation varchar(200), --作者情况
 	score float, --分值
-	attachment varchar(200), --附件
-	owner varchar(50) --所有者
+	attachment varchar(max), --附件
+	owner varchar(50), --所有者
+	checked int	
 	)
 /*功能：创建专利、软件著作表*/
-create table Patent(
+create table patent(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
 	category varchar(200), --类型
+	authorSituation varchar(200), --排名
 	patentHolder varchar(200), --专利权人
+	patentDate date, --授权日期
+	patentNum varchar(50), --专利编号
 	score float,--分值
-	attachment varchar(200) --附件
+	attachment varchar(max), --附件
+	owner varchar(50), --成果申请人
+	checked int	
 	)
 /*创建个人信息表*/
 create table PersonalInfo(
@@ -66,57 +75,72 @@ create table PersonalInfo(
 	achievement_id varchar(200), --成果序号
 	teachingSituation text, --教学情况	
 	rewards text,--立功受奖
+	
 	)
-/*功能：创建教学改革项目表*/
-create table TeachingReform(
+/*功能：创建课题项目表*/
+create table eduProject(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
-	groupLeader varchar(200), --组长
-	members varchar(200), --成员
+	subject varchar(100), --项目从属
+	level varchar(50), --项目级别
+	authorSituation varchar(200), --组长或成员
 	score float,--分值
-	attachment varchar(200), --附件
-	owner varchar(50) --所有者
+	state varchar(50), --项目情况
+	attachment varchar(max), --附件
+	owner varchar(50), --所有者
+	checked int	
 
 	)
 /*功能：创建教材著作表*/
-create table Textbook(
+create table textbook(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
-	subject varchar(200), --主体
+	level varchar(200), --级别
 	authorSituation varchar(200), --作者情况
-	publishSituation varchar(200), --出版情况
+	publishDate date, --出版时间
+	ISBN varchar(50), --ISBN
+	publishingHouse varchar(200), --出版社
 	score float,--分值
-	attachment varchar(200), --附件
-	owner varchar(50) --所有者
+	attachment varchar(max), --附件
+	owner varchar(50), --所有者
+	checked int	
+	)
+/*功能：创建教学改革项目表*/
+create table eduReformProject(
+	ID int identity(1,1) primary key,--序号
+	name varchar(200),--名称
+	score float,--分值
+	state varchar(50), --项目情况
+	authorSituation varchar(200), --作者情况
+	attachment varchar(max), --附件
+	owner varchar(50), --所有者
+	checked int	
 	)
 /*功能：创建论文表*/
-create table Thesis(
+create table thesis(
 	ID int identity(1,1) primary key,--序号
 	name varchar(200),--名称
-	level varchar(200), --级别
-	journal_id varchar(200), --发表刊物ID
+	journalLevel varchar(200), --级别
+	journalName varchar(200), --刊物名称
+	journalNum varchar(200), --发表刊物ID
 	score float,--分值
-	attachment varchar(200), --附件
-	owner varchar(50) --所有者
-	)
-/*功能：创建课题表*/
-create table Topic(
-	ID int identity(1,1) primary key,--序号	
-	name varchar(200),--名称
-	level varchar(200), --级别
-	subject varchar(200), --主体
-	groupLeader varchar(200), --组长
-	members varchar(200), --成员
-	score float,--分值
-	attachment varchar(200),--附件
-	owner varchar(50) --所有者
+	attachment varchar(max), --附件
+	owner varchar(50), --所有者
+	checked int,
+	publishDate date
 	)
 /*功能：创建用户成果表*/
 create table UserAchievement(
-	ID int key,--成果ID
-
+	ID int,--成果ID
+	name varchar(200), --成果名
 	username varchar(200),--用户名
-	category varchar(200), --成果类型
+	category varchar(200), --成果类型	
+	department varchar(200),--所属部门
+	subDepartment varchar(200), --子部门
+	checked int, --状态
+	achievementDate date,
+	maxScore float,
+	score float		--评分
 	)
 /*功能：创建用户类型表*/
 create table UserType(

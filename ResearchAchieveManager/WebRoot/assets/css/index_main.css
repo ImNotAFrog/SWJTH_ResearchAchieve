@@ -1,0 +1,145 @@
+/*鏂伴椈鍖哄煙*/
+.news{
+	width: 1170px;
+	margin: 40px auto auto auto;
+}
+.icon{
+	float: left;
+    background: url(../img/title-icon.jpg) no-repeat;
+    width: 4px;
+    height: 30px;
+}
+.content-title{
+	
+	
+	display: inline-block;
+	margin-left: 16px;
+	height: 30px;
+	border-bottom: 1px solid rgb(65,120,190);
+}
+.content-title h2{
+	float: left;
+    font-size: 20px;
+    color: rgb(51,51,51);
+    line-height: 24px;
+    font-weight: normal;
+}
+.content-title a{
+	float: left;
+	color: #555;
+	margin-left: 120px;
+}
+.content-title a:hover{
+	color: rgb(65,120,190);
+}
+.en-title{
+	font-size: 16px;
+}
+
+/*杞挱妯″潡*/
+.slide-box{
+	margin-top: 20px;
+	/*background: #ccc;*/
+	position: relative;
+	height: 245px;
+}
+.slide img{
+	border: 0;
+	float: left;
+	width: 720px;
+	height:245px;
+}
+.slide-info {
+    float: left;
+    margin-left: 20px;
+    text-align: left;
+    width: 380px;
+}
+.info-title{
+	margin-top: 12px;
+	font-size: 16px;
+}
+.slide .date{
+	font-size: 12px;
+    margin-top: 5px;
+    padding-left: 22px;
+    background-image: url(../img/time-icon1.png);
+    background-repeat: no-repeat;
+    background-position: 0 1px;
+    height: 16px;
+    color: rgb(129,129,129);
+}
+.slide .content{
+	font-size: 14px;
+    margin-top: 10px;
+    height: 80px;
+    color: rgb(129,129,129);
+    line-height: 24px;
+    margin-top: 26px;
+}
+.detail{
+	    display: block;
+    font-size: 14px;
+    color: white;
+    background-color:  rgb(65,120,190);
+    text-align: center;
+    width: 130px;
+    padding: 12px 0;
+    margin:20px auto;
+}
+
+.banner-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 560px;   
+    line-height: 12px;
+}
+
+.banner-dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: 8px;
+    background: rgba(7,17,27,.8);
+    border: 1px solid rgba(255,255,255,.6);
+    transition: transform .2s;
+    cursor: pointer;
+}
+.banner-dots span.active{
+	background-color: #fff;
+}
+
+.anchor{
+	display: block;
+	height: 27px;
+    width: 12px;
+    z-index: 999;
+    top: 120px;
+    position: absolute;
+    cursor: pointer;
+    background-repeat: no-repeat;
+}
+#prev{
+	left:20px;
+	background: url(../img/prev.png) no-repeat;
+}
+#prev:hover{
+	left:20px;
+	background: url(../img/prev-active.png) no-repeat;
+}
+#next{
+	right:20px;
+	background: url(../img/next.png) no-repeat;
+}
+#next:hover{
+	right:20px;
+	background: url(../img/next-active.png) no-repeat;
+}
+/*杞挱缁撴潫*/
+/*閫氱煡鍏憡寮�*/
+.announce{
+	width: 1170px;
+	margin: 40px auto auto auto;
+}
+/*閫氱煡鍏憡缁撴潫*/

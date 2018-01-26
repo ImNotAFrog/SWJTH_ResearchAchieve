@@ -20,7 +20,7 @@ public class UserDao {
 		
 		int i=-1;
 		try {
-			i = Dao.executUpdate("insert into AppUser(username,password) values(?,?)",u,null);
+			i = Dao.executUpdate("insert into AppUser(username,password,role) values(?,?,?)",u,null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,6 +44,7 @@ public class UserDao {
 				a.setPosition(Position.valueOf(rs.getString("position")));
 				a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
 				a.setTitle(Title.valueOf(rs.getString("title")));
+				a.setRole(rs.getString("role"));
 				l.add(a);
 			}			
 		} catch (Exception e) {
@@ -67,12 +68,12 @@ public class UserDao {
 				a.setUsername(rs.getString("username"));
 				a.setPassword(rs.getString("password"));
 				if(rs.getString("name")!=null)a.setName(rs.getString("name"));
-				System.out.println(rs.getString("department"));
-				if(!rs.getString("department").equals("")&&rs.getString("department")!=null)a.setDepartment(Department.valueOf(rs.getString("department")));
-				if(!rs.getString("subDepartment").equals("")&&rs.getString("subDepartment")!=null)a.setSubDepartment(rs.getString("subDepartment"));
-				if(!rs.getString("position").equals("")&&rs.getString("position")!=null)a.setPosition(Position.valueOf(rs.getString("position")));
-				if(!rs.getString("positionLevel").equals("")&&rs.getString("positionLevel")!=null)a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
-				if(!rs.getString("title").equals("")&&rs.getString("title")!=null)a.setTitle(Title.valueOf(rs.getString("title")));
+				if(rs.getString("department")!=null&&!rs.getString("department").equals(""))a.setDepartment(Department.valueOf(rs.getString("department")));
+				if(rs.getString("subDepartment")!=null&&!rs.getString("subDepartment").equals(""))a.setSubDepartment(rs.getString("subDepartment"));
+				if(rs.getString("position")!=null&&!rs.getString("position").equals(""))a.setPosition(Position.valueOf(rs.getString("position")));
+				if(rs.getString("positionLevel")!=null&&!rs.getString("positionLevel").equals(""))a.setPositionLevel(PositionLevel.valueOf(rs.getString("positionLevel")));
+				if(rs.getString("title")!=null&&!rs.getString("title").equals(""))a.setTitle(Title.valueOf(rs.getString("title")));
+				a.setRole(rs.getString("role"));
 				l.add(a);
 			}			
 		} catch (Exception e) {
@@ -108,6 +109,9 @@ public class UserDao {
 			Field[] field = u.getClass().getDeclaredFields();
 			for (int j = 0; j < field.length; j++) {
 				String name = field[j].getName();
+				if(name.contains("$SWITCH_TABLE")){
+					continue;
+				}//Ìø¹ýSWITCH_TABLE
 				String name1 = name.substring(0,1).toUpperCase()+name.substring(1);
 				String type = field[j].getGenericType().toString();
 				String[] classNameSplited = type.split(" ");
@@ -143,14 +147,13 @@ public class UserDao {
                }
 			}
 			sql+=" where username = ?";
-			System.out.println(sql);
 			i = Dao.executUpdate(sql,u,key);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		//Dao.close();
+		Dao.close();
 		return i;
 	}
 }

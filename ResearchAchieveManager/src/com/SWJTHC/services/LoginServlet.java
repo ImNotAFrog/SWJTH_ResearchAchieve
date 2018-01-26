@@ -73,27 +73,20 @@ public class LoginServlet extends HttpServlet {
 				//登录成功
 				request.getSession().setAttribute("username", username);
 				List<AppUser> l = UserDao.getUserByUsername(username);
+				
 				AppUser u = l.get(0);
-				request.setAttribute("user", u);
-//				if(request.getParameterValues("rememberMe")!=null&&request.getParameterValues("rememberMe").length>0){
-//					
-//					
-//					Cookie usernameCookie = new Cookie("username",URLEncoder.encode(username, "utf-8"));
-//					usernameCookie.setMaxAge(604800);
-//					usernameCookie.setPath("/");			
-//					response.addCookie(usernameCookie);
-//				}else{
-//					Cookie[] cookies = request.getCookies();
-//					
-//					for(Cookie c : cookies){
-//						if(c.getName().equals("username")){
-//							c.setMaxAge(0);
-//							c.setPath("/");
-//							response.addCookie(c);							
-//						}					
-//					}					
-//				}						
-				request.getRequestDispatcher("/template/teacher.jsp").forward(request, response);
+
+				request.getSession().setAttribute("role", u.getRole());
+				System.out.println("用户"+username+"登录");
+				//request.setAttribute("user", u);
+				if(u.getRole().equals("teacher")){
+					request.getRequestDispatcher("/template/teacher.jsp").forward(request, response);
+				}else if(u.getRole().equals("admin")){
+					request.getRequestDispatcher("/template/admin.jsp").forward(request, response);
+				}else {
+					request.getRequestDispatcher("/template/index.jsp").forward(request, response);
+				}
+				
 			}else{				
 				out.print("<script type='text/javascript'charset='utf-8'>alert('用户名或密码错误，登录失败!');window.location.href='"+projectPath+"/template/login.jsp"+"';</script>");
 

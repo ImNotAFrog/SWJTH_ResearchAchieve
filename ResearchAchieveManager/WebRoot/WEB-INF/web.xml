@@ -4,9 +4,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
   <display-name></display-name>	
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>/template/index.jsp</welcome-file>
   </welcome-file-list>
   
    <servlet>
@@ -27,6 +30,69 @@
     <servlet-name>LogoutServlet</servlet-name>
     <servlet-class>com.SWJTHC.services.LogoutServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>com.SWJTHC.services.UserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>ThesisUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.ThesisUpload</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>TextbookUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.TextbookUpload</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>PatentUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.PatentUpload</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>LawsUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.LawsUpload</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>ProjectUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.ProjectUpload</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>com.SWJTHC.services.FileUploadServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>EditPasswordServlet</servlet-name>
+    <servlet-class>com.SWJTHC.services.EditPasswordServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet for user Registration</description>
+    <display-name>Servlet for user Registration</display-name>
+    <servlet-name>EduReformProjectUpload</servlet-name>
+    <servlet-class>com.SWJTHC.services.EduReformProjectUpload</servlet-class>
+  </servlet>
+
+
+
+
+
+
+
+
+
 
 
   <servlet-mapping>
@@ -41,8 +107,44 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/services/LogoutServlet</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/services/UserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ThesisUpload</servlet-name>
+    <url-pattern>/services/ThesisUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TextbookUpload</servlet-name>
+    <url-pattern>/services/TextbookUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PatentUpload</servlet-name>
+    <url-pattern>/services/PatentUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LawsUpload</servlet-name>
+    <url-pattern>/services/LawsUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProjectUpload</servlet-name>
+    <url-pattern>/services/ProjectUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/services/FileUploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EditPasswordServlet</servlet-name>
+    <url-pattern>/services/EditPasswordServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EduReformProjectUpload</servlet-name>
+    <url-pattern>/services/EduReformProjectUpload</url-pattern>
+  </servlet-mapping>
   
-      <filter>
+     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.SWJTHC.filters.LoginFilter</filter-class>
         <init-param>
@@ -52,6 +154,19 @@
     </filter>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>RoleFilter</filter-name>
+        <filter-class>com.SWJTHC.filters.RoleFilter</filter-class>
+        <init-param>
+            <param-name>AdminPaths</param-name>
+            <param-value>admin</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 </web-app>

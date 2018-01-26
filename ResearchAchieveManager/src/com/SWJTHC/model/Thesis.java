@@ -1,5 +1,7 @@
 package com.SWJTHC.model;
 
+import java.sql.Date;
+
 import com.SWJTHC.enums.AchieveType;
 
 public class Thesis{
@@ -8,12 +10,39 @@ public class Thesis{
 	private double score=0;
 	private String attachment="";
 	private String owner="";
-	private int journal=0;
-	private String level="";
+	private String journalNum="";
+	private String journalName ="";
+	private String journalLevel="";
+	private int checked =0;
+	private Date publishDate;
 	public Thesis(){
 		
 	}
 	
+	public Date getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
+	}
+
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
+	}
+
+	public String getJournalName() {
+		return journalName;
+	}
+
+	public void setJournalName(String journalName) {
+		this.journalName = journalName;
+	}
+
 	public int getID() {
 		return ID;
 	}
@@ -54,17 +83,17 @@ public class Thesis{
 		this.owner = owner;
 	}
 
-	public int getJournal() {
-		return journal;
+	public String getJournalNum() {
+		return journalNum;
 	}
-	public void setJournal(int journal) {
-		this.journal = journal;
+	public void setJournalNum(String journal) {
+		this.journalNum = journal;
 	}
-	public String getLevel() {
-		return level;
+	public String getJournalLevel() {
+		return journalLevel;
 	}
-	public void setLevel(String level) {
-		this.level = level;
+	public void setJournalLevel(String level) {
+		this.journalLevel = level;
 	}
 	
 }

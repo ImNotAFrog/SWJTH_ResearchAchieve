@@ -1,41 +1,17 @@
-<%@page import="java.util.*,com.SWJTHC.model.AppUser,com.SWJTHC.Dao.UserDao" pageEncoding="UTF-8"%>
-<% String projectPath = request.getContextPath(); 
-	AppUser u = new AppUser();;
-	if(request.getSession().getAttribute("username")!=null){
-		u = (UserDao.getUserByUsername(request.getSession().getAttribute("username").toString())).get(0);
-	}
-%>
+<%@page import="java.util.*,com.SWJTHC.model.*,com.SWJTHC.Dao.*" pageEncoding="UTF-8"%>
+
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>教师主页</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="../assets/css/teacher.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/teacher_main.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-table.min.css">
 </head>
+<%@include file="head_user.jsp"%>
+<% List<UserAchievement> l = UserAchievementDao.getAchievementByUserId(u.getUsername());
+ %>
 <body>
-	<!--å¤´é¨åºå-->
-	<div id="header">
-		<div class="container">
-			
-			<a class="logo" href="<%=projectPath%>/template/index.jsp" target="_self" title="主页">
-				<img src="../assets/img/logo2.jpg">
-			</a>
-
-			<h3>科研成果管理平台</h3>
-			<a id="logout" href="javascript:confirmLogout()">安全退出</a>
-			<div class="image">
-				<a href=""><img src="../assets/img/head.jpg"></a>
-			</div>
-			<p class="name ellipsis">欢迎，<%=u.getName()%></p>
-		</div>
-		<div class="clearfix">
-			
-		</div>
-	</div>
-	<!--å¤´é¨åºåç»æ-->
-
-	<!--åå®¹åºå¼å§-->
 	<div class="content">
 		<div class="container clearfix">
 			<div class="left">
@@ -59,18 +35,15 @@
 							<span class="icon">&gt;</span>
 						</a>
 					</li>
-					<!-- <li>
-						<a href="">
-							<span>ä¸ä¼ ææ</span>
-							<span class="icon">&gt;</span>
-						</a>
-					</li> -->
 				</ul>
 			</div>
 			<div class="right-fix">
 				<div class="right">
 					<div id="detail" class="content-item">
 						<div class="common-title">个人信息
+								<a href="<%=projectPath %>/template/editPassword.jsp" class="pull-right edit">
+									修改密码
+								</a>
 								<a href="<%=projectPath %>/template/editUser.jsp" class="pull-right edit">
 									编辑
 								</a>
@@ -120,113 +93,125 @@
 						<%}%>
 					</div>
 					<div id="research" class="content-item">
-						我的科研成果
-						<p>待审核</p>
-						<p>已通过审核</p>
+						<div class="common-title">成果列表
+						</div>
+						<!--待审核-->
+						<div class="examing">
+							<table id="wating" class="table table-striped table-bordered table-hover" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
+						      <thead>
+						      	<tr>
+						          <th>成果名称</th>
+						      	  <th>成果编号</th>
+						          <th>类型</th>
+						          <th>审核状态</th>
+						          <th>操作</th>
+						        </tr>
+						      </thead>
+						      <tbody>
+						      <% for(int i=0;i<l.size();i++){
+						      %>
+						      <tr class="<% switch(l.get(i).getChecked()){
+						          		case -1:
+						          		%>danger<%
+						          		break;
+						          		case 0:
+						          		break;
+						          		case 1:
+						          		%>success<%
+						          		break;
+						          		default:
+						          		%>warning<%
+						          		break;
+						          	}%>">					          	
+						          	<td><%=l.get(i).getName()%></td>
+									<td><%=l.get(i).getID()%></td>
+									<%if(l.get(i).getCategory().equals("thesis")){
+									%><td>论文</td><%
+									}else if(l.get(i).getCategory().equals("eduProject")){
+									%><td>课题项目</td><%
+									}else if (l.get(i).getCategory().equals("textbook")){
+									%><td>教材、论著</td><%
+									}else if (l.get(i).getCategory().equals("patent")){
+									%><td>专利</td><%
+									}else if (l.get(i).getCategory().equals("laws")){
+									%><td>法律、法规</td><%
+									}else{
+									%><td>教改项目</td><%
+									}%>						          	
+						          	<% switch(l.get(i).getChecked()){
+						          		case -1:
+						          		%><td>未通过</td><%
+						          		break;
+						          		case 0:
+						          		%><td>待审核</td><%
+						          		break;
+						          		case 1:
+						          		%><td>已通过</td><%
+						          		break;
+						          		default:
+						          		%><td>异常</td><%
+						          		break;
+						          	}%>	
+						          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>'">查看</button></td>					        	
+						      </tr>
+						      <%
+						      	}
+						       %>						       
+						       </tbody>
+						    </table>
+						</div>						
+					
 					</div>
 					<div id="loadup"  class="content-item">
-						<div class="common-title">上传科研成果
-							
+						<div class="common-title">上传科研成果
 						</div>
 						<div class="nav">
+								<h4>请选择科研成果类型</h4>
 								<ul>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/project.png">
-										<dic class="item-info">
-											<div>科研项目类</div>
-											<div>Research Project</div>
+										<dic class="item-info" onclick="goToUpload('eduProjectUpload.jsp');">
+											<div>课题项目类</div>
+											<div>Poject</div>
+										</dic>
+									</li>
+									<li class="load-item  clearfix" >
+										<img src="../assets/img/paper.png">
+										<dic class="item-info"  onclick="goToUpload('thesisUpload.jsp');">
+											<div>论文类</div>
+											<div>Thesis</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/paper.png">
-										<dic class="item-info">
-											<div>论文类</div>
-											<div>Paper</div>
-										</dic>
-									</li>
-									<li class="load-item  clearfix">
-										<img src="../assets/img/project.png">
-										<dic class="item-info">
-											<div>教材类</div>
-											<div>Research Project</div>
+										<dic class="item-info" onclick="goToUpload('textbookUpload.jsp');">
+											<div>论著、教材类</div>
+											<div>TextBook</div>
 										</dic>
 									</li>
 									<li class="load-item  clearfix">
 										<img src="../assets/img/patent.png">
-										<dic class="item-info">
+										<dic class="item-info" onclick="goToUpload('patentUpload.jsp');">
 											<div>专利</div>
 											<div>Patent</div>
+										</dic>
+<!-- 									</li> -->
+<!-- 									<li class="load-item  clearfix"> -->
+<!-- 										<img src="../assets/img/paper.png"> -->
+<!-- 										<dic class="item-info" onclick="window.location.href='<%=projectPath%>/template/upload/lawsUpload.jsp';"> -->
+<!-- 											<div>法律法规类</div> -->
+<!-- 											<div>Laws and Regulations</div> -->
+<!-- 										</dic> -->
+<!-- 									</li> -->
+									<li class="load-item  clearfix">
+										<img src="../assets/img/project.png">
+										<dic class="item-info" onclick="goToUpload('eduReformProjectUpload.jsp')">
+											<div>教学改革项目类</div>
+											<div>Edu-Reform Project</div>
 										</dic>
 									</li>
 								</ul>
 						</div>
-						<div class="re-content">
-							<div class="project">
-								<h3>填写项目信息</h3>
-								<form method="post" action="">
-									<div class="form-item">
-										<label>项目名称:</label>
-										<div class="moco-control-input">
-                              				  <input type="text" name="projectName" id="project" autocomplete="off" data-validate="require-nick" class="moco-form-control" value="woodyCheers" placeholder="请输入项目名称...">
-                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
-                           				 </div>
-									</div>
-									<div class="form-item">
-										<label>项目类型:</label>
-										<div class="moco-control-input">
-                              				  <select class="moco-form-control rlf-select" name="job" hidefocus="true" id="job" data-validate="require-select">
-                                   	 				<option value="">请选择项目类型</option>
-                                                    <option value="13">重点项目</option>
-                                                    <option value="18">一般项目</option>
-                                                    <option value="1">页面重构设计</option>
-                                                                           
-                                                </select>
-                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
-                           				 </div>
-									</div>
-									<div class="form-item">
-										<label>立项时间:</label>
-										<div class="moco-control-short">
-                              				 <!-- <input type="date" value="2015-09-24"/> -->
-                              				  <input type="text" name="start-year" id="start-year" autocomplete="off" class="moco-form-year" >
-                              					年
-                              				<input type="text" name="start-month" id="start-month" autocomplete="off"  class="moco-form-month" >
-                              					月
-                              			</div>
-                              			<label>验收时间:</label>
-										<div class="moco-control-short">
-                              				 <!-- <input type="date" value="2015-09-24"/> -->
-                              				  <input type="text" name="end-year" id="end-year" autocomplete="off" class="moco-form-year" >
-                              					年
-                              				<input type="text" name="end-month" id="end-month" autocomplete="off" class="moco-form-month" >
-                              					月
-                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
-                           				 </div>
-									</div>
-									<div class="form-item">
-										<label>我在项目中的角色:</label>
-										<div class="moco-control-input">
-                              				  <select class="moco-form-control rlf-select" name="position" hidefocus="true" id="job" data-validate="require-select">
-                                   	 				<option value="">请选择角色</option>
-                                                    <option value="13">项目负责人</option>
-                                                    <option value="18">项目参与者</option>               
-                                                </select>
-                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
-                           				 </div>
-									</div>
-									<div class="form-item">
-										<label>上传项目材料:&nbsp;&nbsp; <span>(项目立项书、合同、结项书等）</span></label>
-										<div class="moco-control-input" style="position: relative;top:12px;">
-                              				  <input type="file" name="attachment" id="attachment" autocomplete="off" class="moco-control-file" >
-                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
-                           				 </div>
-									</div>
-								</form>
-								
-							</div>
-							科研成果上传表单
-						</div>
-					</div>
 
 				</div>
 			</div>
@@ -235,12 +220,21 @@
 	</div>
 	<!--内容区域结束-->
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/main.js"></script>
+	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript">
+	var goToUpload = function(page){
+		<%if(u.getName()==null){%>
+			alert("请先完善个人资料");
+			window.location.href="<%=projectPath %>/template/editUser.jsp";
+		<%}else{%>
+			window.location.href="<%=projectPath%>/template/upload/"+page;
+		<%}%>
+	}
+	var openAchievement = function(row,$element,filed){
+		console.log("aaa");
+		window.location.href='<%=projectPath%>/template/upload/'+row.category+'Upload.jsp?AchievementId='+row.ID;
+	}
+	</script>
 </body>
-<script type="text/javascript">  
-    function confirmLogout(){  
-            if(confirm("确认退出?")){  
-            window.location="<%=projectPath %>/services/LogoutServlet";
-            }  
-    }  
-</script>
+
 </html>

@@ -1,20 +1,28 @@
 <%@ page language="java" import="java.util.*,java.net.*" contentType="text/html;charset=UTF-8" %>
 <% String projectPath = request.getContextPath();
 	boolean isLogin = false;
+	String role =null;
+	try{
+		role= request.getSession().getAttribute("role").toString();
+	}catch(Exception e){
+	}
  %>
 <html>
 <link rel="stylesheet" type="text/css" href="../assets/css/reset.css">
-<link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/index_header.css">
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+<script type="text/javascript" src="../assets/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 <div id="header">
 		<div class="container">
 			
 			<a href="<%=projectPath%>/template/index.jsp">
-				<img src="../assets/img/logo2.jpg">
+				<img src="<%=projectPath%>/assets/img/logo-2.png" height="75px">
 			</a>
 
 			<div class="navbar">
 				<ul>
-					<li class="active"><a href="">主页</a></li>
+					<li class="active"><a href="<%=projectPath%>/template/index.jsp">主页</a></li>
 					<li><a href="">新闻</a></li>
 					<li><a href="">通知公告</a></li>
 					<li><a href="">资料下载</a></li>
@@ -43,7 +51,7 @@
 			<%}else{
 			 %>
 			 <div class="header_login">
-			 	<a id="js-signin" href="<%=projectPath%>/template/teacher.jsp">个人信息</a>
+			 	<a id="js-signin" href="<%=projectPath%>/template/<%=role%>.jsp">个人信息</a>
 				<a id="js-signin" href="javascript:confirmLogout()">退出</a>
 			 </div>
 			 <%}

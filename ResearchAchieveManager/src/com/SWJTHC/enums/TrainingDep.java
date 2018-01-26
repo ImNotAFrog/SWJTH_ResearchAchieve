@@ -9,8 +9,8 @@ public enum TrainingDep implements SubDepartment{
 	LEADER("部领导",1),DEANS_OFFICE("教务处",2),EDU_INSURANCE("教保处",3)
 	,RESEARCH("科研处",4),LIBRARY("图书馆",5),CULTURE("文化基础教研室",6)
 	,LAW("法律教研室",7),PHYSICAL("军事体育教研室",8),BASICS("专业基础教研室",9)
-	,FIRE_PREVENTION("防火管理教研室",10),FIRE_CONTROL_MANAGE("消防指挥教研室",11),EMERGENCYRESCUE("抢先救援教研室",12)
-	,POLITICAL_WORK("政治工作教研室",13);
+	,FIRE_PREVENTION("防火管理教研室",10),FIRE_CONTROL_MANAGE("消防指挥教研室",11),EMERGENCYRESCUE("抢险救援教研室",12)
+	,POLITICAL_WORK("政治工作教研室",13),ELECTRICAL("电化教研室",14);
 	private String name;
 	private int index;
 	private TrainingDep(String name, int index) {
