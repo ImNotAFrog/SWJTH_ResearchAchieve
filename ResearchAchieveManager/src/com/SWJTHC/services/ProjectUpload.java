@@ -1,8 +1,10 @@
 package com.SWJTHC.services;
 
+import java.awt.List;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +17,11 @@ import com.SWJTHC.Dao.EduProjectDao;
 import com.SWJTHC.Dao.LawsDao;
 import com.SWJTHC.Dao.PatentDao;
 import com.SWJTHC.Dao.ThesisDao;
+import com.SWJTHC.Dao.UserAchievementDao;
 import com.SWJTHC.model.EduProject;
 import com.SWJTHC.model.Laws;
+import com.SWJTHC.model.UserAchievement;
+import com.SWJTHC.Dao.AppConfigs;
 
 public class ProjectUpload extends HttpServlet {
 
@@ -75,60 +80,60 @@ public class ProjectUpload extends HttpServlet {
 					case "1":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 100;
+							countScore = AppConfigs.SCORES.get(17);
 							break;
 						case "2":
-							countScore = 20;
+							countScore = AppConfigs.SCORES.get(18);
 							break;
 						}
 						break;
 					case "2":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 30;
+							countScore = AppConfigs.SCORES.get(19);
 							break;
 						case "2":							
-							countScore = 10;
+							countScore = AppConfigs.SCORES.get(20);
 							break;
 						}
 						break;
 					case "3":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 10;
+							countScore = AppConfigs.SCORES.get(21);
 							break;
 						case "2":							
-							countScore = 5;
+							countScore = AppConfigs.SCORES.get(22);
 							break;
 						}
 						break;
 					case "4":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 33.3;
+							countScore = AppConfigs.SCORES.get(23);
 							break;
 						case "2":
-							countScore = 6.6;
+							countScore = AppConfigs.SCORES.get(24);
 							break;
 						}
 						break;
 					case "5":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 10;
+							countScore = AppConfigs.SCORES.get(25);
 							break;
 						case "2":
-							countScore = 3.3;
+							countScore = AppConfigs.SCORES.get(26);
 							break;
 						}
 						break;
 					case "6":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 3.3;
+							countScore = AppConfigs.SCORES.get(27);
 							break;
 						case "2":
-							countScore = 1.6;
+							countScore = AppConfigs.SCORES.get(28);
 							break;
 						}
 						break;
@@ -158,7 +163,22 @@ public class ProjectUpload extends HttpServlet {
 					i=EduProjectDao.insertEduProject(p);
 				}
 			}
-			if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
+			if(request.getParameter("next")!=null){
+				java.util.List<UserAchievement> ls = new ArrayList();
+				if(request.getParameter("next").equals("pass")){
+					ls = UserAchievementDao.getNextUncheckedAchievement("eduProject",Integer.parseInt(request.getParameter("checked"))-1);
+				}else{
+					ls = UserAchievementDao.getNextUncheckedAchievement("eduProject",Integer.parseInt(request.getParameter("checked"))+1);
+				}
+				 
+				 if(ls.size()>0){
+					 UserAchievement ua = ls.get(0);
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/upload/eduProjectUpload.jsp?AchievementId="+ua.getID()+"&state=EXAMING';</script>");
+				 }else{
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
+				 }
+				
+			}else if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
 				out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();

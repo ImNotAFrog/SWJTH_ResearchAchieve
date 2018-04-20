@@ -1,0 +1,425 @@
+/*
+* @Author: MaiBenBen
+* @Date:   2018-02-07 14:47:40
+* @Last Modified by:   MaiBenBen
+* @Last Modified time: 2018-02-16 17:29:04
+*/
+/* 头部 */
+.header{
+	width: 100%;
+	height: 124px;
+	background: url("../img/index/head.png");
+	position: relative;
+}
+.header .img-contain{
+	display: inline-block;
+	margin-top: 15px;
+	width: 683px;
+}
+.header .logined{
+	display: block;
+	float: right;
+	margin-top: 30px;
+}
+.header .portrait-wrap{
+	width: 65px;
+	height: 65px;
+	border: 1px solid #fff;
+	border-radius: 50px;
+}
+.header .portrait-wrap .portrait{
+	width: 100%;
+	height: 100%;
+}
+.header .user-center{
+	display: none;
+	position: absolute;
+	top: 124px;
+	right: 337px;
+	z-index: 5;
+	width: 200px;
+	height: 250px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	box-shadow: 0px 0px 20px #9f9f9f;
+	background: #fff;
+}
+.header .user-center .user-header{
+	height: 100px;
+	line-height: 100px;
+	overflow: hidden;
+}
+.header .user-center .user-header img{
+	margin-top: 8px;
+	margin-left: 6px;
+	width: 84px;
+	height: 84px;
+}
+.header .user-center .user-header span{
+	float: right;
+	margin-right: 50px;
+}
+.header .user-center .user-body a{
+	display: block;
+	margin: 12px 0px;
+	padding-left: 60px; 
+}
+.header .user-center .user-body a:nth-child(1){
+	background: url("../img/login/user.png") no-repeat 20px 0px;
+}
+.header .user-center .user-body a:nth-child(2){
+	background: url("../img/login/study.png") no-repeat 20px 2px;
+}
+.header .user-center .user-body a:nth-child(3){
+	background: url("../img/login/update.png") no-repeat 20px 2px;
+}
+.header .user-center .user-body button{
+	width: 80px;
+	height: 30px;
+	padding: 0px;
+	border: 0px;
+	border-radius: 6px;
+	background: #0794d5;
+	font-size: 16px;
+	color: #fff;
+	float: right;
+	margin-right: 20px;
+	cursor: pointer;
+}
+/* 导航 */
+nav{
+	width: 100%;
+	height: 50px;
+	background-color: #fff;
+	z-index: 2;
+}
+nav .wrap{
+	height: 43px; 
+}
+nav .nav-wrap{
+	display: inline-block;
+	width: 480px;	
+	overflow: hidden;
+}
+nav .wrap .nav-wrap li{
+	float: left;
+	width: 118px;
+	text-align: center;
+	font-size: 16px;
+	color: #000;
+	font-weight: bold;
+}
+nav .wrap .nav-wrap li a{
+	display: inline-block;
+	width: 118px;
+	padding: 10px 0;
+}
+nav .wrap .nav-wrap a:hover{
+	color: #ae4944;
+	border-bottom: 2px solid #ae4944;
+}
+.live{
+	color: #ae4944;
+	border-bottom: 2px solid #ae4944;
+}
+nav .wrap .research-wrap{
+	display: inline-block;
+	width: 594px;
+	height: 43px;
+	overflow: hidden;
+}
+nav .wrap .research-wrap .research{
+	display: inline-block;
+	width: 252px;
+	height: 30px;
+	border: 1px solid #000;
+	border-radius: 25px;
+	text-align: right;
+	margin-left: 340px;
+	margin-top: 5px;
+	padding: 2px 0;
+}
+nav .wrap .research-wrap .research input{
+	width: 180px;
+	height: 25px;
+	padding: 0;
+	border: 0;
+	outline: none;
+}
+nav .wrap .research-wrap .research img{
+	margin-right: 20px;
+}
+/* 内容 */
+.personal-content{
+	width: 100%;
+	padding-top: 20px;
+	overflow: hidden;
+}
+.personal-content .choose{
+	float: left;
+	width: 250px;
+	height: 339px;
+	border: 1px solid #787878;
+}
+.personal-content .choose .choose-title{
+	height: 47px;
+	background: #ae4944;
+	text-align: center;
+}
+.personal-content .choose .choose-title p{
+	height: 47px;
+	margin:0px;
+	line-height: 47px;
+	color: #fff;
+	font-weight: bold;
+}
+.personal-content .choose .choose-show li{
+	height: 97px;
+}
+.personal-content .choose .choose-show li a{
+	display: block;
+	padding-left: 50px;
+	padding-top: 50px;
+	text-decoration: none;
+}
+.personal-content .choose .choose-show li:nth-child(3){
+	font-weight: bold;
+	border-bottom: 2px solid #ae4944;
+}
+.personal-content .choose .choose-show li:nth-child(3) a{
+	color: #ae4944;
+}
+.personal-content .choose .choose-show li:nth-child(1){
+	border-bottom: 1px solid #787878;
+}
+.personal-content .choose .choose-show li:nth-child(2){
+	border-bottom: 1px solid #787878;
+}
+
+/* 右部表单 */
+.personal-info{
+	float: left;
+	width: 680px;
+	margin-left: 60px;
+	border: 2px solid #cecece;
+	box-shadow: 0px 0px 8px #cecece;
+}
+.personal-info .personal-info-content{
+	width: 582px;
+	margin-left: 40px;
+}
+.personal-info .personal-info-content .result-type{
+	padding-bottom: 40px;
+}
+.personal-info .personal-info-content .choosetitle{
+	padding-left:20px; 
+	margin-top: 20px;
+	background:url("../img/myresearch/1.gif") no-repeat 0px 8px; 
+	color: #ae4944;
+}
+.personal-info .personal-info-content .result-type ul{
+	margin-left: 40px;
+	overflow: hidden;
+}
+.personal-info .personal-info-content .result-type ul li{
+	float: left;
+	width: 250px;
+	padding-bottom: 20px;
+}
+.personal-info .personal-info-content .result-type ul li:nth-child(even){
+	margin-left: 30px;
+}
+.personal-info .personal-info-content .result-type ul li img{
+	vertical-align: middle;
+}
+.personal-info .personal-info-content .result-type ul li a{
+	display: inline-block;
+	width: 168px;
+	height: 53px;
+	vertical-align: middle;
+	text-align: center;
+	background: #e5e5e5;
+	margin-left: 10px;
+	color: #000;
+	text-decoration: none;
+}
+.personal-info .personal-info-content .result-type ul li a p{
+	margin: 0px;
+}
+.selected{
+	background: #0088c6!important;
+	color: #fff!important;
+}
+/*project部分*/
+.personal-info .personal-info-content .project{
+	display: block;
+}
+.personal-info .personal-info-content .project label{
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background: #e5e5e5;
+}
+.personal-info .personal-info-content .project input{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+.personal-info .personal-info-content .project select{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+/*thesis部分*/
+.personal-info .personal-info-content .thesis{
+	display: none;
+}
+.personal-info .personal-info-content .thesis label{
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background: #e5e5e5;
+}
+.personal-info .personal-info-content .thesis input{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+.personal-info .personal-info-content .thesis select{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+/*textbook部分*/
+.personal-info .personal-info-content .textbook{
+	display: none;
+}
+.personal-info .personal-info-content .textbook label{
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background: #e5e5e5;
+}
+.personal-info .personal-info-content .textbook input{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+.personal-info .personal-info-content .textbook select{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+/*patent部分*/
+.personal-info .personal-info-content .patent{
+	display: none;
+}
+.personal-info .personal-info-content .patent label{
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background: #e5e5e5;
+}
+.personal-info .personal-info-content .patent input{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+.personal-info .personal-info-content .patent select{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+/*laws部分*/
+.personal-info .personal-info-content .laws{
+	display: none;
+}
+.personal-info .personal-info-content .laws label{
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background: #e5e5e5;
+}
+.personal-info .personal-info-content .laws input{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+.personal-info .personal-info-content .laws select{
+	width: 470px;
+	height: 28px;
+	margin-left: 6px;
+	padding-left: 20px;
+}
+.personal-info .personal-info-content .btn-wrap{
+	margin-top: 40px;
+	height: 100px;
+	text-align: center;
+}
+.personal-info .personal-info-content .btn-wrap input{
+	width: 74px;
+	height: 33px;
+	border: 0px;
+	border-radius: 5px;
+	background: #2c49a2;
+	color: #fff;
+	cursor: pointer;
+}
+/* 底部 */
+.footerwantnotchange{
+	margin-top: 40px;
+	width: 100%;
+	height: 300px;
+	background: url("../img/index/foot.png") no-repeat;
+	background-size: 100% 100%;
+}
+.footerwantnotchange .footer-wrap .left{
+	float: left;
+	width: 420px;
+	color: #fff;
+	padding:40px 30px;
+}
+.footerwantnotchange .footer-wrap .left h4{
+	font-size: 16px;
+	font-weight: bold;
+}
+.footerwantnotchange .footer-wrap .left p{
+	font-size: 12px;
+}
+.footerwantnotchange .footer-wrap .centre{
+	float: left;
+	width: 200px;
+	color: #fff;
+	margin: 40px 60px;
+}
+.footerwantnotchange .footer-wrap .centre .show-link a{
+	display: block;
+	color: #fff;
+	font-size: 14px;
+}
+.footerwantnotchange .footer-wrap .centre .show-link a:hover{
+	color: #000;
+}
+.footerwantnotchange .footer-wrap .right{
+	float: left;
+	width: 232px;
+	color: #fff;
+	padding: 40px 20px;
+}
+.footerwantnotchange .footer-wrap .right p{
+	font-size: 14px;
+}

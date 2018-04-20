@@ -6,9 +6,9 @@
 	<title>教师主页</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<link rel="stylesheet" type="text/css" href="../assets/css/teacher_main.css">
-	<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-table.min.css">
 </head>
-<%@include file="head_user.jsp"%>
+<%@include file="head.jsp"%>
+
 <% List<UserAchievement> l = UserAchievementDao.getAchievementByUserId(u.getUsername());
  %>
 <body>
@@ -41,60 +41,63 @@
 				<div class="right">
 					<div id="detail" class="content-item">
 						<div class="common-title">个人信息
-								<a href="<%=projectPath %>/template/editPassword.jsp" class="pull-right edit">
-									修改密码
-								</a>
-								<a href="<%=projectPath %>/template/editUser.jsp" class="pull-right edit">
-									编辑
-								</a>
+							<a href="<%=projectPath %>/template/editPassword.jsp" class="pull-right edit">
+								修改密码
+							</a>
+							<a href="<%=projectPath %>/template/editUser.jsp" class="pull-right edit">
+								编辑
+							</a>
 						</div>
-						<!-- <div class="line"></div> -->
-						<%if(u.getUsername()!=null){%>
-						<div class="info-box clearfix">
-							<label class="pull-left">账号</label>
-							<div class="pull-left"> <%=u.getUsername() %></div>
+						<div class = "detail">
+							<div class="line"></div> 
+							<%if(u.getUsername()!=null){%>
+							<div class="info-box clearfix">
+								<label class="pull-left">账号</label>
+								<div class="pull-left"> <%=u.getUsername() %></div>
+							</div>
+							<%}%>
+							<%if(u.getName()!=null){%>
+							<div class="info-box clearfix">
+								<label class="pull-left">姓名</label>
+								<div class="pull-left"><%=u.getName() %></div>
+							</div>
+							<%}%>
+							<%if(u.getPosition()!=null){%>
+							<div class="info-box clearfix">
+								<label class="pull-left">职务</label>
+								<div class="pull-left"><%=u.getPosition().getName() %></div>
+							</div>
+							<%}%>
+							<%if(u.getTitle()!=null){%>
+							<div class="info-box clearfix">
+								<label class="pull-left">职称</label>
+								<div class="pull-left"> <%=u.getTitle().getName() %></div>
+							</div>
+							<%}%>
+							<%if(u.getPositionLevel()!=null){%>
+							<div class="info-box clearfix">
+								<label class="pull-left">职级</label>
+								<div class="pull-left"> <%=u.getPositionLevel().getName() %></div>
+							</div>
+							<%}%>
+							<%if(u.getDepartment()!=null){%>
+							<div class="info-box clearfix">
+								<label class="pull-left">所属部门</label>
+								<div class="pull-left"> <%=u.getDepartment().getName() %></div>
+							</div>
+							<%}%>
+							<%if(u.getSubDepartment()!=null){%>
+							<div class="info-box clearfix">
+								<label class="pull-left">所属科室</label>
+								<div class="pull-left"> <%=u.getSubDepartment().getName() %></div>
+							</div>
+							<%}%>
 						</div>
-						<%}%>
-						<%if(u.getName()!=null){%>
-						<div class="info-box clearfix">
-							<label class="pull-left">姓名</label>
-							<div class="pull-left"><%=u.getName() %></div>
-						</div>
-						<%}%>
-						<%if(u.getPosition()!=null){%>
-						<div class="info-box clearfix">
-							<label class="pull-left">职务</label>
-							<div class="pull-left"><%=u.getPosition().getName() %></div>
-						</div>
-						<%}%>
-						<%if(u.getTitle()!=null){%>
-						<div class="info-box clearfix">
-							<label class="pull-left">职称</label>
-							<div class="pull-left"> <%=u.getTitle().getName() %></div>
-						</div>
-						<%}%>
-						<%if(u.getPositionLevel()!=null){%>
-						<div class="info-box clearfix">
-							<label class="pull-left">职级</label>
-							<div class="pull-left"> <%=u.getPositionLevel().getName() %></div>
-						</div>
-						<%}%>
-						<%if(u.getDepartment()!=null){%>
-						<div class="info-box clearfix">
-							<label class="pull-left">所属部门</label>
-							<div class="pull-left"> <%=u.getDepartment().getName() %></div>
-						</div>
-						<%}%>
-						<%if(u.getSubDepartment()!=null){%>
-						<div class="info-box clearfix">
-							<label class="pull-left">所属科室</label>
-							<div class="pull-left"> <%=u.getSubDepartment().getName() %></div>
-						</div>
-						<%}%>
 					</div>
 					<div id="research" class="content-item">
 						<div class="common-title">成果列表
 						</div>
+						<div class="line"></div> 
 						<!--待审核-->
 						<div class="examing">
 							<table id="wating" class="table table-striped table-bordered table-hover" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
@@ -117,6 +120,9 @@
 						          		case 0:
 						          		break;
 						          		case 1:
+						          		%>warning<%
+						          		break;
+						          		case 2:
 						          		%>success<%
 						          		break;
 						          		default:
@@ -138,21 +144,29 @@
 									}else{
 									%><td>教改项目</td><%
 									}%>						          	
-						          	<% switch(l.get(i).getChecked()){
+						          	<%  String state = "";
+						          		switch(l.get(i).getChecked()){
 						          		case -1:
+						          		state = "EDIT";
 						          		%><td>未通过</td><%
 						          		break;
 						          		case 0:
+						          		state = "EDIT";
 						          		%><td>待审核</td><%
 						          		break;
 						          		case 1:
+						          		state = "VIEW";
+						          		%><td>已上报</td><%
+						          		break;
+						          		case 2:
+						          		state = "VIEW";
 						          		%><td>已通过</td><%
 						          		break;
 						          		default:
 						          		%><td>异常</td><%
 						          		break;
 						          	}%>	
-						          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>'">查看</button></td>					        	
+						          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=l.get(i).getCategory()%>Upload.jsp?AchievementId=<%=l.get(i).getID()%>&state=<%=state%>'">查看</button></td>					        	
 						      </tr>
 						      <%
 						      	}
@@ -165,6 +179,7 @@
 					<div id="loadup"  class="content-item">
 						<div class="common-title">上传科研成果
 						</div>
+						<div class="line"></div> 
 						<div class="nav">
 								<h4>请选择科研成果类型</h4>
 								<ul>
@@ -220,14 +235,13 @@
 	</div>
 	<!--内容区域结束-->
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/main.js"></script>
-	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
 	<script type="text/javascript">
 	var goToUpload = function(page){
 		<%if(u.getName()==null){%>
 			alert("请先完善个人资料");
 			window.location.href="<%=projectPath %>/template/editUser.jsp";
 		<%}else{%>
-			window.location.href="<%=projectPath%>/template/upload/"+page;
+			window.location.href="<%=projectPath%>/template/upload/"+page+"?state=NEW";
 		<%}%>
 	}
 	var openAchievement = function(row,$element,filed){
@@ -235,6 +249,7 @@
 		window.location.href='<%=projectPath%>/template/upload/'+row.category+'Upload.jsp?AchievementId='+row.ID;
 	}
 	</script>
-</body>
 
+</body>
+	<%@include file="copyright.jsp"%>
 </html>

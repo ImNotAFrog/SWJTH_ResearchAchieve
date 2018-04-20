@@ -3,6 +3,7 @@ package com.SWJTHC.services;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import com.SWJTHC.Dao.AppConfigs;
 import com.SWJTHC.Dao.TextbookDao;
 import com.SWJTHC.Dao.ThesisDao;
+import com.SWJTHC.Dao.UserAchievementDao;
 import com.SWJTHC.model.Textbook;
 import com.SWJTHC.model.Thesis;
+import com.SWJTHC.model.UserAchievement;
 
 public class TextbookUpload extends HttpServlet {
 
@@ -73,39 +77,39 @@ public class TextbookUpload extends HttpServlet {
 					case "1":
 						switch(t.getAuthorSituation()){
 						case "1":							
-							countScore = 15;
+							countScore = AppConfigs.SCORES.get(0);
 							break;
 						case "2":
-							countScore = 10;
+							countScore = AppConfigs.SCORES.get(1);
 							break;
 						case "3":
-							countScore = 7;
+							countScore = AppConfigs.SCORES.get(2);
 							break;
 						}
 						break;
 					case "2":
 						switch(t.getAuthorSituation()){
 						case "1":							
-							countScore = 5;
+							countScore = AppConfigs.SCORES.get(3);
 							break;
 						case "2":
-							countScore = 3;
+							countScore = AppConfigs.SCORES.get(4);
 							break;
 						case "3":
-							countScore = 1;
+							countScore = AppConfigs.SCORES.get(5);
 							break;
 						}
 						break;
 					case "3":
 						switch(t.getAuthorSituation()){
 						case "1":							
-							countScore = 5;
+							countScore = AppConfigs.SCORES.get(6);
 							break;
 						case "2":
-							countScore = 3.3;
+							countScore = AppConfigs.SCORES.get(7);
 							break;
 						case "3":
-							countScore = 2.3;
+							countScore = AppConfigs.SCORES.get(8);
 							break;
 						}
 						break;
@@ -127,7 +131,22 @@ public class TextbookUpload extends HttpServlet {
 					t.setOwner(request.getSession().getAttribute("username").toString());
 					i=TextbookDao.insertTextbook(t);
 				}
-			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
+			}if(request.getParameter("next")!=null){
+				java.util.List<UserAchievement> ls = new ArrayList();
+				if(request.getParameter("next").equals("pass")){
+					ls = UserAchievementDao.getNextUncheckedAchievement("textbook",Integer.parseInt(request.getParameter("checked"))-1);
+				}else{
+					ls = UserAchievementDao.getNextUncheckedAchievement("textbook",Integer.parseInt(request.getParameter("checked"))+1);
+				}
+				 
+				 if(ls.size()>0){
+					 UserAchievement ua = ls.get(0);
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/upload/textbookUpload.jsp?AchievementId="+ua.getID()+"&state=EXAMING';</script>");
+				 }else{
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
+				 }
+				
+			}else if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
 				out.print("<script type='text/javascript'charset='utf-8'>alert('论著、教材成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();

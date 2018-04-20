@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/user_edit.css">
 
  </head>
-   <%@include file="head_user.jsp"%> 
+   <%@include file="head.jsp"%> 
   <body>
  <div class="container">
 	    <div class="row">	    	
@@ -169,4 +169,5 @@
   		return true;
   }
   </script>
+  <%@include file="copyright.jsp"%>
 </html>

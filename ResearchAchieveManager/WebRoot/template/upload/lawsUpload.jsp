@@ -1,22 +1,24 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,com.SWJTHC.model.*,com.SWJTHC.Dao.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+List<UserAchievement> grouping = new ArrayList();
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-   <%@include file="../head_user.jsp"%> 
+   <%@include file="../head.jsp"%> 
    <% Laws l = new Laws();
    if(request.getParameter("AchievementId")!=null){
    	l=LawsDao.getLawById(Integer.parseInt(request.getParameter("AchievementId")));
+   	grouping= UserAchievementDao.getAchievementByName(l.getName());
    } 
    String username = request.getSession().getAttribute("username").toString(); 
    String owner = l.getOwner();
    %>
   <head>
     <base href="<%=basePath%>">
-    <%if(request.getParameter("AchievementId")!=null&&(request.getSession().getAttribute("role").equals("admin"))){%>
+    <%if(request.getParameter("AchievementId")!=null&&(request.getSession().getAttribute("role").toString().contains("admin"))){%>
     <title>法律、法规成果查看</title>
     <%}else if(request.getParameter("AchievementId")!=null){ %>
     <title>法律、法规成果编辑</title>
@@ -55,21 +57,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<div class="form-item">
 											<label for="lawName">法规名称:</label>
 											<div class="moco-control-input">
-	                              				  <input type="text" name="lawName" id="lawName" autocomplete="off" class="moco-form-control" value="<%=l.getName() %>" placeholder="请输入法规名称..."<%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%>readonly="readonly"<%}%>>
+	                              				  <input type="text" name="lawName" id="lawName" autocomplete="off" class="moco-form-control" value="<%=l.getName() %>" placeholder="请输入法规名称..."<%if(request.getParameter("state").equals("VIEW")){%>readonly="readonly"<%}%>>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
 	                           				 </div>
 										</div>
 										<div class="form-item">
 											<label for="lawNumber">法规编号:</label>
 											<div class="moco-control-input">
-	                              				  <input type="text" name="lawNumber" id="lawNumber" autocomplete="off" class="moco-form-control" value="<%=l.getLawNumber() %>" placeholder="请输入法规编号..." <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%>readonly="readonly"<%}%>>
+	                              				  <input type="text" name="lawNumber" id="lawNumber" autocomplete="off" class="moco-form-control" value="<%=l.getLawNumber() %>" placeholder="请输入法规编号..." <%if(request.getParameter("state").equals("VIEW")){%>readonly="readonly"<%}%>>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
 	                           				 </div>
 										</div>
 										<div class="form-item">
 											<label>级别:</label>
 											<div class="moco-control-input">
-                              				  <select class="moco-form-control rlf-select" name="lawLevel" hidefocus="true" id="lawLevel" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%> disabled="true"<%}%>>
+                              				  <select class="moco-form-control rlf-select" name="lawLevel" hidefocus="true" id="lawLevel" data-validate="require-select" <%if(request.getParameter("state").equals("VIEW")){%> disabled="true"<%}%>>
                                    	 				<option value="1"<%if(l.getLevel().equals("1")){%>selected="true"<%}%>>法律、行政法规、国家标准</option>
                                                     <option value="2"<%if(l.getLevel().equals("2")){%>selected="true"<%}%>>部门规章、行业标准规范</option>
                                                     <option value="3"<%if(l.getLevel().equals("3")){%>selected="true"<%}%>>地方性法规、政府规章、地方性标准规范</option>                              
@@ -80,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<div class="form-item">
 											<label for="" class="moco-control-label">作者参与情况：</label>
 			                            	<div class="moco-control-input">
-				                                <select class="moco-form-control rlf-select" name="authorSituation" hidefocus="true" id="authorSituation" data-validate="require-select" <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%> disabled="true"<%}%>>
+				                                <select class="moco-form-control rlf-select" name="authorSituation" hidefocus="true" id="authorSituation" data-validate="require-select" <%if(request.getParameter("state").equals("VIEW")){%> disabled="true"<%}%>>
                                 	 				 <option value="1"<%if(l.getAuthorSituation().equals("1")){%>selected="true"<%}%>>1.主编</option>
 	                                                 <option value="2"<%if(l.getAuthorSituation().equals("2")){%>selected="true"<%}%>>2.参编</option>                               
 	                                             </select>
@@ -90,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										<div class="form-item">
 											<label for="wordsCount">字数:</label>
 											<div class="moco-control-input">
-	                              				  <input type="text" name="wordsCount" id="wordsCount" autocomplete="off" class="moco-form-control" value="<%=l.getWordsCount() %>" placeholder="请输入总字数..." <%if((role.equals("admin")&&!owner.equals("")&&!owner.equals(username))||l.getChecked()==1){%>readonly="readonly"<%}%>>
+	                              				  <input type="text" name="wordsCount" id="wordsCount" autocomplete="off" class="moco-form-control" value="<%=l.getWordsCount() %>" placeholder="请输入总字数..." <%if(request.getParameter("state").equals("VIEW")){%>readonly="readonly"<%}%>>
 	                               				 <div class="rlf-tip-wrap errorHint color-red"></div>
 	                           				 </div>
 										</div>
@@ -98,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											<div class="form-item">
 												<label for="chiefEditor">成果得分:</label>
 												<div class="moco-control-input">
-				                            				  <input type="text" name="score" id="score" autocomplete="off" class="moco-form-control" value="<%=l.getScore()%>" <%if(!role.equals("admin")||l.getChecked()==1){%>readonly="readonly"<%}%>>
+				                            				  <input type="text" name="score" id="score" autocomplete="off" class="moco-form-control" value="<%=l.getScore()%>" <%if(request.getParameter("state").equals("VIEW")){%>readonly="readonly"<%}%>>
 				                             				 <div class="rlf-tip-wrap errorHint color-red"></div>
 				                         				 </div>
 										</div>
@@ -107,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											<label>成果附件:&nbsp;&nbsp; </label>
 											<input name="attachment" id="attachment" type="hidden" value="<%=l.getAttachment()%>" />						
 			  								<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe> 
-			  								<%if(l.getChecked()!=1&&((role.equals("admin")&&owner.equals(username))||owner.equals("")||role.equals("teacher"))){%>
+			  								<%if(!request.getParameter("state").equals("VIEW")){%>
 											<div class="row fileupload-buttonbar col-md-8">
 							                    <div class="span7">
 							                        <!-- The fileinput-button span is used to style the file input field as button -->
@@ -155,26 +157,127 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										</div>
 										<div id="countdown" class="col-md-offset-2 col-md-10" style="color:#F00"></div>
 										<div class="col-md-offset-2">
-										<%if(request.getParameter("AchievementId")!=null&&l.getChecked()!=1&&role.equals("admin")&&!owner.equals(username)){%>			
+										<%if(request.getParameter("state").equals("EXAMING")&&role.equals("admin1")){%>			
+										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmSubmit()">修改分数</button>
+										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmPass()">上报</button>
+										<button id="btnSubmit" type="submit" class="btn btn-danger submit" style="opacity: 0.75" onclick="return confirmUnpass()">驳回</button>
+										<%}else if(request.getParameter("state").equals("EXAMING")&&role.equals("admin2")){%>									
 										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmSubmit()">修改分数</button>
 										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmPass()">通过</button>
-										<button id="btnSubmit" type="submit" class="btn btn-danger submit" style="opacity: 0.75" onclick="return confirmUnpass()">不通过</button>
-										<%}else if(request.getParameter("AchievementId")!=null&&l.getChecked()!=1&&(role.equals("teacher")||owner.equals(username))){%>						
+										<button id="btnSubmit" type="submit" class="btn btn-danger submit" style="opacity: 0.75" onclick="return confirmUnpass()">驳回</button>
+										<%}else if(request.getParameter("state").equals("REVIEW")&&role.equals("admin1")){%>
+										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmWithDraw()">撤回</button>
+										<%}else if(request.getParameter("state").equals("EDIT")){%>						
 										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmSubmit()">提交更新</button>
 										<button class="btn btn-default btn-warning" type="reset">撤销修改</button>	
 										<button class="btn btn-default btn-danger" type="button" onclick="deleteAchievement(<%=l.getID()%>)">删除成果</button>				
-										<%}else if(request.getParameter("AchievementId")==null){%>
+										<%}else if(request.getParameter("state").equals("NEW")){%>
 										<button id="btnSubmit" type="submit" class="btn btn-primary submit" style="opacity: 0.75" onclick="return confirmSubmit()">提交</button>
 										<button class="btn btn-default btn-warning" type="reset">重置</button>
 										<%}%>						
 										<button type="button"class="btn btn-default" onclick="window.location.href='<%=projectPath%>/template/<%=role%>.jsp';">返回</button>
 										</div>
 									</form>
-								
+								<%if(role.contains("admin")){%>	
+					<h3>同名成果：	</h3>
+					<table id="grouping" class="table table-striped table-bordered" data-toggle="table" data-pagination="true" data-height="516" data-search="true">
+							      <thead>
+							          <th>成果名称</th>
+							          <th>类型</th>
+							          <th>提交人</th>
+							          <th>自评得分</th>
+							          <th>操作</th>
+							        </tr>
+							      </thead>
+							      <tbody>
+							      	
+							        <% for(int i=0;i<grouping.size();i++){
+								      %>
+								      <%  String state = "";
+							          		switch(grouping.get(i).getChecked()){
+							          		case -1:
+							          		state = "VIEW";
+							          		break;
+							          		case 0:
+							          		state = "EXAMING";
+							          		break;
+							          		case 1:
+							          		state = "EXAMING";
+							          		break;
+							          		case 2:
+							          		state = "EXAMING";
+							          		break;
+							          		default:
+							          		break;
+							          	}%>	
+								      <tr class="<% switch(grouping.get(i).getChecked()){
+						          		case -1:
+						          		%>danger<%
+						          		break;
+						          		case 0:
+						          		break;
+						          		case 1:
+						          		%>warning<%
+						          		break;
+						          		case 2:
+						          		%>success<%
+						          		break;
+						          		default:
+						          		%>warning<%
+						          		break;
+						          	}%>" onclick="window.open('<%=projectPath%>/template/upload/<%=grouping.get(i).getCategory()%>Upload.jsp?AchievementId=<%=grouping.get(i).getID()%>&state=<%=state %>')">					          	
+								          	<td><%=grouping.get(i).getName()%></td>
+											<%if(grouping.get(i).getCategory().equals("thesis")){
+											%><td>论文</td><%
+											}else if(grouping.get(i).getCategory().equals("eduProject")){
+											%><td>课题项目</td><%
+											}else if (grouping.get(i).getCategory().equals("textbook")){
+											%><td>教材、论著</td><%
+											}else if (grouping.get(i).getCategory().equals("patent")){
+											%><td>专利</td><%
+											}else if (grouping.get(i).getCategory().equals("laws")){
+											%><td>法律、法规</td><%
+											}else{
+											%><td>教改项目</td><%
+											}%>			
+														          	
+								          	<td><%=grouping.get(i).getUsername()%></td>		
+								          	<td><%=grouping.get(i).getScore()%></td>	
+								          
+								          	<td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/upload/<%=grouping.get(i).getCategory()%>Upload.jsp?AchievementId=<%=grouping.get(i).getID()%>&state='<%=state%>">详情</button></td>				        	
+								      </tr>
+								      <%
+								      	}
+								       %>	
+							       </tbody>
+							    </table>
+						<%} %>	
 							</div>
 	        </div>
 	    </div>
 <script>
+function confirmWithDraw(){
+		/*校验一些输入表单是否为空*/
+  		
+  		var score = document.getElementById("score");
+
+  		if(score.value == ""){
+  			thesisName.nextElementSibling.innerText = "分数不能为空.";
+  			return false;
+  		}else{
+			if(confirm("确认将成果撤回?")){  
+				var form = document.getElementById("fileupload");
+				var checked = document.getElementById("checked");
+				checked.value=0;
+				form.setAttribute("action", "<%=projectPath%>/services/ProjectUpload");
+				form.removeAttribute("enctype");
+				form.removeAttribute("target");
+				form.submit();			
+			}else{
+				return false;
+			}
+		}
+	}
    	function confirmPass(){
 		/*校验一些输入表单是否为空*/
   		
@@ -187,8 +290,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(confirm("提交后成果将无法修改，确认通过?")){  
 				var form = document.getElementById("fileupload");
 				var checked = document.getElementById("checked");
-				checked.value=1;
-				form.setAttribute("action", "<%=projectPath%>/services/LawsUpload");
+				checked.value = parseInt(checked.value)+1;
+				form.setAttribute("action", "<%=projectPath%>/services/LawsUpload?next=pass");
 				form.removeAttribute("enctype");
 				form.removeAttribute("target");
 				form.submit();			
@@ -209,8 +312,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(confirm("确认将成果设置为不通过?")){  
 				var form = document.getElementById("fileupload");
 				var checked = document.getElementById("checked");
-				checked.value=-1;
-				form.setAttribute("action", "<%=projectPath%>/services/LawsUpload");
+				checked.value-=1;
+				form.setAttribute("action", "<%=projectPath%>/services/LawsUpload?next=unpass");
 				form.removeAttribute("enctype");
 				form.removeAttribute("target");
 				form.submit();			
@@ -438,7 +541,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=projectPath%>/assets/js/fileupload/jquery.fileupload-ui.js"></script>
     <script src="<%=projectPath%>/assets/js/fileupload/locale.js"></script>
     <script type="text/javascript">
-    <%if((role.equals("admin")&&owner.equals(username))||owner.equals("")||!role.equals("admin")){%>
+    <%if((role.contains("admin")&&owner.equals(username))||owner.equals("")||!role.contains("admin")){%>
      <%if(l.getChecked()!=1){%>
      $(function() {
     $( "#patentDate" ).datepicker({
@@ -472,4 +575,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     );
 	}); 
     </script>
+    <%@include file="../copyright.jsp"%>
 </html>

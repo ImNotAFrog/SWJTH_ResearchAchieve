@@ -2,14 +2,7 @@ package com.SWJTHC.model;
 
 import java.util.List;
 
-import com.SWJTHC.enums.Department;
-import com.SWJTHC.enums.ManagementDep;
-import com.SWJTHC.enums.PoliticalDep;
-import com.SWJTHC.enums.Position;
-import com.SWJTHC.enums.PositionLevel;
-import com.SWJTHC.enums.SchoolAffairsDep;
-import com.SWJTHC.enums.Title;
-import com.SWJTHC.enums.TrainingDep;
+import com.SWJTHC.enums.*;
 import com.SWJTHC.interfaces.SubDepartment;
 
 public class AppUser {
@@ -90,7 +83,7 @@ public class AppUser {
 		case TRAINNING:
 			return TrainingDep.valueOf(subDepartment.toString());
 		case LEADER:
-			return null;
+			return Leader.valueOf(subDepartment.toString());
 		case POLITICAL:			
 			return PoliticalDep.valueOf(subDepartment.toString());
 		case SCHOOL_AFFAIRS:
@@ -111,7 +104,7 @@ public class AppUser {
 			this.subDepartment= TrainingDep.valueOf(subDepartmentName);
 			break;
 		case LEADER:
-			this.subDepartment=  null;
+			this.subDepartment=  Leader.valueOf(subDepartmentName);
 			break;
 		case POLITICAL:			
 			this.subDepartment=  PoliticalDep.valueOf(subDepartmentName);

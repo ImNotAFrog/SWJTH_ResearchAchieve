@@ -13,14 +13,7 @@ import net.sf.json.JSONObject;
 
 
 import com.SWJTHC.Dao.UserDao;
-import com.SWJTHC.enums.Department;
-import com.SWJTHC.enums.ManagementDep;
-import com.SWJTHC.enums.PoliticalDep;
-import com.SWJTHC.enums.Position;
-import com.SWJTHC.enums.PositionLevel;
-import com.SWJTHC.enums.SchoolAffairsDep;
-import com.SWJTHC.enums.Title;
-import com.SWJTHC.enums.TrainingDep;
+import com.SWJTHC.enums.*;
 import com.SWJTHC.model.AppUser;
 
 public class UserServlet extends HttpServlet {
@@ -73,6 +66,9 @@ public class UserServlet extends HttpServlet {
 			JSONObject j = new JSONObject();
 			switch(department){
 			case "LEADER":	
+				for(int i=0;i<Leader.values().length;i++){
+					j.put(Leader.values()[i], Leader.values()[i].getName());
+				}
 				out.write(j.toString());
 				break;
 			case "TRAINNING":

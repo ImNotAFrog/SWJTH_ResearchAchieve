@@ -3,6 +3,7 @@ package com.SWJTHC.services;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import com.SWJTHC.Dao.AppConfigs;
 import com.SWJTHC.Dao.EduProjectDao;
 import com.SWJTHC.Dao.ThesisDao;
+import com.SWJTHC.Dao.UserAchievementDao;
 import com.SWJTHC.model.Thesis;
+import com.SWJTHC.model.UserAchievement;
 
 public class ThesisUpload extends HttpServlet {
 
@@ -71,28 +75,28 @@ public class ThesisUpload extends HttpServlet {
 				double countScore = 0;
 				switch(t.getJournalLevel()){
 				case "1":
-					countScore=50;
+					countScore=AppConfigs.SCORES.get(9);
 					break;
 				case "2":
-					countScore=20;
+					countScore=AppConfigs.SCORES.get(10);
 					break;
 				case "3":
-					countScore=15;
+					countScore=AppConfigs.SCORES.get(11);
 					break;
 				case "4":
-					countScore=12;
+					countScore=AppConfigs.SCORES.get(12);
 					break;
 				case "5":
-					countScore=10;
+					countScore=AppConfigs.SCORES.get(13);
 					break;
 				case "6":
-					countScore=6;
+					countScore=AppConfigs.SCORES.get(14);
 					break;
 				case "7":
-					countScore=4;
+					countScore=AppConfigs.SCORES.get(15);
 					break;
 				case "8":
-					countScore=1;
+					countScore=AppConfigs.SCORES.get(16);
 					break;
 				default:
 					break;
@@ -115,7 +119,22 @@ public class ThesisUpload extends HttpServlet {
 					i=ThesisDao.insertThesis(t);
 				}
 			}
-			if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
+			if(request.getParameter("next")!=null){
+				java.util.List<UserAchievement> ls = new ArrayList();
+				if(request.getParameter("next").equals("pass")){
+					ls = UserAchievementDao.getNextUncheckedAchievement("thesis",Integer.parseInt(request.getParameter("checked"))-1);
+				}else{
+					ls = UserAchievementDao.getNextUncheckedAchievement("thesis",Integer.parseInt(request.getParameter("checked"))+1);
+				}
+				 
+				 if(ls.size()>0){
+					 UserAchievement ua = ls.get(0);
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/upload/thesisUpload.jsp?AchievementId="+ua.getID()+"&state=EXAMING';</script>");
+				 }else{
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
+				 }
+				
+			}else if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
 				out.print("<script type='text/javascript'charset='utf-8'>alert('论文成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();

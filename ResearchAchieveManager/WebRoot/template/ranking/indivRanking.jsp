@@ -3,17 +3,19 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<%@include file="../head_user.jsp"%>
+<%@include file="../head.jsp"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <% 	List<UserAchievement> all = UserAchievementDao.getAchievementList();
 	List<UserAchievement> approval=new ArrayList();
 	Map<String,Integer> achieveNum = new HashMap<String, Integer>();
-	java.sql.Date start = java.sql.Date.valueOf("2015-1-1");
-	java.sql.Date end = java.sql.Date.valueOf("2017-11-1");
+	String s =request.getParameter("startDate");
+	String e =request.getParameter("endDate");
+	java.sql.Date start = java.sql.Date.valueOf(s);
+	java.sql.Date end = java.sql.Date.valueOf(e);
 	for(int i=0;i<all.size();i++){
 	
-		if(all.get(i).getChecked()==1&&all.get(i).getAchievementDate().after(start)&&all.get(i).getAchievementDate().before(end)){
+		if(all.get(i).getChecked()==2&&all.get(i).getAchievementDate().after(start)&&all.get(i).getAchievementDate().before(end)){
 			//System.out.println(all.get(i).getUsername()+all.get(i).getName()+all.get(i).getAchievementDate());
 			approval.add(all.get(i));
 		}
@@ -81,25 +83,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			      </thead>
 			      <tbody>
 			      <%for(int i=0;i<sumed.size();i++){%>
-			      	<tr onclick="window.location.href='<%=projectPath%>/template/ranking/indivRankingLookup.jsp?chosenUser=<%=sumed.get(i).getUsername()%>';">
+			      	<tr onclick="window.location.href='<%=projectPath%>/template/ranking/indivRankingLookup.jsp?chosenUser=<%=sumed.get(i).getUsername()%>&startDate=<%=s%>&endDate=<%=e%>';">
 			      	<td><%=i+1 %></td>
 			      	<td><%=sumed.get(i).getUsername() %></td>
 			      	<td><%=achieveNum.get(sumed.get(i).getUsername()) %></td>
 			        <td><%=sumed.get(i).getScore()%></td>
 			        <td><%=sumed.get(i).getDepartment().getName()%></td>
 			        <td><%=sumed.get(i).getSubDepartment().getName()%></td>	
-			        <td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/ranking/indivRankingLookup.jsp?chosenUser=<%=sumed.get(i).getUsername()%>';">详情</button></td>					        	
+			        <td><button type="button" class="btn btn-xs btn-info" onclick="window.location.href='<%=projectPath%>/template/ranking/indivRankingLookup.jsp?chosenUser=<%=sumed.get(i).getUsername()%>&startDate=<%=s%>&endDate=<%=e%>';">详情</button></td>					        	
 			        </tr>		      	
 			      <%} %>
 			      </tbody>
 			      </table>
 			      <div class="col-md-offset-5">
 			      	<button type="button"class="btn btn-default" onclick="window.location.href='<%=projectPath%>/template/<%=role%>.jsp';">返回</button>
+			      	<button type="button"class="btn btn-default" onclick="window.open('<%=projectPath%>/services/RankExportServlet?startDate=<%=start %>&endDate=<%=end %>&state=indivRank');">导出</button>
 			      </div>						      
 				</div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript" src="<%=projectPath %>/assets/js/tableExport.js"></script>
+	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstarp-table-export.js"></script>
   </body>
+    <%@include file="../copyright.jsp"%>
+    <script type="text/javascript">
+    </script>
 </html>

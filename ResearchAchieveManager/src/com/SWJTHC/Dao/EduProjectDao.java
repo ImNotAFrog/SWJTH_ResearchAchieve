@@ -54,6 +54,17 @@ public class EduProjectDao {
 					a.setMaxScore(10);
 					break;
 				}
+				System.out.println(a.getCategory());
+				System.out.println(a.getChecked());
+				System.out.println(a.getID());
+				System.out.println(a.getMaxScore());
+				System.out.println(a.getName());
+				System.out.println(a.getScore());
+				System.out.println(a.getUserId());
+				System.out.println(a.getUsername());
+				System.out.println(a.getAchievementDate());
+				System.out.println(a.getDepartment());
+				System.out.println(a.getSubDepartment());
 				Dao.executUpdate("insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore,userId) values(?,?,?,?,?,?,?,?,?,?,?)", a, null);
 			}
 		} catch (Exception e) {

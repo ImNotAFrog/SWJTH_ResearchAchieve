@@ -49,7 +49,7 @@ public class LogoutServlet extends HttpServlet {
 
         System.out.println(request.getSession().getAttribute("username")+"ÍË³öÏµÍ³");
         session.invalidate();
-        response.sendRedirect(request.getContextPath()+"/template/index.jsp");
+        response.sendRedirect(request.getContextPath()+"/template/login.jsp");
         out.close();
 	}
 

@@ -3,6 +3,7 @@ package com.SWJTHC.services;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import com.SWJTHC.Dao.AppConfigs;
 import com.SWJTHC.Dao.EduProjectDao;
 import com.SWJTHC.Dao.EduReformProjectDao;
+import com.SWJTHC.Dao.UserAchievementDao;
 import com.SWJTHC.model.EduProject;
 import com.SWJTHC.model.EduReformProject;
+import com.SWJTHC.model.UserAchievement;
 
 public class EduReformProjectUpload extends HttpServlet {
 
@@ -72,10 +76,10 @@ public class EduReformProjectUpload extends HttpServlet {
 				double countScore = 0;
 				switch(p.getAuthorSituation()){
 					case "1":
-						countScore=8;
+						countScore=AppConfigs.SCORES.get(29);
 						break;
 					case "2":
-						countScore=4;
+						countScore=AppConfigs.SCORES.get(30);
 						break;
 				}
 				if(state.equals("立项在研")){
@@ -99,7 +103,22 @@ public class EduReformProjectUpload extends HttpServlet {
 					i=EduReformProjectDao.insertEduReformProject(p);
 				}
 			}
-			if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
+			if(request.getParameter("next")!=null){
+				java.util.List<UserAchievement> ls = new ArrayList();
+				if(request.getParameter("next").equals("pass")){
+					ls = UserAchievementDao.getNextUncheckedAchievement("eduReformProject",Integer.parseInt(request.getParameter("checked"))-1);
+				}else{
+					ls = UserAchievementDao.getNextUncheckedAchievement("eduReformProject",Integer.parseInt(request.getParameter("checked"))+1);
+				}
+				 
+				 if(ls.size()>0){
+					 UserAchievement ua = ls.get(0);
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/upload/eduReformProjectUpload.jsp?AchievementId="+ua.getID()+"&state=EXAMING';</script>");
+				 }else{
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
+				 }
+				
+			}else if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
 				out.print("<script type='text/javascript'charset='utf-8'>alert('教学改革项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();

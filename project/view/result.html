@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>上传成果</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="../themes/explorer-fa/theme.css" media="all" rel="stylesheet" type="text/css"/>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/result.css" />
+	<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+	<script src="../js/jquery-3.2.1.min.js"></script>
+	<script src="../js/fileinput.js" type="text/javascript"></script>
+	<script src="../themes/explorer-fa/theme.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<!--头部logo-->
+	<div class="header">
+		<div class="wrap">
+			<div class="img-contain">
+				<a href="index.html">
+					<img src="../img/index/logo.png">
+				</a>
+			</div>
+			<!-- 登录后 -->
+			<div class="logined">
+				<div class="portrait-wrap">
+					<img class="portrait" src="../img/login/portrait.png" />
+				</div>
+				<div class="user-center">
+					<div class="user-center-wrap">
+						<div class="user-header">
+							<img src="../img/login/portrait.png">
+							<span>用户名</span>	
+						</div>
+						<div class="user-body">
+							<a href="personal.html">个人信息</a>
+							<a href="myresearch.html">我的科研成果</a>
+							<a href="">上传成果</a>
+							<button>安全退出</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--导航部分-->
+	<nav>
+		<div class="wrap">
+			<div class="nav-wrap">
+				<ul>
+					<li>
+						<a href="index.html">
+							首页
+						</a>
+					</li><!--
+				 --><li>
+					 	<a href="">
+					 		新闻资讯
+					 	</a>
+				 	</li><!--
+				 --><li>
+					 	<a href="">
+					 		通知公告
+					 	</a>
+					 </li><!--
+				 --><li>
+				 		<a href="">
+				 			资料下载
+				 		</a>
+				 	</li>
+				</ul>
+			</div>
+			<div class="research-wrap">
+				<div class="research">
+					<input type="text" name="">
+					<a href="">
+						<img src="../img/index/find.png">
+					</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!-- 内容 -->
+	<div class="personal-content">
+		<div class="wrap">
+			<div class="choose">
+				<div class="choose-title">
+					<p>首页&nbsp;&nbsp;>&nbsp;&nbsp;个人中心</p>
+				</div>
+				<div class="choose-show">
+					<ul>
+						<li>
+							<a href="personal.html">
+								个人信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+							</a>
+						</li>
+						<li>
+							<a href="myresearch.html">
+								我的科研成果&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								上传成果&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="personal-info">
+				<div class="personal-info-content">
+					<div class="result-type">
+						<p class="choosetitle">
+							请选择成果类型
+						</p>
+						<ul>
+							<li>
+								<img src="../img/result/project.png">
+								<a href="">
+									<p>
+										课题项目类
+									</p>
+									<p>
+										Project
+									</p>
+								</a>
+							</li>			
+							<li>
+								<img src="../img/result/thesis.png">
+								<a href="">
+									<p>
+										论文类
+									</p>
+									<p>
+										Thesis
+									</p>	
+								</a>
+							</li>			
+							<li>
+								<img src="../img/result/textbook.png">
+								<a href="">
+									<p>
+										论著、教材类
+									</p>
+									<p>
+										TextBook
+									</p>
+								</a>
+							</li>			
+							<li>
+								<img src="../img/result/patent.png">
+								<a href="">
+									<p>
+										专利类
+									</p>
+									<p>
+										Patent
+									</p>
+								</a>
+							</li>			
+							<li>
+								<img src="../img/result/laws.png">
+								<a href="">
+									<p>
+										法律法规类
+									</p>
+									<p>
+										Laws and Regulation
+									</p>
+								</a>
+							</li>			
+						</ul>
+					</div>
+					<p class="choosetitle">
+							填写成果信息
+					</p>
+					<div class="project">
+						<form>
+							<p>
+								<label>项目名称</label>
+								<input type="text" value="项目名称" />
+							</p>
+							<p>
+								<label>组长</label>
+								<input type="text" value="组长" />
+							</p>
+							<p>
+								<label>成员</label>
+								<input type="text" value="成员" />
+							</p>
+							<p>
+								<label>项目级别</label>
+								<select>
+									<option>项目级别</option>
+								</select>
+							</p>
+							<p>
+								<label>项目主体名称</label>
+								<input type="text" value="项目主体名称" />
+							</p>
+							<p>
+								<label>项目状态</label>
+								<input type="text" value="项目状态" />
+							</p>
+							<p>
+								<label>时间</label>
+								<select>
+									<option>时间</option>
+								</select>
+							</p>
+						</form>
+					</div>
+					<div class="thesis">
+						<form>
+							<p>
+								<label>论文名称</label>
+								<input type="text" value="论文名称">
+							</p>
+							<p>
+								<label>刊物级别</label>
+								<select>
+									<option>刊物级别</option>
+								</select>
+							</p>
+							<p>
+								<label>发表刊物</label>
+								<input type="text" value="发表刊物">
+							</p>
+							<p>
+								<label>刊号</label>
+								<input type="text" value="刊号">
+							</p>
+						</form>
+					</div>
+					<div class="textbook">
+						<form>
+							<p>
+								<label>名称</label>
+								<input type="text" value="名称" />
+							</p>
+							<p>
+								<label>主题级别</label>
+								<select>
+									<option>主题级别</option>
+								</select>
+							</p>
+							<p>
+								<label>作者参与情况</label>
+								<select>
+									<option>作者参与情况</option>
+								</select>
+							</p>
+							<p>
+								<label>出版社</label>
+								<input type="text" value="出版社" />
+							</p>
+							<p>
+								<label>ISBN</label>
+								<input type="text" value="ISBN" />
+							</p>
+							<p>
+								<label>出版时间</label>
+								<input type="text" value="出版时间" />
+							</p>
+						</form>
+					</div>
+					<div class="patent">
+						<form>
+							<p>
+								<label>名称</label>
+								<input type="text" value="名称" />
+							</p>
+							<p>
+								<label>类型</label>
+								<select>
+									<option>类型</option>
+								</select>
+							</p>
+							<p>
+								<label>专利编号</label>
+								<input type="text" value="专利编号" />
+							</p>
+							<p>
+								<label>专利发明人</label>
+								<input type="text" value="专利发明人" />
+							</p>
+							<p>
+								<label>授权公告日期</label>
+								<input type="text" value="授权公告日期" />
+							</p>
+						</form>
+					</div>
+					<div class="laws">
+						<form>
+							<p>
+								<label>法规名称</label>
+								<input type="text" value="法规名称" />
+							</p>
+							<p>
+								<label>法规编号</label>
+								<input type="text" value="法规编号" />
+							</p>
+							<p>
+								<label>级别</label>
+								<select>
+									<option>级别</option>
+								</select>
+							</p>
+							<p>
+								<label>类别</label>
+								<select>
+									<option>类别</option>
+								</select>
+							</p>
+							<p>
+								<label>主编</label>
+								<input type="text" value="主编" />
+							</p>
+							<p>
+								<label>参编</label>
+								<input type="text" value="参编" />
+							</p>
+							<p>
+								<label>字数</label>
+								<input type="text" value="字数" />
+							</p>
+						</form>
+					</div>
+					<div class="container kv-main">
+						<form enctype="multipart/form-data">
+							<div class="file-loading">
+	            				<input id="kv-explorer" type="file" multiple>
+	        				</div>
+						</form>
+					</div>
+					<div class="btn-wrap">
+						<input type="button" value="提交" />
+						<input type="button" value="取消" />
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!--底部-->
+	<div class="footerwantnotchange">
+		<div class="footer-wrap">
+			<div class="left">
+				<h4>
+					公安消防部队高等专科学校&nbsp;&nbsp;|&nbsp;&nbsp;科研成果管理平台
+				</h4>
+				<p>
+					Copyright&nbsp;©&nbsp;2017&nbsp;hoperesearch.com京ICP备&nbsp;13046642号-2
+				</p>
+			</div>
+			<div class="centre">
+				<h4>
+					友情链接
+				</h4>
+				<div class="show-link">
+					<a href="http://www.moe.gov.cn/">中华人民共和国教育部</a>
+					<a href="http://www.miit.gov.cn/">中华人民共和国工业和信息化部</a>
+					<a href="http://www.most.gov.cn/">中华人民共和国科学技术部</a>
+				</div>
+			</div>
+			<div class="right">
+				<h4>联系我们</h4>
+				<div class="show-info">
+					<p>深圳市南山区高新科技园中区一路腾讯大厦</p>
+					<p>电话：0755-86013388</p>
+					<p>传真：0755-86013399</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/result.js"></script>
+</body>
+<script>
+    /*
+     $(".file").on('fileselect', function(event, n, l) {
+     alert('File Selected. Name: ' + l + ', Num: ' + n);
+     });
+     */
+    $(".btn-warning").on('click', function () {
+        var $el = $("#file-4");
+        if ($el.attr('disabled')) {
+            $el.fileinput('enable');
+        } else {
+            $el.fileinput('disable');
+        }
+    });
+    $(".btn-info").on('click', function () {
+        $("#file-4").fileinput('refresh', {previewClass: 'bg-info'});
+    });
+    /*
+     $('#file-4').on('fileselectnone', function() {
+     alert('Huh! You selected no files.');
+     });
+     $('#file-4').on('filebrowse', function() {
+     alert('File browse clicked for #file-4');
+     });
+     */
+    $(document).ready(function () {
+        $("#test-upload").fileinput({
+            'theme': 'fa',
+            'showPreview': false,
+            'allowedFileExtensions': ['jpg', 'png', 'gif'],
+            'elErrorContainer': '#errorBlock'
+        });
+        $("#kv-explorer").fileinput({
+            'theme': 'explorer-fa',
+            'uploadUrl': '#',
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            initialPreview: [
+                
+            ],
+            initialPreviewConfig: [
+                
+            ]
+        });
+        /*
+         $("#test-upload").on('fileloaded', function(event, file, previewId, index) {
+         alert('i = ' + index + ', id = ' + previewId + ', file = ' + file.name);
+         });
+         */
+    });
+</script>
+</html>

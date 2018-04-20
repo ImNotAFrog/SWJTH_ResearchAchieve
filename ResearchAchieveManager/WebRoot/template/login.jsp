@@ -44,7 +44,7 @@
 	    try{
 	    	String username =request.getSession().getAttribute("username").toString();
 	    	if(username!=null&&username.length()>0){
-	    		response.sendRedirect(projectPath+"/template/teacher.jsp");
+	    		response.sendRedirect(projectPath+"/template/"+role+".jsp");
 		    	}
 	    	}catch(Exception e){
 	    	}
@@ -70,56 +70,21 @@
      %>
 <!-- 		<div id="bg-div"><img src="../assets/img/backgrounds/1.jpg" /></div>  -->
         <!-- Top content -->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3" style="height:auto;border-radius: 5px 5px 0px 0px;background:#eee;margin-top:20px;padding: 0px 25px 0px 10px;">
-					<div class="col-sm-8">			
-					<h3 class="pull-left" style="font-weight:bold">用户登录</h3>							
-					</div>
-					
-					<div class="col-sm-8 ">
-						<p class="pull-left" style="color:#999;">请输入用户名和密码登录:</p>							
-					</div>
-				</div>
-				<div class="col-sm-6 col-sm-offset-3" style="border-radius: 0px 0px 5px 5px;background:#fff;border-style:solid; border-width:1px;border-color:#ccc;padding: 10px 25px 20px 25px;">
-					
-					<form name="loginForm" action="<%=projectPath%>/services/LoginServlet" method="post" >
-						<div class="form-group">
-							
-							<div class="input-group">
-							  <div class="input-group-addon">用户名:</div>
-							  <input type="text" name="form-username" class="form-control" placeholder="用户名"  id="form-username" value="<%=usernameCookie %>">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-group">
-								  <div class="input-group-addon">密码:</div>
-								  <input type="password" name="form-password" class="form-control" placeholder="密码"  id="form-password" value="<%=passwordCookie %>">
-								 
-							</div>
-						</div>
-						<!-- <div class="form-group">
-							<label>
-								<input type ="checkBox" name = "rememberMe" checked="true">7天之内记住我
-							</label>
-							<label>
-								<input type ="checkBox" name = "autoLogin" checked="true">7天之内自动登录
-							</label>
-						</div> -->
-						<div class="form-group">
-							<button type="submit" class="btn btn-success form-control">登录</button>
-						</div>				
-
-							
-					</form>
-				</div>
+       <div id="loginpage">
+		<div class="content-wrap">
+			<div class="login-window">
+				<h4>欢迎登录</h4>
+				<form class="window-content" name="loginForm" action="<%=projectPath%>/services/LoginServlet" method="post" >
+					<input type="text" name="form-username" placeholder="请输入用户名" />
+					<input type="password" name="form-password" placeholder="请输入密码" />
+					<input type="submit" name="Submit" value="登录">
+				</form>
 			</div>
 		</div>
+	</div>	
 
 
         <!-- Javascript -->
-        <script src="../assets/js/jquery-1.11.1.min.js"></script>
-        <script src="../bootstrap/js/bootstrap.min.js"></script>
         
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>

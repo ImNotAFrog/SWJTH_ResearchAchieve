@@ -3,6 +3,7 @@ package com.SWJTHC.services;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import com.SWJTHC.Dao.AppConfigs;
 import com.SWJTHC.Dao.EduProjectDao;
 import com.SWJTHC.Dao.PatentDao;
 import com.SWJTHC.Dao.TextbookDao;
+import com.SWJTHC.Dao.UserAchievementDao;
 import com.SWJTHC.model.Patent;
 import com.SWJTHC.model.Textbook;
+import com.SWJTHC.model.UserAchievement;
 
 public class PatentUpload extends HttpServlet {
 
@@ -76,37 +80,37 @@ public class PatentUpload extends HttpServlet {
 					case "1":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 8;
+							countScore = AppConfigs.SCORES.get(37);
 							break;
 						case "2":
-							countScore = 3;
+							countScore = AppConfigs.SCORES.get(38);
 							break;
 						case "3":
-							countScore = 1;
+							countScore = AppConfigs.SCORES.get(39);
 							break;
 						}
 						break;
 					case "2":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 5;
+							countScore = AppConfigs.SCORES.get(40);
 							break;
 						}
 						break;
 					case "3":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 4;
+							countScore = AppConfigs.SCORES.get(41);
 							break;
 						}
 						break;
 					case "4":
 						switch(p.getAuthorSituation()){
 						case "1":							
-							countScore = 4;
+							countScore = AppConfigs.SCORES.get(42);
 							break;
 						case "2":
-							countScore = 2;
+							countScore = AppConfigs.SCORES.get(43);
 							break;
 						}
 						break;
@@ -129,7 +133,22 @@ public class PatentUpload extends HttpServlet {
 					p.setOwner(request.getSession().getAttribute("username").toString());
 					i=PatentDao.insertPatent(p);
 				}
-			}if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
+			}if(request.getParameter("next")!=null){
+				java.util.List<UserAchievement> ls = new ArrayList();
+				if(request.getParameter("next").equals("pass")){
+					ls = UserAchievementDao.getNextUncheckedAchievement("patent",Integer.parseInt(request.getParameter("checked"))-1);
+				}else{
+					ls = UserAchievementDao.getNextUncheckedAchievement("patent",Integer.parseInt(request.getParameter("checked"))+1);
+				}
+				 
+				 if(ls.size()>0){
+					 UserAchievement ua = ls.get(0);
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/upload/patentUpload.jsp?AchievementId="+ua.getID()+"&state=EXAMING';</script>");
+				 }else{
+					 out.print("<script type='text/javascript'charset='utf-8'>alert('课题项目成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
+				 }
+				
+			}else if(request.getParameter("ID")!=null&&i==0&&request.getParameter("deleteAchievement")==null){
 				out.print("<script type='text/javascript'charset='utf-8'>alert('专利成果已更新!');window.location.href='"+projectPath+"/template/"+role+".jsp"+"';</script>");
 			}else if(request.getParameter("deleteAchievement")!=null){
 				JSONObject j = new JSONObject();

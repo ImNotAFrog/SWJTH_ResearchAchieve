@@ -1,10 +1,13 @@
 <%@page contentType="text/html;charset=UTF-8" %>
+<% 
+	String pPath = request.getContextPath();
+	%>
 <html>
-<link rel="stylesheet" type="text/css" href="../assets/css/index_footer.css">
+<link rel="stylesheet" type="text/css" href="<%=pPath%>/assets/css/index_footer.css">
 <div class="footer" >
 	<div class="container">
 		<div class="col1">
-			<p>HOPE COLLEGE &nbsp;|&nbsp;科研成果管理平台 </p>
+			<p>公安消防部队高等专科学校 &nbsp;|&nbsp;科研成果管理平台 </p>
 			<p class="copy">Copyright @ 2017-2018NETWORK.西南交大希望学院</p>
 		</div>
 		<div class="col2">

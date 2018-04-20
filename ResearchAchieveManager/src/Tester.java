@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.SWJTHC.Dao.AppConfigs;
 import com.SWJTHC.Dao.Dao;
 import com.SWJTHC.Dao.ThesisDao;
 import com.SWJTHC.Dao.UserAchievementDao;
@@ -39,24 +40,7 @@ public class Tester {
 //
 //			System.out.println(list[i]);
 //		}
-		for (int i = 0; i < 8; i++) {
-			UserAchievement a = new UserAchievement();
-			a.setID(i + "");
-			a.setUsername("massTestingLIBRARY"+i);
-			a.setCategory("thesis");
-			a.setName("TestingLIBRARY"+i);
-			a.setChecked(1);
-			a.setScore(20*(i%5));
-			a.setDepartment(Department.TRAINNING);
-			a.setSubDepartment(TrainingDep.LIBRARY);
-
-			java.sql.Date start = java.sql.Date.valueOf("2016-1-1");
-			a.setAchievementDate(start);
-			a.setMaxScore(500);
-			Dao.executUpdate(
-					"insert into UserAchievement(ID,username,category,name,checked,score,department,subDepartment,achievementDate,maxScore) values(?,?,?,?,?,?,?,?,?,?)",
-					a, null);
-		}
+		AppConfigs.load();
 	}
 
 }

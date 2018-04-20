@@ -81,9 +81,12 @@ public class LoginServlet extends HttpServlet {
 				//request.setAttribute("user", u);
 				if(u.getRole().equals("teacher")){
 					request.getRequestDispatcher("/template/teacher.jsp").forward(request, response);
-				}else if(u.getRole().equals("admin")){
-					request.getRequestDispatcher("/template/admin.jsp").forward(request, response);
-				}else {
+				}else if(u.getRole().equals("admin1")){
+					request.getRequestDispatcher("/template/admin1.jsp").forward(request, response);
+				}else if(u.getRole().equals("admin2")){
+					request.getRequestDispatcher("/template/admin2.jsp").forward(request, response);
+				}
+				else {
 					request.getRequestDispatcher("/template/index.jsp").forward(request, response);
 				}
 				

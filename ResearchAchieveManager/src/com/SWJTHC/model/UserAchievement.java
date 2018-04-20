@@ -2,18 +2,16 @@ package com.SWJTHC.model;
 
 import java.sql.Date;
 
-import com.SWJTHC.enums.Department;
-import com.SWJTHC.enums.ManagementDep;
-import com.SWJTHC.enums.PoliticalDep;
-import com.SWJTHC.enums.SchoolAffairsDep;
-import com.SWJTHC.enums.TrainingDep;
+import javax.enterprise.inject.New;
+
+import com.SWJTHC.enums.*;
 import com.SWJTHC.interfaces.SubDepartment;
 
 public class UserAchievement {
 	private String ID;
 	private String username;
 	private String category;
-	private String name;
+	private String name=null;
 	private int checked=-2;
 	private double score=0;
 	private Department department=null;
@@ -66,7 +64,7 @@ public class UserAchievement {
 		case TRAINNING:
 			return TrainingDep.valueOf(subDepartment.toString());
 		case LEADER:
-			return null;
+			return Leader.valueOf(subDepartment.toString());
 		case POLITICAL:			
 			return PoliticalDep.valueOf(subDepartment.toString());
 		case SCHOOL_AFFAIRS:
@@ -87,7 +85,7 @@ public class UserAchievement {
 			this.subDepartment= TrainingDep.valueOf(subDepartmentName);
 			break;
 		case LEADER:
-			this.subDepartment=  null;
+			this.subDepartment= Leader.valueOf(subDepartmentName);
 			break;
 		case POLITICAL:			
 			this.subDepartment=  PoliticalDep.valueOf(subDepartmentName);

@@ -1,9 +1,9 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,com.SWJTHC.Dao.*,com.SWJTHC.model.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<%@include file="../head_user.jsp"%>
+<%@include file="../head.jsp"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -24,10 +24,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		List<UserAchievement> all = UserAchievementDao.getAchievementList();
 		List<UserAchievement> userAchieve = new ArrayList();
-		java.sql.Date start = java.sql.Date.valueOf("2015-1-1");
-		java.sql.Date end = java.sql.Date.valueOf("2017-11-1");
+		java.sql.Date start = java.sql.Date.valueOf(request.getParameter("startDate"));
+		java.sql.Date end = java.sql.Date.valueOf(request.getParameter("endDate"));
 		for(int i=0;i<all.size();i++){
-		if(all.get(i).getUsername().equals(chosenUser)&&all.get(i).getChecked()==1&&all.get(i).getAchievementDate().after(start)&&all.get(i).getAchievementDate().before(end)){
+		if(all.get(i).getUsername().equals(chosenUser)&&all.get(i).getChecked()==2&&all.get(i).getAchievementDate().after(start)&&all.get(i).getAchievementDate().before(end)){
 			userAchieve.add(all.get(i));
 			}
 		}
@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			          		case 0:
 			          		%><td>待审核</td><%
 			          		break;
-			          		case 1:
+			          		case 2:
 			          		%><td>已通过</td><%
 			          		break;
 			          		default:
@@ -91,10 +91,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			      </table>
 			      <div class="col-md-offset-5">
 			      	<button type="button"class="btn btn-default" onclick="window.history.back(-1);">返回</button>
+			      	<button type="button"class="btn btn-default" onclick="window.open('<%=projectPath%>/services/RankExportServlet?startDate=<%=start %>&endDate=<%=end %>&state=indivLookup&chosenUser=<%=chosenUser%>');">导出</button>
 			      </div>						      
 				</div>
 			</div>
 		</div>
 	</div>
   </body>
+  <%@include file="../copyright.jsp"%>
 </html>

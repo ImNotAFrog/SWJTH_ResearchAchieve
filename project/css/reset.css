@@ -1,0 +1,27 @@
+/*
+* @Author: MaiBenBen
+* @Date:   2018-01-28 01:24:46
+* @Last Modified by:   MaiBenBen
+* @Last Modified time: 2018-01-31 15:10:26
+*/
+/* css重置 */
+body{
+	margin: 0;
+	padding: 0;
+}
+a{
+	text-decoration: none;
+	color: #000;
+}
+ul{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+.wrap,.news,.announcement,.footer-wrap,.content-wrap,.news-content-wrap{
+	width: 1080px;
+	margin: 0 auto;
+	overflow: hidden;
+}

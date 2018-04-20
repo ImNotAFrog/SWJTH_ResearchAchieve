@@ -82,7 +82,7 @@ span.icon{
 .left .active{
     /*background: #66a;*/
     color:rgb(65,120,190);
-    border-bottom: 1px solid #a8f;
+    border-bottom: 1px solid #008cc8;
 }
 
 /*涓诲唴瀹瑰尯鍙宠竟锛�涓汉淇℃伅*/
@@ -105,6 +105,7 @@ span.icon{
     font-size: 14px;
     margin-right: 26px;
     background: url(../img/edit-icon.png) no-repeat 0 12px;
+    float:right;
 }
 
 a.edit:hover{
@@ -117,6 +118,7 @@ a.edit:hover{
 }
 .info-box{
     margin-bottom: 12px;
+    height:100%
 }
  .info-box label {
     width: 120px;

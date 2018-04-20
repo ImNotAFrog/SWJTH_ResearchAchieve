@@ -34,7 +34,7 @@ public class RoleFilter implements Filter{
 			for(int i =0;i<strArray.length;i++){
 				if(strArray[i]==null||"".equals(strArray[i]))continue;
 				if(request.getRequestURI().indexOf(strArray[i])!=-1){
-					if(session.getAttribute("role").equals("admin")){
+					if(session.getAttribute("role").toString().contains("admin")){
 						arg2.doFilter(arg0, arg1);
 						return;
 					}else{

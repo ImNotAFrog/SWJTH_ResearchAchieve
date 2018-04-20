@@ -140,7 +140,8 @@ create table UserAchievement(
 	checked int, --状态
 	achievementDate date,
 	maxScore float,
-	score float		--评分
+	score float,		--评分
+	userId int
 	)
 /*功能：创建用户类型表*/
 create table UserType(

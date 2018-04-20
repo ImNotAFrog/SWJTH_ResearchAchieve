@@ -20,6 +20,8 @@ for(var i=0; i<navItem.length;i++)
 		for(var j=0; j<navItem.length; j++)
 			con[j].style.display ="none";
 		con[this.index].style.display ="block";
-
+		for(var j=0; j<navItem.length; j++)
+			navItem[j].firstElementChild.className= "";
+		navItem[this.index].firstElementChild.className= "active";
 	}
 }
