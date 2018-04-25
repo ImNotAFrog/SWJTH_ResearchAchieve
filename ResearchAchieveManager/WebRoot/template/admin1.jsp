@@ -19,19 +19,21 @@
 	List<UserAchievement> uploaded=new ArrayList();
 	List<UserAchievement> denied=new ArrayList();
 	for(int i=0;i<all.size();i++){
-		switch(all.get(i).getChecked()){
-			case -1:
-				denied.add(all.get(i));
-			break;
-			case 0:
-				pending.add(all.get(i));
-			break;
-			case 1:
-				uploaded.add(all.get(i));
-			break;
-			case 2:
-				approval.add(all.get(i));
-			break;
+		if(all.get(i).getDepartment().equals(u.getDepartment())&&all.get(i).getSubDepartment().equals(u.getSubDepartment())){		
+			switch(all.get(i).getChecked()){
+				case -1:
+					denied.add(all.get(i));
+				break;
+				case 0:
+					pending.add(all.get(i));
+				break;
+				case 1:
+					uploaded.add(all.get(i));
+				break;
+				case 2:
+					approval.add(all.get(i));
+				break;
+			}
 		}
 	}
  %>
@@ -68,12 +70,6 @@
 					<li>
 						<a href="#">
 							<span>未通过成果</span>
-							<span class="icon">&gt;</span>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<span>成果评比</span>
 							<span class="icon">&gt;</span>
 						</a>
 					</li>
@@ -343,51 +339,7 @@
 							</div>
 						</div>
 					</div>	
-					<div id="ranking"  class="content-item">
-						<div class="common-title">科研成果评比情况
-						</div>
-						<div class="nav">
-								<h4>请设置评比日期：</h4>
-								<div class="col-md-12">
-									<label for="stateDate" class="pull-left">起始日期:</label>
-									<div class="moco-control-input">
-			                            <input type="text" name="startDate" id="startDate" autocomplete="off" class="moco-form-control" value="1990-01-01">
-		               				 <div class="rlf-tip-wrap errorHint color-red"></div>
-		               				 </div>
-	               				 </div>
-	               				 <div class="col-md-12">
-		               				 <label for="stateDate" class="pull-left">截止日期:</label>
-									<div class="moco-control-input ">
-			                            <input type="text" name="endDate" id="endDate" autocomplete="off" class="moco-form-control" value="2100-01-01">
-		               				 <div class="rlf-tip-wrap errorHint color-red"></div>
-		               				 </div>
-	               				 </div>
-								<h4>请选择查看类型</h4>
-								<ul>
-									<li class="load-item  clearfix">
-										<button type="button" class="btn btn-info btn-lg" onclick="goPersonalRank()">查看个人成果评比排名列表</button>
-									</li>
-									<br>
-									<h4>请选择评比部门</h4>
-									<li class="load-item  clearfix">
-										<select name="department" id="department" class="form-control"  onChange="getSubDepartment()" value="<%=u.getDepartment()%>">
-									          <%
-										    	Department d[] = Department.values();
-										    	for(int i=0;i<d.length;i++){
-										    		%>
-										    		<option value="<%=d[i]%>"><%=d[i].getName()%></option>
-										    		<%
-										    	}
-									    	 %>
-						        	   </select>
-									</li>
-									<br>
-									<li class="load-item  clearfix">
-										<button type="button" class="btn btn-info btn-lg" onclick="goDepartmentRank()">查看集体成果评比排名列表</button>
-									</li>
-								</ul>
-						</div>
-					</div>
+					
 			</div>
 		</div>
 		</div>
@@ -454,7 +406,15 @@
               changeMonth: true,
               changeYear: true
           });  
+          
 	});
+	$(function(){
+		<%if(u.getName()==null){%>
+				alert("请先完善个人资料");
+				window.location.href="<%=projectPath %>/template/editUser.jsp";
+			<%}%>
+		}
+	)
 	function filterByCategory(ele){
 		var tableName=ele.id.replace('Filter','');
 		if(ele.value==""){

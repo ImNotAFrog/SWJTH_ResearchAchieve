@@ -112,6 +112,7 @@ window.onload = function(){
 //		 }
 
 		 userIcon.onmouseover = function(){
+			 console.log('--------------')
 		 	userCenter.style.display = "block";
 		 }
 		 userIcon.onmouseout  = function(){

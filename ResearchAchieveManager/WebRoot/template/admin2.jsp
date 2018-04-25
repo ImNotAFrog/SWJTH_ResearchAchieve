@@ -1,4 +1,4 @@
-<%@page import="java.util.*,com.SWJTHC.model.*,com.SWJTHC.Dao.*" pageEncoding="UTF-8"%>
+<%@page import="java.util.*,com.SWJTHC.model.*,com.SWJTHC.Dao.*,com.SWJTHC.enums.*" pageEncoding="UTF-8"%>
 
 <html>
 <%@include file="head.jsp"%>
@@ -57,7 +57,7 @@
 					</li>
 					<li>
 						<a href="#">
-							<span>待上报成果</span>
+							<span>已驳回成果</span>
 							<span class="icon">&gt;</span>
 						</a>
 					</li>
@@ -285,13 +285,43 @@
 						<div class="common-title">科研成果评比情况
 						</div>
 						<div class="nav">
+								<h4>请设置评比日期：</h4>
+								<div class="col-md-12">
+									<label for="stateDate" class="pull-left">起始日期:</label>
+									<div class="moco-control-input">
+			                            <input type="text" name="startDate" id="startDate" autocomplete="off" class="moco-form-control" value="1990-01-01">
+		               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+		               				 </div>
+	               				 </div>
+	               				 <div class="col-md-12">
+		               				 <label for="stateDate" class="pull-left">截止日期:</label>
+									<div class="moco-control-input ">
+			                            <input type="text" name="endDate" id="endDate" autocomplete="off" class="moco-form-control" value="2100-01-01">
+		               				 <div class="rlf-tip-wrap errorHint color-red"></div>
+		               				 </div>
+	               				 </div>
 								<h4>请选择查看类型</h4>
 								<ul>
 									<li class="load-item  clearfix">
-										<button type="button" class="btn btn-info btn-lg" onclick="window.location.href='<%=projectPath%>/template/ranking/indivRanking.jsp';">查看个人成果评比排名列表</button>
+										<button type="button" class="btn btn-info btn-lg" onclick="goPersonalRank()">查看个人成果评比排名列表</button>
 									</li>
+									<br>
+									<h4>请选择评比部门</h4>
 									<li class="load-item  clearfix">
-										<button type="button" class="btn btn-info btn-lg" onclick="window.location.href='<%=projectPath%>/template/ranking/departRanking.jsp';">查看集体成果评比排名列表</button>
+										<select name="department" id="department" class="form-control"  onChange="getSubDepartment()" value="<%=u.getDepartment()%>">
+									          <%
+										    	Department d[] = Department.values();
+										    	for(int i=0;i<d.length;i++){
+										    		%>
+										    		<option value="<%=d[i]%>"><%=d[i].getName()%></option>
+										    		<%
+										    	}
+									    	 %>
+						        	   </select>
+									</li>
+									<br>
+									<li class="load-item  clearfix">
+										<button type="button" class="btn btn-info btn-lg" onclick="goDepartmentRank()">查看集体成果评比排名列表</button>
 									</li>
 								</ul>
 						</div>
@@ -304,7 +334,17 @@
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/main.js"></script>
 	<script type="text/javascript" src="<%=projectPath %>/assets/js/bootstrap-table.min.js"></script>
 	<script>
-
+	function goPersonalRank(){
+		var startDate=document.getElementById("startDate");
+		var endDate=document.getElementById("endDate");
+		window.location.href="<%=projectPath%>/template/ranking/indivRanking.jsp?startDate="+startDate.value+"&endDate="+endDate.value;
+	}
+	function goDepartmentRank(){
+		var startDate=document.getElementById("startDate");
+		var endDate=document.getElementById("endDate");
+		var department=document.getElementById("department");
+		window.location.href="<%=projectPath%>/template/ranking/departRanking.jsp?startDate="+startDate.value+"&endDate="+endDate.value+"&department="+department.value;
+	}
 	$(function(){
 		
 		  var approvalFilter = document.getElementById("approvalFilter"); 

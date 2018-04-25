@@ -45,7 +45,7 @@ List<UserAchievement> grouping = new ArrayList();
 				<div class="re-item">
 					
 						<h3>论文信息</h3>
-						<a href="<%=projectPath%>/template/<%=role%>.jsp.jsp" class="moco-modal-close"></a>
+						<a href="<%=projectPath%>/template/<%=role%>.jsp" class="moco-modal-close"></a>
 						<form id="fileupload" method="post" target="nm_iframe" onchange="confirmFlag=0;">
 						<input id="owner" name="owner" type="hidden" value="<%=t.getOwner()%>" />
 						<input id="type" name="type" type="hidden" value="ThesisUpload" />						
